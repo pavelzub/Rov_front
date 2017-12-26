@@ -2,7 +2,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
-      _mainWidget(new MyMainWidget(this)),
+      _mainWidget(new MainWidget(this)),
       _gamepadManager(new MyGamepadManager(this))
 {
     setCentralWidget(_mainWidget);

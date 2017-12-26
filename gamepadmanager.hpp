@@ -48,19 +48,22 @@ signals:
     ChangeHat_1(int);
 
 private:
-    const static int                   AXISCOUNT = 10;
-    const static int                   BUTTONSCOUNT = 20;
-    const static int                   HATSCOUNT = 2;
+    const static int AXISCOUNT = 10;
+    const static int BUTTONSCOUNT = 20;
+    const static int HATSCOUNT = 2;
 
-    QTimer*                     _timer;
-    bool                        _isGamepadConnect;
-    double                      _axis[AXISCOUNT];
-    double                      _buttons[BUTTONSCOUNT];
-    int                         _hats[HATSCOUNT];
-    void                        setConnectionStatus(bool isConnect);
-    void                        refreshGamepadInfo();
-    void                        initializeConnetions();
-    void                        initializeTimer();
+    QTimer* m_timer;
+    bool m_isGamepadConnect;
+    double m_axis[AXISCOUNT];
+    double m_buttons[BUTTONSCOUNT];
+    int m_hats[HATSCOUNT];
+    void setConnectionStatus(bool isConnect);
+    void refreshGamepadInfo();
+    void refreshAxisInfo(SDL_Joystick *joystik);
+    void refreshButtonInfo(SDL_Joystick* joystik);
+    void refreshHatInfo(SDL_Joystick *joystik);
+    void initializeConnetions();
+    void initializeTimer();
 };
 
 #endif // MYGAMEPADMANAGER_HPP

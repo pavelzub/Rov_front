@@ -10,10 +10,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Rov_front
 TEMPLATE = app
-#INCLUDEPATH = $$PWD/SDL-1.2/include/SDL
-#LIBS += -L$$PWD/SDL-1.2/bin -lSDL
-INCLUDEPATH = $$PWD/SDL/include
-LIBS += -L$$PWD/SDL -lSDL2
+INCLUDEPATH = $$PWD/SDL-1.2/include/SDL
+LIBS += -L$$PWD/SDL-1.2/bin -lSDL
+#INCLUDEPATH = $$PWD/SDL/include
+#LIBS += -L$$PWD/SDL -lSDL2
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -30,10 +30,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    mymainwidget.cpp \
-    mygamepadmanager.cpp
+    gamepadmanager.cpp \
+    mainwidget.cpp
 
 HEADERS += \
         mainwindow.hpp \
-    mymainwidget.hpp \
-    mygamepadmanager.hpp
+    gamepadmanager.hpp \
+    mainwidget.hpp

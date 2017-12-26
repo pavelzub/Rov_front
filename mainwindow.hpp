@@ -2,8 +2,8 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
-#include <mymainwidget.hpp>
-#include <mygamepadmanager.hpp>
+#include <mainwidget.hpp>
+#include <gamepadmanager.hpp>
 #undef main
 
 class MainWindow : public QMainWindow
@@ -15,7 +15,7 @@ public:
     ~MainWindow();
 
 private:
-    MyMainWidget* _mainWidget;
+    MainWidget* _mainWidget;
     MyGamepadManager *_gamepadManager;
     void initializeConnections();
     void changeAxis_X(double value);
