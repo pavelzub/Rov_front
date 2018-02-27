@@ -3,22 +3,21 @@
 
 #include <QWidget>
 #include <QTextEdit>
+#include <imagedetector.hpp>
+#include <videowidget.hpp>
 
 class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit MainWidget(QWidget *parent = nullptr);
-    void setAxisText(int index, QString text);
-    void setButtonsText(int index, QString text);
-    void disableAll();
-    void enableAll();
-
+    void swapCameras(int a, int b);
+    
 private:
-    QTextEdit* m_axis[9];
-    QTextEdit* m_buttons[9];
-
-    void createLayout();
+    ImageDetector* _detector;
+    void _initCameras();
+    void _createLayout();
+    VideoWidget _cameras[4];
 };
 
 #endif // MYMAINWIDGET_HPP

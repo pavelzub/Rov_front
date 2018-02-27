@@ -4,14 +4,35 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Rov_front
 TEMPLATE = app
-INCLUDEPATH = $$PWD/SDL-1.2/include/SDL
-LIBS += -L$$PWD/SDL-1.2/bin -lSDL
+INCLUDEPATH += $$PWD/SDL-1.2/include/SDL \
+    $$PWD/OpenCV/include
+LIBS += -L$$PWD/SDL-1.2/bin -lSDL \
+    -L$$PWD/OpenCV/lib \
+    -lopencv_highgui2413 \
+    -lopencv_calib3d2413 \
+    -lopencv_contrib2413 \
+    -lopencv_core2413 \
+    -lopencv_features2d2413 \
+    -lopencv_flann2413 \
+    -lopencv_gpu2413 \
+    -lopencv_imgproc2413 \
+    -lopencv_legacy2413 \
+    -lopencv_ml2413 \
+    -lopencv_nonfree2413 \
+    -lopencv_objdetect2413 \
+    -lopencv_ocl2413 \
+    -lopencv_photo2413 \
+    -lopencv_stitching2413 \
+    -lopencv_superres2413 \
+    -lopencv_video2413 \
+    -lopencv_videostab2413
+
 #INCLUDEPATH = $$PWD/SDL/include
 #LIBS += -L$$PWD/SDL -lSDL2
 
@@ -31,9 +52,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     gamepadmanager.cpp \
-    mainwidget.cpp
+    mainwidget.cpp \
+    imagedetector.cpp \
+    videowidget.cpp
 
 HEADERS += \
         mainwindow.hpp \
     gamepadmanager.hpp \
-    mainwidget.hpp
+    mainwidget.hpp \
+    imagedetector.hpp \
+    videowidget.hpp
+
+#LIBS += "C:/MATE/Rov_front/OpenCV/x64/mingw/bin//*.dll"
+
+#DEPENDPATH += $$PWD/OpenCV/x64/mingw/bin
