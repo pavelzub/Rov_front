@@ -7,6 +7,8 @@
 #include <QCamera>
 #include <QCameraInfo>
 #include <QPainter>
+#include <QTimer>
+#include <QAction>
 
 enum CameraType {USB, Ethernet};
 enum CameraPriority {Main, Sub};
@@ -32,10 +34,18 @@ protected:
 private:
     const int MAINWIDTH= 650;
     const int SUBWIDTH = 200;
+    const QString STARTTIMETTEXT = "Начать распознавание";
+    const QString STOPTIMETTEXT = "Остановить распознавание";
 
     void mouseReleaseEvent(QMouseEvent *event);
+    void _createMenu();
+    void _menuBtnPress();
+    void _initConnections();
+    void _findImage();
 
+    QAction* _findAction;
     CameraPriority _priority = Sub;
+    QTimer* _timer;
 };
 
 #endif // VIDEOWIDGET_HPP

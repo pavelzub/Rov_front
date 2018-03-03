@@ -5,8 +5,11 @@
 
 VideoWidget::VideoWidget(int index, QWidget *parent):
     QVideoWidget(parent),
-    _painter(new QPainter(this))
+    _painter(new QPainter(this)),
+    _timer(new QTimer(this))
 {
+    _createMenu();
+    _initConnections();
     this->index = index;
     setPriority(Sub);
 }
@@ -55,5 +58,38 @@ bool VideoWidget::isEnabled()
 
 void VideoWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+    if (event->button() != Qt::LeftButton) return;
     ((MainWidget*)(this->parent()))->swapCameras(index);
+}
+
+void VideoWidget::_createMenu()
+{
+    _findAction = new QAction(STARTTIMETTEXT, this);
+    this->addAction(_findAction);
+    this->setContextMenuPolicy(Qt::ActionsContextMenu);
+}
+
+void VideoWidget::_menuBtnPress()
+{
+    if (_timer->isActive())
+    {
+        _findAction->setText(STARTTIMETTEXT);
+        _timer->stop();
+    }
+    else
+    {
+        _findAction->setText(STOPTIMETTEXT);
+        _timer->start(20);
+    }
+}
+
+void VideoWidget::_initConnections()
+{
+     connect(_findAction, &QAction::triggered, this, &_menuBtnPress);
+     connect(_timer, &QTimer::timeout, this, &_findImage);
+}
+
+void VideoWidget::_findImage()
+{
+    std::cout << index << std::endl;
 }

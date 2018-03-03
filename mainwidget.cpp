@@ -26,9 +26,6 @@ void MainWidget::swapCameras(int index)
     _cameras[index]->setPriority(CameraPriority::Main);
 
     _mainCameraIndex = index;
-//    std::swap(_cameras[index], _cameras[_mainCameraIndex]);
-//    _cameras[0]->index = _mainCameraIndex;
-    //    _cameras[index]->index = index;
 }
 
 void MainWidget::refreshCamerasInfo()
@@ -77,9 +74,7 @@ void MainWidget::_createLayout()
 {
     QVBoxLayout* mainLayout = new QVBoxLayout;
 
-//    QWidget* camerasWidget = new QWidget;
     QVBoxLayout* camerasLayout = new QVBoxLayout();
-//    camerasWidget->setFixedSize(650, 500);
     _mainCameraLayout = new QVBoxLayout;
     _mainCameraLayout->addWidget(_cameras[0]);
     _subCamerasLayout = new QHBoxLayout;
@@ -97,5 +92,4 @@ void MainWidget::_createLayout()
 void MainWidget::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &refreshCamerasInfo);
-//    connect(_cameras[0], &QVideoWidget::mouseReleaseEvent, this, &_cameraPress);
 }
