@@ -17,9 +17,7 @@ MainWidget::MainWidget(QWidget *parent)
 void MainWidget::swapCameras(int index)
 {
     _mainCameraLayout->removeWidget(_cameras[_mainCameraIndex]);
-    _subCamerasLayout->removeWidget(_cameras[index]);
-
-    _subCamerasLayout->addWidget(_cameras[_mainCameraIndex]);
+    _subCamerasLayout->replaceWidget(_cameras[index], _cameras[_mainCameraIndex]);
     _mainCameraLayout->addWidget(_cameras[index]);
 
     _cameras[_mainCameraIndex]->setPriority(CameraPriority::Sub);
@@ -31,7 +29,7 @@ void MainWidget::swapCameras(int index)
 void MainWidget::refreshCamerasInfo()
 {
     QList<QCameraInfo> camerasInfo = QCameraInfo::availableCameras();
-    std::cout << "Available USB cameras count: " << camerasInfo.size() << std::endl;
+//    std::cout << "Available USB cameras count: " << camerasInfo.size() << std::endl;
 
     for (int i = 0; i < 2; i++)
     {

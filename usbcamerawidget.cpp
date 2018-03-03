@@ -35,3 +35,10 @@ void USBCameraWidget::setCamera(QCameraInfo camInfo)
     _camera->start();
     _isEnabled = true;
 }
+
+QPixmap USBCameraWidget::getPixmap()
+{
+    QPixmap pix = this->grab(this->rect());
+    return pix;
+//    return this->bi();
+}

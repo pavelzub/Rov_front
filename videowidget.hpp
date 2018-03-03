@@ -1,6 +1,8 @@
 #ifndef VIDEOWIDGET_HPP
 #define VIDEOWIDGET_HPP
 
+#include "imagedetector.hpp"
+
 #include <QObject>
 #include <QWidget>
 #include <QVideoWidget>
@@ -26,6 +28,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    virtual QPixmap getPixmap();
 
     QPainter* _painter;
     bool _isEnabled = false;
@@ -43,6 +46,7 @@ private:
     void _initConnections();
     void _findImage();
 
+    FoundFigure _figure;
     QAction* _findAction;
     CameraPriority _priority = Sub;
     QTimer* _timer;

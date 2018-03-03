@@ -30,10 +30,20 @@ void VideoWidget::paintEvent(QPaintEvent *event)
 
     _painter->setFont(font);
     _painter->setPen(pen);
-    _painter->drawText(0, 20, "Камера_" + QString::number(index + 1));
+
+    _painter->drawText(0, 20, "Камера " + QString::number(index + 1));
+    if (_timer->isActive() && _figure.type != Type::NONE)
+    {
+        _painter->drawRect(_figure.rect);
+        font.setPointSize(10);
+        _painter->setFont(font);
+        _painter->drawText(_figure.rect.left(), _figure.rect.top() - 10, FIGURENAMES[_figure.type - 1]);
+    }
 
     _painter->end();
 }
+
+QPixmap VideoWidget::getPixmap(){}
 
 void VideoWidget::setPriority(CameraPriority priority)
 {
@@ -49,6 +59,8 @@ void VideoWidget::setPriority(CameraPriority priority)
 void VideoWidget::setEnabled(bool flag)
 {
     _isEnabled = flag;
+    if (!_isEnabled && _timer->isActive())
+        _timer->stop();
 }
 
 bool VideoWidget::isEnabled()
@@ -71,6 +83,7 @@ void VideoWidget::_createMenu()
 
 void VideoWidget::_menuBtnPress()
 {
+    if (!_isEnabled) return;
     if (_timer->isActive())
     {
         _findAction->setText(STARTTIMETTEXT);
@@ -91,5 +104,10 @@ void VideoWidget::_initConnections()
 
 void VideoWidget::_findImage()
 {
-    std::cout << index << std::endl;
+    QPixmap pixmap = getPixmap();
+    _figure = ImageDetector::detectImage(pixmap);
+    if (_figure.type != Type::NONE)
+        std::cout << FIGURENAMES[_figure.type - 1].toStdString() << std::endl;
+    else
+        std::cout << "NONE" << std::endl;
 }

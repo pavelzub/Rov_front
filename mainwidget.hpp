@@ -1,7 +1,6 @@
 #ifndef MYMAINWIDGET_HPP
 #define MYMAINWIDGET_HPP
 
-#include "imagedetector.hpp"
 #include "usbcamerawidget.hpp"
 #include "ithernetcamerawidget.hpp"
 
@@ -12,7 +11,6 @@
 #include <QMouseEvent>
 #include <videowidget.hpp>
 #include <QTimer>
-//#include <imagedetector.hpp>
 
 class MainWidget : public QWidget
 {

@@ -14,6 +14,9 @@ public:
     QString getDeviceName();
     void setCamera(QCameraInfo camInfo);
 
+protected:
+    QPixmap getPixmap() override;
+
 private:
     QString _deviceName;
     QCamera* _camera = nullptr;

@@ -5,3 +5,8 @@ IthernetCameraWidget::IthernetCameraWidget(int index, QWidget *parent):
 {
 
 }
+
+QPixmap IthernetCameraWidget::getPixmap()
+{
+
+}

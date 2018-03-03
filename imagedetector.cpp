@@ -1,5 +1,6 @@
 #include "imagedetector.hpp"
 #include "vector"
+#include "iostream"
 #include <QPainter>
 #include <iostream>
 
@@ -46,14 +47,19 @@ FoundFigure ImageDetector::_detectFigure(QPixmap &pixmap)
 
             cv::RotatedRect bEllipse = cv::fitEllipse(contours.at(i));
             FigureColor color = _getFigureColor(images.pixel((int)bEllipse.center.x, (int)bEllipse.center.y));
-
             if (color == FigureColor::OTHER || hull.size() > 4) continue;
-            result.rect.setX(bEllipse.boundingRect().x);
-            result.rect.setY(bEllipse.boundingRect().y);
-            result.rect.setWidth(bEllipse.boundingRect().width);
-            result.rect.setHeight(bEllipse.boundingRect().height);
-            result.angle = bEllipse.angle;
-            result.type = (Type)((hull.size() - 3) * 2 + color);
+
+            QPoint min = {INT_MAX, INT_MAX};
+            QPoint max = {0, 0};
+            for (auto i : hull){
+                min.setX(qMin(min.x(), i.x));
+                min.setY(qMin(min.y(), i.y));
+                max.setX(qMax(max.x(), i.x));
+                max.setY(qMax(max.y(), i.y));
+            }
+            result.rect.setTopLeft(min);
+            result.rect.setBottomRight(max);
+            result.type = (Type)((hull.size() - 3) * 3 + color);
             return result;
         }
 
