@@ -1,6 +1,7 @@
 #include "ithernetcamerawidget.hpp"
 
-IthernetCameraWidget::IthernetCameraWidget()
+IthernetCameraWidget::IthernetCameraWidget(int index, QWidget *parent):
+    VideoWidget(index, parent)
 {
 
 }

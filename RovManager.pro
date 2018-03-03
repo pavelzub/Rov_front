@@ -52,11 +52,15 @@ SOURCES += \
     mainwidget.cpp \
     gamepadmanager.cpp \
     imagedetector.cpp \
-    videowidget.cpp
+    videowidget.cpp \
+    usbcamerawidget.cpp \
+    ithernetcamerawidget.cpp
 
 HEADERS += \
         mainwindow.hpp \
     mainwidget.hpp \
     gamepadmanager.hpp \
     imagedetector.hpp \
-    videowidget.hpp
+    videowidget.hpp \
+    usbcamerawidget.hpp \
+    ithernetcamerawidget.hpp

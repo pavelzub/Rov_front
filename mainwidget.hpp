@@ -2,6 +2,8 @@
 #define MYMAINWIDGET_HPP
 
 #include "imagedetector.hpp"
+#include "usbcamerawidget.hpp"
+#include "ithernetcamerawidget.hpp"
 
 #include <QWidget>
 #include <QTextEdit>
@@ -20,16 +22,17 @@ public:
     void swapCameras(int index);
 
 private:
+    void refreshCamerasInfo();
+    void _initCameras();
+    void _createLayout();
+    void _initConnections();
+
     ImageDetector* _detector;
     QTimer* _timer;
     VideoWidget* _cameras[4];
     int _mainCameraIndex = 0;
     QVBoxLayout* _mainCameraLayout;
     QHBoxLayout* _subCamerasLayout;
-    void refreshCamerasInfo();
-    void _initCameras();
-    void _createLayout();
-    void _initConnections();
 };
 
 #endif // MYMAINWIDGET_HPP

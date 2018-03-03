@@ -15,26 +15,27 @@ class VideoWidget : public QVideoWidget
 {
     Q_OBJECT
 public:
-    VideoWidget(int index, QWidget *parent = nullptr, CameraType type = Ethernet);
-    VideoWidget(int index, QCameraInfo camInfo, QWidget *parent = nullptr, CameraType type = Ethernet);
+    VideoWidget(int index, QWidget *parent = nullptr);
     void setPriority(CameraPriority priority);
+    void setEnabled(bool flag);
+    bool isEnabled();
     void setIndex(int index);
-    void setCamera(QCameraInfo camInfo);
     int index;
 
-private:
-    void mouseReleaseEvent(QMouseEvent *event);
+protected:
     void paintEvent(QPaintEvent *event);
-    void _initConnections();
-    void _cameraStateChanged(bool available);
+
     QPainter* _painter;
-    const int MAINWIDTH= 600;
+    bool _isEnabled = false;
+    QSize _resolution = {1920, 1080};
+
+private:
+    const int MAINWIDTH= 650;
     const int SUBWIDTH = 200;
-    QSize _resolution;
+
+    void mouseReleaseEvent(QMouseEvent *event);
+
     CameraPriority _priority = Sub;
-    CameraType _type;
-    QCamera* _camera = nullptr;
-    void _addCamera(QCamera camera);
 };
 
 #endif // VIDEOWIDGET_HPP
