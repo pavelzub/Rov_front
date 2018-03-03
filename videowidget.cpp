@@ -58,9 +58,11 @@ void VideoWidget::setPriority(CameraPriority priority)
 
 void VideoWidget::setEnabled(bool flag)
 {
-    _isEnabled = flag;
     if (!_isEnabled && _timer->isActive())
-        _timer->stop();
+    {
+        _menuBtnPress();
+    }
+    _isEnabled = flag;
 }
 
 bool VideoWidget::isEnabled()
