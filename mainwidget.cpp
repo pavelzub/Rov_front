@@ -6,6 +6,7 @@
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
       _detector(new ImageDetector(this)),
+      _timerWidget(new TimerWidget(this)),
       _timer(new QTimer(this))
 {
     _initCameras();
@@ -70,9 +71,11 @@ void MainWidget::_initCameras()
 
 void MainWidget::_createLayout()
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout;
+    QHBoxLayout* mainLayout = new QHBoxLayout;
 
-    QVBoxLayout* camerasLayout = new QVBoxLayout();
+    QVBoxLayout* leftLayout = new QVBoxLayout;
+    QVBoxLayout* rigthLayout = new QVBoxLayout;
+    QVBoxLayout* camerasLayout = new QVBoxLayout;
     _mainCameraLayout = new QVBoxLayout;
     _mainCameraLayout->addWidget(_cameras[0]);
     _subCamerasLayout = new QHBoxLayout;
@@ -82,7 +85,15 @@ void MainWidget::_createLayout()
     camerasLayout->addLayout(_mainCameraLayout);
     camerasLayout->addLayout(_subCamerasLayout);
 
-    mainLayout->addLayout(camerasLayout);
+    rigthLayout->addWidget(_timerWidget);
+    _timerWidget->setFixedSize(200, 200);
+    QPixmap picture("C:\\MATE\\Rov_front\\image\\1.jpg");
+    _timerWidget->setScaledContents(true);
+    _timerWidget->setPixmap(picture);
+
+    leftLayout->addLayout(camerasLayout);
+    mainLayout->addLayout(leftLayout);
+    mainLayout->addLayout(rigthLayout);
 
     this->setLayout(mainLayout);
 }

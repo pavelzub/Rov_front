@@ -79,8 +79,8 @@ FoundFigure ImageDetector::_detectText(QPixmap pixmap)
         extractor.compute(img_scene, keypoints_scene, descriptors_scene);
 
         for (int i = 0; i < 6; i++){
-//            cv::Mat img_object = cv::imread("C://MATE//Rov_front//" + TEMPLATESPATH[i].toStdString(), CV_LOAD_IMAGE_GRAYSCALE);
-            cv::Mat img_object = cv::imread("templates//1.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+            cv::Mat img_object = cv::imread("C://MATE//Rov_front//" + TEMPLATESPATH[i].toStdString(), CV_LOAD_IMAGE_GRAYSCALE);
+//            cv::Mat img_object = cv::imread(TEMPLATESPATH[i].toStdString(), CV_LOAD_IMAGE_GRAYSCALE);
 //            cv::imshow( "Good", img_object );
 //            cv::waitKey(1);
 

@@ -3,6 +3,7 @@
 
 #include "usbcamerawidget.hpp"
 #include "ithernetcamerawidget.hpp"
+#include "timerwidget.hpp"
 
 #include <QWidget>
 #include <QTextEdit>
@@ -26,6 +27,7 @@ private:
     void _initConnections();
 
     ImageDetector* _detector;
+    TimerWidget* _timerWidget;
     QTimer* _timer;
     VideoWidget* _cameras[4];
     int _mainCameraIndex = 0;

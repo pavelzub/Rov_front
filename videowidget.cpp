@@ -5,7 +5,6 @@
 
 VideoWidget::VideoWidget(int index, QWidget *parent):
     QVideoWidget(parent),
-    _painter(new QPainter(this)),
     _timer(new QTimer(this))
 {
     _createMenu();
@@ -17,30 +16,30 @@ VideoWidget::VideoWidget(int index, QWidget *parent):
 void VideoWidget::paintEvent(QPaintEvent *event)
 {
     QVideoWidget::paintEvent(event);
-    _painter->begin(this);
+    QPainter* painter = new QPainter(this);
 
     QPen pen = QPen(Qt::black);
-    QFont font = _painter->font();
+    QFont font = painter->font();
     font.setPointSize (20);
 
     if (!_isEnabled) {
-        _painter->fillRect(QRect(0, 0, this->width(), this->height()), QBrush(Qt::black));
+        painter->fillRect(QRect(0, 0, this->width(), this->height()), QBrush(Qt::black));
         pen = QPen(Qt::white);
     }
 
-    _painter->setFont(font);
-    _painter->setPen(pen);
+    painter->setFont(font);
+    painter->setPen(pen);
 
-    _painter->drawText(0, 20, "Камера " + QString::number(index + 1));
+    painter->drawText(0, 20, "Камера " + QString::number(index + 1));
     if (_timer->isActive() && _figure.type != Type::NONE)
     {
-        _painter->drawRect(_figure.rect);
+        painter->drawRect(_figure.rect);
         font.setPointSize(10);
-        _painter->setFont(font);
-        _painter->drawText(_figure.rect.left(), _figure.rect.top() - 10, FIGURENAMES[_figure.type - 1]);
+        painter->setFont(font);
+        painter->drawText(_figure.rect.left(), _figure.rect.top() - 10, FIGURENAMES[_figure.type - 1]);
     }
 
-    _painter->end();
+    painter->end();
 }
 
 QPixmap VideoWidget::getPixmap(){}

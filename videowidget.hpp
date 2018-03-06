@@ -30,7 +30,6 @@ protected:
     void paintEvent(QPaintEvent *event);
     virtual QPixmap getPixmap();
 
-    QPainter* _painter;
     bool _isEnabled = false;
     QSize _resolution = {1920, 1080};
 
