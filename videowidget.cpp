@@ -5,6 +5,7 @@
 
 VideoWidget::VideoWidget(int index, QWidget *parent):
     QVideoWidget(parent),
+    _detector(new ImageDetector(this)),
     _timer(new QTimer(this))
 {
     _createMenu();
@@ -31,12 +32,12 @@ void VideoWidget::paintEvent(QPaintEvent *event)
     painter->setPen(pen);
 
     painter->drawText(0, 20, "Камера " + QString::number(index + 1));
-    if (_timer->isActive() && _figure.type != Type::NONE)
+    if (_timer->isActive() && _detector->figureIsFound())
     {
-        painter->drawRect(_figure.rect);
+        painter->drawRect(_detector->getRect());
         font.setPointSize(10);
         painter->setFont(font);
-        painter->drawText(_figure.rect.left(), _figure.rect.top() - 10, FIGURENAMES[_figure.type - 1]);
+        painter->drawText(_detector->getRect(), Qt::AlignTop | Qt::AlignCenter, FIGURENAMES[_detector->getType() - 1]);
     }
 
     painter->end();
@@ -105,10 +106,9 @@ void VideoWidget::_initConnections()
 
 void VideoWidget::_findImage()
 {
-    QPixmap pixmap = getPixmap();
-    _figure = ImageDetector::detectImage(pixmap);
-    if (_figure.type != Type::NONE)
-        std::cout << FIGURENAMES[_figure.type - 1].toStdString() << std::endl;
-    else
-        std::cout << "NONE" << std::endl;
+    _detector->detectImage(getPixmap());
+//    if (_detector->figureIsFound())
+//        std::cout << FIGURENAMES[_detector->getType()- 1].toStdString() << std::endl;
+//    else
+//        std::cout << "NONE" << std::endl;
 }

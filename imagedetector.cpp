@@ -12,60 +12,70 @@ ImageDetector::ImageDetector(QObject *parent) : QObject(parent)
 
 }
 
-FoundFigure ImageDetector::detectImage(QPixmap pixmap)
+void ImageDetector::detectImage(QPixmap pixmap)
 {
-    FoundFigure figure = _detectFigure(pixmap);
-    FoundFigure text = _detectText(pixmap);
-    return figure.type == Type::NONE ? text : figure;
+    _type = NONE;
+    _detectFigure(pixmap);
+    if (_type == NONE)
+        _detectText(pixmap);
 }
 
-FoundFigure ImageDetector::_detectFigure(QPixmap pixmap)
+bool ImageDetector::figureIsFound()
 {
-        FoundFigure result;
-        cv::Mat image = _getGrauScaleMat(pixmap.toImage());
-        std::vector<std::vector<cv::Point> > contours;
+    return _type != NONE;
+}
 
-        double cannyParams = cv::threshold(image, image, 0, 255, CV_THRESH_BINARY_INV + CV_THRESH_OTSU);
-        cv::Canny(image, image, cannyParams, cannyParams / 2.0F);
-        cv::findContours(image, contours, CV_RETR_TREE, CV_CHAIN_APPROX_NONE);
-        cv::drawContours(image, contours, -1, cv::Scalar(100,200,255));
-//        cv::imshow("ASD", image);
-//        cv::waitKey(1);
+QRect ImageDetector::getRect()
+{
+    return _rect;
+}
 
-        for (std::size_t i = 0; i < contours.size(); i++)
-        {
-            if (contours.at(i).size() < 5) continue;
-            if (std::fabs(cv::contourArea(contours.at(i))) < 300.0) continue;
+Type ImageDetector::getType()
+{
+    return _type;
+}
 
-            static std::vector<cv::Point> hull;
-            cv::convexHull(contours.at(i), hull, true);
-            cv::approxPolyDP(hull, hull, 15, true);
-            if (!cv::isContourConvex(hull)) continue;
+void ImageDetector::_detectFigure(QPixmap pixmap)
+{
+    cv::Mat image = _getGrauScaleMat(pixmap.toImage());
+    std::vector<std::vector<cv::Point> > contours;
 
-            cv::RotatedRect bEllipse = cv::fitEllipse(contours.at(i));
-            FigureColor color = _getFigureColor(pixmap.toImage().pixel((int)bEllipse.center.x, (int)bEllipse.center.y));
-            if (color == FigureColor::OTHER || hull.size() > 4) continue;
+    double cannyParams = cv::threshold(image, image, 0, 255, CV_THRESH_BINARY_INV + CV_THRESH_OTSU);
+    cv::Canny(image, image, cannyParams, cannyParams / 2.0F);
+    cv::findContours(image, contours, CV_RETR_TREE, CV_CHAIN_APPROX_NONE);
+    cv::drawContours(image, contours, -1, cv::Scalar(100,200,255));
 
-            QPoint min = {INT_MAX, INT_MAX};
-            QPoint max = {0, 0};
-            for (auto i : hull){
-                min.setX(qMin(min.x(), i.x));
-                min.setY(qMin(min.y(), i.y));
-                max.setX(qMax(max.x(), i.x));
-                max.setY(qMax(max.y(), i.y));
-            }
+    for (std::size_t i = 0; i < contours.size(); i++)
+    {
+        if (contours.at(i).size() < 5) continue;
+        if (std::fabs(cv::contourArea(contours.at(i))) < 300.0) continue;
 
-            result.rect = QRect(min, max);
-            result.type = (Type)((hull.size() - 3) * 3 + color);
-            return result;
+        static std::vector<cv::Point> hull;
+        cv::convexHull(contours.at(i), hull, true);
+        cv::approxPolyDP(hull, hull, 15, true);
+        if (!cv::isContourConvex(hull)) continue;
+
+        cv::RotatedRect bEllipse = cv::fitEllipse(contours.at(i));
+        FigureColor color = _getFigureColor(pixmap.toImage().pixel((int)bEllipse.center.x, (int)bEllipse.center.y));
+        if (color == FigureColor::OTHER || hull.size() > 4) continue;
+
+        QPoint min = {INT_MAX, INT_MAX};
+        QPoint max = {0, 0};
+        for (auto i : hull){
+            min.setX(qMin(min.x(), i.x));
+            min.setY(qMin(min.y(), i.y));
+            max.setX(qMax(max.x(), i.x));
+            max.setY(qMax(max.y(), i.y));
         }
 
-    return result;
+        _rect = QRect(min, max);
+        _type = (Type)((hull.size() - 3) * 3 + color);
+    }
+
 }
 
-FoundFigure ImageDetector::_detectText(QPixmap pixmap)
+void ImageDetector::_detectText(QPixmap pixmap)
 {
-    FoundFigure result;
     try {
         cv::Mat img_scene = _getGrauScaleMat(pixmap.toImage());
         std::vector<cv::KeyPoint> keypoints_scene;
@@ -81,8 +91,7 @@ FoundFigure ImageDetector::_detectText(QPixmap pixmap)
         for (int i = 0; i < 6; i++){
             cv::Mat img_object = cv::imread("C://MATE//Rov_front//" + TEMPLATESPATH[i].toStdString(), CV_LOAD_IMAGE_GRAYSCALE);
 //            cv::Mat img_object = cv::imread(TEMPLATESPATH[i].toStdString(), CV_LOAD_IMAGE_GRAYSCALE);
-//            cv::imshow( "Good", img_object );
-//            cv::waitKey(1);
+
 
 
             std::vector<cv::KeyPoint> keypoints_object;
@@ -114,12 +123,6 @@ FoundFigure ImageDetector::_detectText(QPixmap pixmap)
                 }
             }
 
-//            cv::Mat img_matches;
-
-//            cv::drawMatches( img_object, keypoints_object, img_scene, keypoints_scene,
-//            good_matches, img_matches, cv::Scalar::all(-1), cv::Scalar::all(-1),
-//            std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
-
             std::vector<cv::Point2f> obj;
             std::vector<cv::Point2f> scene;
 
@@ -131,32 +134,23 @@ FoundFigure ImageDetector::_detectText(QPixmap pixmap)
 
             cv::Mat H = cv::findHomography(obj, scene, CV_RANSAC);
             std::vector<cv::Point2f> obj_corners(4);
-            obj_corners[0] = cvPoint(0,0); obj_corners[1] = cvPoint( img_object.cols, 0 );
-            obj_corners[2] = cvPoint( img_object.cols, img_object.rows ); obj_corners[3] = cvPoint( 0, img_object.rows );
-            std::vector<cv::Point2f> scene_corners(4);
+            obj_corners[0] = cvPoint(0,0);
+            obj_corners[1] = cvPoint( img_object.cols, 0 );
+            obj_corners[2] = cvPoint( img_object.cols, img_object.rows );
+            obj_corners[3] = cvPoint( 0, img_object.rows );
 
+            std::vector<cv::Point2f> scene_corners(4);
             cv::perspectiveTransform(obj_corners, scene_corners, H);
 
-//            cv::line( img_matches, scene_corners[0] + cv::Point2f( img_object.cols, 0), scene_corners[1] + cv::Point2f( img_object.cols, 0), cv::Scalar(0, 255, 0), 4 );
-//            cv::line( img_matches, scene_corners[1] + cv::Point2f( img_object.cols, 0), scene_corners[2] + cv::Point2f( img_object.cols, 0), cv::Scalar( 0, 255, 0), 4 );
-//            cv::line( img_matches, scene_corners[2] + cv::Point2f( img_object.cols, 0), scene_corners[3] + cv::Point2f( img_object.cols, 0), cv::Scalar( 0, 255, 0), 4 );
-//            cv::line( img_matches, scene_corners[3] + cv::Point2f( img_object.cols, 0), scene_corners[0] + cv::Point2f( img_object.cols, 0), cv::Scalar( 0, 255, 0), 4 );
-
-//            std::cout << scene_corners[0].x + cv::Point2f( img_object.cols, 0).x << " " << scene_corners[0].y + cv::Point2f( img_object.cols, 0).y << std::endl;
-//            std::cout << scene_corners[1].x + cv::Point2f( img_object.cols, 0).x << " " << scene_corners[1].y + cv::Point2f( img_object.cols, 0).y << std::endl;
-//            std::cout << scene_corners[2].x + cv::Point2f( img_object.cols, 0).x << " " << scene_corners[2].y + cv::Point2f( img_object.cols, 0).y << std::endl;
-//            std::cout << scene_corners[3].x + cv::Point2f( img_object.cols, 0).x << " " << scene_corners[3].y + cv::Point2f( img_object.cols, 0).y << std::endl << std::endl;
-//            cv::imshow( "image_" + QString::number(i).toStdString(), img_matches );
-//            cv::waitKey(1);
             double square = _getSquare(scene_corners);
-            if (cv::isContourConvex(scene_corners) && square > 10000 && square < 1000000){
-                result.rect = _getRect(scene_corners);
-                result.type = (Type)(i + 1);
+            if (cv::isContourConvex(scene_corners) && square > MINSQUARE && square < MAXSQUARE){
+                _rect = _getRect(scene_corners);
+                _type = (Type)(i + 1);
+                return;
             }
         }
     } catch (...) {
     }
-    return result;
 }
 
 FigureColor ImageDetector::_getFigureColor(QColor color)

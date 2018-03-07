@@ -9,32 +9,34 @@
 
 enum Type {NONE, REDTRIANGLE, YELLOWTRIANGLE, BLUETRIANGLE, REDRECT, YELLOWRECT, BLUERECT};
 enum FigureColor {OTHER, RED, YELLOW, BLUE};
-static QString FIGURENAMES[6] = {"REDTRIANGLE", "YELLOWTRIANGLE", "BLUETRIANGLE",
+const QString FIGURENAMES[6] = {"REDTRIANGLE", "YELLOWTRIANGLE", "BLUETRIANGLE",
                                 "REDRECT", "YELLOWRECT", "BLUERECT"};
-static QString TEMPLATESPATH[6] = {"templates//1.jpg", "templates//2.jpg", "templates//3.jpg",
+const QString TEMPLATESPATH[6] = {"templates//1.jpg", "templates//2.jpg", "templates//3.jpg",
                                    "templates//4.jpg", "templates//5.jpg", "templates//6.jpg"};
-
-struct FoundFigure
-{
-    Type type = NONE;
-    QRect rect;
-};
 
 class ImageDetector : public QObject
 {
     Q_OBJECT
 public:
     explicit ImageDetector(QObject *parent = nullptr);
-    static FoundFigure detectImage(QPixmap pixmap);
+    void detectImage(QPixmap pixmap);
+    bool figureIsFound();
+    QRect getRect();
+    Type getType();
 
 private:
-    static const int COLORTOLERANCE = 100;
-    static FoundFigure _detectFigure(QPixmap pixmap);
-    static FoundFigure _detectText(QPixmap pixmap);
-    static FigureColor _getFigureColor(QColor color);
-    static double _getSquare(std::vector<cv::Point2f> poitns);
-    static QRect _getRect(std::vector<cv::Point2f> poitns);
-    static cv::Mat _getGrauScaleMat(QImage image);
+    const int COLORTOLERANCE = 100;
+    const int MAXSQUARE = 1000000;
+    const int MINSQUARE = 10000;
+    Type _type = NONE;
+    QRect _rect;
+
+    void _detectFigure(QPixmap pixmap);
+    void _detectText(QPixmap pixmap);
+    FigureColor _getFigureColor(QColor color);
+    double _getSquare(std::vector<cv::Point2f> poitns);
+    QRect _getRect(std::vector<cv::Point2f> poitns);
+    cv::Mat _getGrauScaleMat(QImage image);
 };
 
 #endif // IMAGEDETECTOR_HPP

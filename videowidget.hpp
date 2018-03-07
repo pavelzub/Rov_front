@@ -45,7 +45,7 @@ private:
     void _initConnections();
     void _findImage();
 
-    FoundFigure _figure;
+    ImageDetector* _detector;
     QAction* _findAction;
     CameraPriority _priority = Sub;
     QTimer* _timer;
