@@ -1,12 +1,12 @@
 #include "ithernetcamerawidget.hpp"
 
-IthernetCameraWidget::IthernetCameraWidget(int index, QWidget *parent):
+EthernetCameraWidget::EthernetCameraWidget(int index, QWidget *parent):
     VideoWidget(index, parent)
 {
 
 }
 
-QPixmap IthernetCameraWidget::getPixmap()
+QPixmap EthernetCameraWidget::getPixmap()
 {
 
 }

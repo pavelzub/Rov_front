@@ -55,7 +55,8 @@ SOURCES += \
     videowidget.cpp \
     usbcamerawidget.cpp \
     ithernetcamerawidget.cpp \
-    timerwidget.cpp
+    timerwidget.cpp \
+    finder.cpp
 
 HEADERS += \
         mainwindow.hpp \
@@ -65,4 +66,5 @@ HEADERS += \
     videowidget.hpp \
     usbcamerawidget.hpp \
     ithernetcamerawidget.hpp \
-    timerwidget.hpp
+    timerwidget.hpp \
+    finder.hpp

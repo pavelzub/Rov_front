@@ -21,7 +21,7 @@ void VideoWidget::paintEvent(QPaintEvent *event)
 
     QPen pen = QPen(Qt::black);
     QFont font = painter->font();
-    font.setPointSize (20);
+    font.setPointSize(15);
 
     if (!_isEnabled) {
         painter->fillRect(QRect(0, 0, this->width(), this->height()), QBrush(Qt::black));
@@ -37,7 +37,7 @@ void VideoWidget::paintEvent(QPaintEvent *event)
         painter->drawRect(_detector->getRect());
         font.setPointSize(10);
         painter->setFont(font);
-        painter->drawText(_detector->getRect(), Qt::AlignTop | Qt::AlignCenter, FIGURENAMES[_detector->getType() - 1]);
+        painter->drawText(_detector->getRect(), Qt::AlignTop, FIGURENAMES[_detector->getType() - 1]);
     }
 
     painter->end();

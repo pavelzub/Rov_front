@@ -63,8 +63,8 @@ void MainWidget::_initCameras()
 {
     _cameras[0] = new USBCameraWidget(0, this);
     _cameras[1] = new USBCameraWidget(1, this);
-    _cameras[2] = new IthernetCameraWidget(2, this);
-    _cameras[3] = new IthernetCameraWidget(3, this);
+    _cameras[2] = new EthernetCameraWidget(2, this);
+    _cameras[3] = new EthernetCameraWidget(3, this);
 
     _cameras[0]->setPriority(CameraPriority::Main);
 }
