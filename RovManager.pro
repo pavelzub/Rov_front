@@ -12,7 +12,8 @@ TARGET = RovManager
 TEMPLATE = app
 
 INCLUDEPATH += $$PWD/SDL-1.2/include/SDL \
-    $$PWD/OpenCV/include
+    $$PWD/OpenCV/include \
+    $$PWD/ffmpeg/include
 LIBS += -L$$PWD/SDL-1.2/bin -lSDL \
     -L$$PWD/OpenCV/lib \
     -lopencv_highgui2413 \
@@ -32,7 +33,16 @@ LIBS += -L$$PWD/SDL-1.2/bin -lSDL \
     -lopencv_stitching2413 \
     -lopencv_superres2413 \
     -lopencv_video2413 \
-    -lopencv_videostab2413
+    -lopencv_videostab2413 \
+    -L$$PWD/ffmpeg/lib \
+    -lavcodec \
+    -lavdevice \
+    -lavutil \
+    -lpostproc \
+    -lavfilter \
+    -lswresample \
+    -lavformat \
+    -lswscale
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -56,7 +66,8 @@ SOURCES += \
     usbcamerawidget.cpp \
     ithernetcamerawidget.cpp \
     timerwidget.cpp \
-    finder.cpp
+    finder.cpp \
+    anuspes.cpp
 
 HEADERS += \
         mainwindow.hpp \
@@ -67,4 +78,5 @@ HEADERS += \
     usbcamerawidget.hpp \
     ithernetcamerawidget.hpp \
     timerwidget.hpp \
-    finder.hpp
+    finder.hpp \
+    anuspes.hpp

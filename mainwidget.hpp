@@ -4,13 +4,14 @@
 #include "usbcamerawidget.hpp"
 #include "ithernetcamerawidget.hpp"
 #include "timerwidget.hpp"
+#include "videowidget.hpp"
+#include "anuspes.hpp"
 
 #include <QWidget>
 #include <QTextEdit>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMouseEvent>
-#include <videowidget.hpp>
 #include <QTimer>
 
 class MainWidget : public QWidget
@@ -25,6 +26,7 @@ private:
     void _initCameras();
     void _createLayout();
     void _initConnections();
+    void _initFfmpeg();
 
     ImageDetector* _detector;
     TimerWidget* _timerWidget;
