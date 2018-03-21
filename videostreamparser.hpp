@@ -13,11 +13,11 @@ extern "C" {
 
 typedef void (*repaintFunc)();
 
-class AnusPes : public QObject
+class VideoStreamParser : public QObject
 {
     Q_OBJECT
 public:
-    explicit AnusPes(QPixmap *pixmap, QString url, QObject *parent = nullptr);
+    explicit VideoStreamParser(QPixmap *pixmap, QString url, bool* enable, QObject *parent = nullptr);
 
 signals:
     void repaint();
@@ -27,8 +27,17 @@ public slots:
     void process();
 
 private:
+    QPixmap frameToQPixmap(AVFrame *src_frame, AVCodecContext *dec);
+    bool _init();
+
     QPixmap* _pixmap;
     QString _url;
+    AVFormatContext* _mFormatContext = NULL;
+    int _mDataStreamIdx;
+    AVCodecContext* _mVideoDecodeContext;
+    int _mVideoStreamIdx;
+    AVCodecContext* _dec_ctx;
+    bool * _enable;
 };
 
 #endif // ANUSPES_HPP

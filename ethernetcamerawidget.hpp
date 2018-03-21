@@ -19,6 +19,7 @@ public:
 
 private:
     void _update();
+    void _onStopEvent();
     void paintEvent(QPaintEvent *event);
     QPixmap getPixmap() override;
     QPixmap* _pixmap;

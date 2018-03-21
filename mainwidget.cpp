@@ -9,7 +9,6 @@ MainWidget::MainWidget(QWidget *parent)
       _timerWidget(new TimerWidget(this)),
       _timer(new QTimer(this))
 {
-    _initFfmpeg();
     _initCameras();
     _createLayout();
     _initConnections();
@@ -62,10 +61,12 @@ void MainWidget::refreshCamerasInfo()
 
 void MainWidget::_initCameras()
 {
+    _initFfmpeg();
+
     _cameras[0] = new USBCameraWidget(0, this);
     _cameras[1] = new USBCameraWidget(1, this);
-    _cameras[2] = new EthernetCameraWidget(2, "udp://127.0.0.1:1234", this);
-    _cameras[3] = new EthernetCameraWidget(3, "udp://127.0.0.2:1234", this);
+    _cameras[2] = new EthernetCameraWidget(2, "udp://127.0.0.1:" + QString::number(CAMERA_PORT_1), this);
+    _cameras[3] = new EthernetCameraWidget(3, "udp://127.0.0.1:" + QString::number(CAMERA_PORT_2), this);
 
     _cameras[0]->setPriority(CameraPriority::Main);
 }
@@ -88,7 +89,7 @@ void MainWidget::_createLayout()
 
     rigthLayout->addWidget(_timerWidget);
     _timerWidget->setFixedSize(200, 200);
-    QPixmap picture("C:\\MATE\\Rov_front\\image\\1.jpg");
+    QPixmap picture("C:\\MATE\\Rov_front\\image\\timer.jpg");
     _timerWidget->setScaledContents(true);
     _timerWidget->setPixmap(picture);
 

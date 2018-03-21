@@ -2,10 +2,10 @@
 #define MYMAINWIDGET_HPP
 
 #include "usbcamerawidget.hpp"
-#include "ithernetcamerawidget.hpp"
+#include "ethernetcamerawidget.hpp"
 #include "timerwidget.hpp"
 #include "videowidget.hpp"
-#include "anuspes.hpp"
+#include "videostreamparser.hpp"
 
 #include <QWidget>
 #include <QTextEdit>
@@ -22,6 +22,9 @@ public:
     void swapCameras(int index);
 
 private:
+    const int CAMERA_PORT_1 = 1234;
+    const int CAMERA_PORT_2 = 2;
+
     void refreshCamerasInfo();
     void _initCameras();
     void _createLayout();

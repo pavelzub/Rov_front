@@ -64,10 +64,10 @@ SOURCES += \
     imagedetector.cpp \
     videowidget.cpp \
     usbcamerawidget.cpp \
-    ithernetcamerawidget.cpp \
     timerwidget.cpp \
     finder.cpp \
-    anuspes.cpp
+    ethernetcamerawidget.cpp \
+    videostreamparser.cpp
 
 HEADERS += \
         mainwindow.hpp \
@@ -76,7 +76,7 @@ HEADERS += \
     imagedetector.hpp \
     videowidget.hpp \
     usbcamerawidget.hpp \
-    ithernetcamerawidget.hpp \
     timerwidget.hpp \
     finder.hpp \
-    anuspes.hpp
+    ethernetcamerawidget.hpp \
+    videostreamparser.hpp
