@@ -19,6 +19,7 @@ void MainWidget::swapCameras(int index)
 {
     _mainCameraLayout->removeWidget(_cameras[_mainCameraIndex]);
     _subCamerasLayout->replaceWidget(_cameras[index], _cameras[_mainCameraIndex]);
+//    _mainCameraLayout->replaceWidget(_cameras[_mainCameraIndex], _cameras[index]);
     _mainCameraLayout->addWidget(_cameras[index]);
 
     _cameras[_mainCameraIndex]->setPriority(CameraPriority::Sub);
@@ -77,7 +78,9 @@ void MainWidget::_createLayout()
 
     QVBoxLayout* leftLayout = new QVBoxLayout;
     QVBoxLayout* rigthLayout = new QVBoxLayout;
+//    QWidget* camWidget = new QWidget(this);
     QVBoxLayout* camerasLayout = new QVBoxLayout;
+//    camWidget->setLayout(camerasLayout);
     _mainCameraLayout = new QVBoxLayout;
     _mainCameraLayout->addWidget(_cameras[0]);
     _subCamerasLayout = new QHBoxLayout;
@@ -94,6 +97,8 @@ void MainWidget::_createLayout()
     _timerWidget->setPixmap(picture);
 
     leftLayout->addLayout(camerasLayout);
+//    camWidget->setFixedSize(500, 500);
+//    leftLayout->addLayout(camerasLayout);
     mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(rigthLayout);
 

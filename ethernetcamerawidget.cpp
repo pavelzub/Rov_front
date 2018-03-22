@@ -37,9 +37,10 @@ void EthernetCameraWidget::paintEvent(QPaintEvent *event)
 {
     QPainter* painter = new QPainter(this);
 
-    if (_pixmap) std::cout << _pixmap->width() << " " << _pixmap->height() << std::endl;
-    painter->drawPixmap(rect(), *_pixmap);
-    painter->end();
+    if (_pixmap){
+        painter->drawPixmap(rect(), *_pixmap);
+        painter->end();
+    }
 
     VideoWidget::paintEvent(event);
 }
