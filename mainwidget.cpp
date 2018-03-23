@@ -37,7 +37,7 @@ void MainWidget::refreshCamerasInfo()
     {
        if (_cameras[i]->isEnabled())
        {
-           auto camera = (USBCameraWidget*)_cameras[i];
+           auto camera = dynamic_cast<USBCameraWidget*>(_cameras[i]);
            auto it = std::find_if(camerasInfo.begin(), camerasInfo.end(),
                                   [&camera](QCameraInfo info) { return info.deviceName() == (camera)->getDeviceName(); }
                    );
@@ -54,7 +54,7 @@ void MainWidget::refreshCamerasInfo()
         if (camerasInfo.size() == 0) break;
         if (!_cameras[i]->isEnabled())
         {
-            ((USBCameraWidget*)_cameras[i])->setCamera(camerasInfo.front());
+            dynamic_cast<USBCameraWidget*>(_cameras[i])->setCamera(camerasInfo.front());
             camerasInfo.pop_front();
         }
     }
@@ -107,7 +107,7 @@ void MainWidget::_createLayout()
 
 void MainWidget::_initConnections()
 {
-    connect(_timer, &QTimer::timeout, this, &refreshCamerasInfo);
+    connect(_timer, &QTimer::timeout, this, &MainWidget::refreshCamerasInfo);
 }
 
 void MainWidget::_initFfmpeg()

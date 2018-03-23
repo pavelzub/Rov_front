@@ -46,13 +46,13 @@ void MyGamepadManager::refreshAxisInfo(SDL_Joystick* joystik)
 {
     for (int i = 0; i < SDL_JoystickNumAxes(joystik); i++)
     {
-        double axisVal = (double)SDL_JoystickGetAxis(joystik, i) / (double)SHRT_MAX;
+        int axisVal = SDL_JoystickGetAxis(joystik, i);
         if (m_axis[i] != axisVal)
         {
             m_axis[i] = axisVal;
             const char* signalName = QString("ChangeAxis_" + QString::number(i)).toStdString().c_str();
-            emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(double, axisVal));
-            std::cout << QString("ChangeAxis_" + QString::number(i)).toStdString() << ": " << axisVal << std::endl;
+            emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, axisVal));
+//            std::cout << QString("ChangeAxis_" + QString::number(i)).toStdString() << ": " << axisVal << std::endl;
         }
     }
 }
@@ -61,13 +61,13 @@ void MyGamepadManager::refreshButtonInfo(SDL_Joystick* joystik)
 {
     for (int i = 0; i < SDL_JoystickNumButtons(joystik); i++)
     {
-        double buttonVal = (double)SDL_JoystickGetButton(joystik, i);
+        int buttonVal = SDL_JoystickGetButton(joystik, i);
         if (m_buttons[i] != buttonVal)
         {
             m_buttons[i] = buttonVal;
             const char* signalName = QString("ChangeButton_" + QString::number(i)).toStdString().c_str();
-            emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(double, buttonVal));
-            std::cout << QString("ChangeButton_" + QString::number(i)).toStdString() << ": " << buttonVal << std::endl;
+            emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, buttonVal));
+//            std::cout << QString("ChangeButton_" + QString::number(i)).toStdString() << ": " << buttonVal << std::endl;
         }
     }
 }
@@ -82,14 +82,14 @@ void MyGamepadManager::refreshHatInfo(SDL_Joystick* joystik)
             m_hats[i] = hatVal;
             const char* signalName = QString("ChangeHat_" + QString::number(i)).toStdString().c_str();
             emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, hatVal));
-            std::cout << QString("ChangeHat_" + QString::number(i)).toStdString() << ": " << hatVal << std::endl;
+//            std::cout << QString("ChangeHat_" + QString::number(i)).toStdString() << ": " << hatVal << std::endl;
         }
     }
 }
 
 void MyGamepadManager::initializeConnetions()
 {
-    connect(m_timer, &QTimer::timeout, this, &refreshGamepadInfo);
+    connect(m_timer, &QTimer::timeout, this, &MyGamepadManager::refreshGamepadInfo);
 }
 
 void MyGamepadManager::initializeTimer()

@@ -1,4 +1,5 @@
 #include "timerwidget.hpp"
+#include <QMouseEvent>
 
 #include <QPainter>
 
@@ -15,7 +16,7 @@ TimerWidget::TimerWidget(QWidget *parent):
 
 void TimerWidget::_initConnections()
 {
-    connect(_timer, &QTimer::timeout, this, &_updateTimer);
+    connect(_timer, &QTimer::timeout, this, &TimerWidget::_updateTimer);
 }
 
 void TimerWidget::_updateTimer()
@@ -27,6 +28,7 @@ void TimerWidget::_updateTimer()
 
 void TimerWidget::mousePressEvent(QMouseEvent *event)
 {
+    if (event->button() != Qt::LeftButton) return;
     if (_timer->isActive()){
         _timer->stop();
         _time = _timeLeft;

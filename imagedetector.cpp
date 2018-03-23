@@ -22,7 +22,7 @@ void ImageDetector::detectImage(QPixmap pixmap)
 
     connect(thread, &QThread::started, finder, &Finder::process);
     connect(finder, &Finder::finished, thread, &QThread::quit);
-    connect(finder, &Finder::finished, this, &_stopDetection);
+    connect(finder, &Finder::finished, this, &ImageDetector::_stopDetection);
     connect(finder, &Finder::finished, finder, &Finder::deleteLater);
     connect(thread, &QThread::finished, thread, &QThread::deleteLater);
 

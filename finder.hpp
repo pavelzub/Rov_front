@@ -32,7 +32,7 @@ private:
     void _detectText(QPixmap pixmap);
 
     FigureColor _getFigureColor(QColor color);
-    double _getSquare(std::vector<cv::Point2f> poitns);
+    float _getSquare(std::vector<cv::Point2f> poitns);
     QRect _getRect(std::vector<cv::Point2f> poitns);
     cv::Mat _getGrauScaleMat(QImage image);
 };

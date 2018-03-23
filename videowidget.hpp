@@ -28,7 +28,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
-    virtual QPixmap getPixmap();
+    virtual QPixmap getPixmap() = 0;
 
     bool _isEnabled = false;
     QSize _resolution = {1920, 1080};

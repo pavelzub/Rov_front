@@ -43,16 +43,14 @@ void VideoWidget::paintEvent(QPaintEvent *event)
     painter->end();
 }
 
-QPixmap VideoWidget::getPixmap(){}
-
 void VideoWidget::setPriority(CameraPriority priority)
 {
     _priority = priority;
 
     if (_priority == Sub)
-        this->setFixedSize(SUBWIDTH, (int)((double)SUBWIDTH / (double)_resolution.width() * (double)_resolution.height()));
+        this->setFixedSize(SUBWIDTH, SUBWIDTH * _resolution.height() / _resolution.width());
     else
-        this->setFixedSize(MAINWIDTH, (int)((double)MAINWIDTH / (double)_resolution.width() * (double)_resolution.height()));
+        this->setFixedSize(MAINWIDTH, MAINWIDTH * _resolution.height() / _resolution.width());
 
 }
 
@@ -73,7 +71,7 @@ bool VideoWidget::isEnabled()
 void VideoWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() != Qt::LeftButton) return;
-    ((MainWidget*)(this->parent()))->swapCameras(index);
+    dynamic_cast<MainWidget*>(this->parent())->swapCameras(index);
 }
 
 void VideoWidget::_createMenu()
@@ -100,8 +98,8 @@ void VideoWidget::_menuBtnPress()
 
 void VideoWidget::_initConnections()
 {
-     connect(_findAction, &QAction::triggered, this, &_menuBtnPress);
-     connect(_timer, &QTimer::timeout, this, &_findImage);
+     connect(_findAction, &QAction::triggered, this, &VideoWidget::_menuBtnPress);
+     connect(_timer, &QTimer::timeout, this, &VideoWidget::_findImage);
 }
 
 void VideoWidget::_findImage()
