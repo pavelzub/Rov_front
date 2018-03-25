@@ -4,10 +4,9 @@
 #include <QDate>
 #include <QScopedPointer>
 
-VideoStreamParser::VideoStreamParser(QPixmap* pixmap, QString url, bool *enable, QObject *parent) :
+VideoStreamParser::VideoStreamParser(QString url, bool *enable, QObject *parent) :
     QObject(parent)
 {
-    _pixmap = pixmap;
     _url = url;
     _enable = enable;
 }
@@ -19,7 +18,6 @@ void VideoStreamParser::process()
     }
 
     *_enable = true;
-    emit(repaint());
 
    for(;;){
         static std::queue<std::pair<int64_t, double> > ptsDb;
@@ -41,8 +39,8 @@ void VideoStreamParser::process()
           auto mFrame = av_frame_alloc();
           avcodec_decode_video2(_mVideoDecodeContext, mFrame, &got_frame, &pkt);
 
-          *_pixmap = frameToQPixmap(mFrame, _dec_ctx);
-          emit(repaint());
+          QPixmap pixmap = frameToQPixmap(mFrame, _dec_ctx);
+          emit(pixmap);
 
           av_free_packet(&pkt);
           av_frame_free(&mFrame);

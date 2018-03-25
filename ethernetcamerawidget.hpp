@@ -18,7 +18,7 @@ public:
     EthernetCameraWidget(int index, QString  url, QWidget *parent = nullptr);
 
 private:
-    void _update();
+    void _update(QPixmap pixmap);
     void _onStopEvent();
     void paintEvent(QPaintEvent *event) override;
     QPixmap getPixmap() override;

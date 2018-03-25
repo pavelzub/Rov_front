@@ -9,7 +9,7 @@ EthernetCameraWidget::EthernetCameraWidget(int index, QString url, QWidget *pare
     _pixmap(new QPixmap())
 {
     QThread* thread = new QThread;
-    VideoStreamParser* parser = new VideoStreamParser(_pixmap, url, &_isEnabled);
+    VideoStreamParser* parser = new VideoStreamParser(url, &_isEnabled);
 
     parser->moveToThread(thread);
 
@@ -23,8 +23,9 @@ EthernetCameraWidget::EthernetCameraWidget(int index, QString url, QWidget *pare
     thread->start();
 }
 
-void EthernetCameraWidget::_update()
+void EthernetCameraWidget::_update(QPixmap pixmap)
 {
+    *_pixmap = pixmap;
     repaint();
 }
 

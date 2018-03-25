@@ -17,10 +17,10 @@ class VideoStreamParser : public QObject
 {
     Q_OBJECT
 public:
-    explicit VideoStreamParser(QPixmap *pixmap, QString url, bool* enable, QObject *parent = nullptr);
+    explicit VideoStreamParser(QString url, bool* enable, QObject *parent = nullptr);
 
 signals:
-    void repaint();
+    void repaint(QPixmap pixmap);
     void finished();
 
 public slots:
@@ -30,7 +30,6 @@ private:
     QPixmap frameToQPixmap(AVFrame *src_frame, AVCodecContext *dec);
     bool _init();
 
-    QPixmap* _pixmap;
     QString _url;
     AVFormatContext* _mFormatContext = NULL;
     int _mDataStreamIdx;
