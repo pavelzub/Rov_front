@@ -3,6 +3,7 @@
 
 #include "gamepadmanager.hpp"
 #include "mainwidget.hpp"
+#include "calculationwindow.hpp"
 
 #include <QMainWindow>
 
@@ -15,6 +16,9 @@ public:
     ~MainWindow();
 
 private:
+    void test();
+
+    CalculationWindow* _calcWindow;
     MainWidget* _mainWidget;
     MyGamepadManager *_gamepadManager;
 };

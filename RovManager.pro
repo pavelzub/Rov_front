@@ -13,7 +13,8 @@ TEMPLATE = app
 
 INCLUDEPATH += $$PWD/SDL-1.2/include/SDL \
     $$PWD/OpenCV/include \
-    $$PWD/ffmpeg/include
+    $$PWD/ffmpeg/include \
+    $$PWD/python/include
 LIBS += -L$$PWD/SDL-1.2/bin -lSDL \
     -L$$PWD/OpenCV/lib \
     -lopencv_highgui2413 \
@@ -68,7 +69,8 @@ SOURCES += \
     finder.cpp \
     ethernetcamerawidget.cpp \
     videostreamparser.cpp \
-    camerascontrolwidget.cpp
+    camerascontrolwidget.cpp \
+    calculationwindow.cpp
 
 HEADERS += \
         mainwindow.hpp \
@@ -81,4 +83,5 @@ HEADERS += \
     finder.hpp \
     ethernetcamerawidget.hpp \
     videostreamparser.hpp \
-    camerascontrolwidget.hpp
+    camerascontrolwidget.hpp \
+    calculationwindow.hpp
