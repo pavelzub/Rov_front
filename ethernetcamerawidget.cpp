@@ -5,8 +5,7 @@
 #include <QThread>
 
 EthernetCameraWidget::EthernetCameraWidget(int index, QString url, QWidget *parent):
-    VideoWidget(index, parent),
-    _pixmap(new QPixmap())
+    VideoWidget(index, parent)
 {
     QThread* thread = new QThread;
     VideoStreamParser* parser = new VideoStreamParser(url, &_isEnabled);
@@ -25,7 +24,7 @@ EthernetCameraWidget::EthernetCameraWidget(int index, QString url, QWidget *pare
 
 void EthernetCameraWidget::_update(QPixmap pixmap)
 {
-    *_pixmap = pixmap;
+    _pixmap = pixmap;
     repaint();
 }
 
@@ -38,8 +37,8 @@ void EthernetCameraWidget::paintEvent(QPaintEvent *event)
 {
     QPainter* painter = new QPainter(this);
 
-    if (_pixmap){
-        painter->drawPixmap(rect(), *_pixmap);
+    if (_pixmap.size() != QSize(0, 0)){
+        painter->drawPixmap(rect(), _pixmap);
         painter->end();
     }
 
@@ -48,5 +47,5 @@ void EthernetCameraWidget::paintEvent(QPaintEvent *event)
 
 QPixmap EthernetCameraWidget::getPixmap()
 {
-    return *_pixmap;
+    return _pixmap;
 }

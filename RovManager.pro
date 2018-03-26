@@ -67,7 +67,8 @@ SOURCES += \
     timerwidget.cpp \
     finder.cpp \
     ethernetcamerawidget.cpp \
-    videostreamparser.cpp
+    videostreamparser.cpp \
+    camerascontrolwidget.cpp
 
 HEADERS += \
         mainwindow.hpp \
@@ -79,4 +80,5 @@ HEADERS += \
     timerwidget.hpp \
     finder.hpp \
     ethernetcamerawidget.hpp \
-    videostreamparser.hpp
+    videostreamparser.hpp \
+    camerascontrolwidget.hpp

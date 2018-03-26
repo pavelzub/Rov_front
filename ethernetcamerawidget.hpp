@@ -22,7 +22,7 @@ private:
     void _onStopEvent();
     void paintEvent(QPaintEvent *event) override;
     QPixmap getPixmap() override;
-    QPixmap* _pixmap;
+    QPixmap _pixmap;
 };
 
 #endif // ITHERNETCAMERAWIDGET_HPP

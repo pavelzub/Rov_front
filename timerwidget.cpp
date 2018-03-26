@@ -12,6 +12,9 @@ TimerWidget::TimerWidget(QWidget *parent):
     _timer(new QTimer(this))
 {
     _initConnections();
+    QPixmap picture("C:\\MATE\\Rov_front\\image\\timer.jpg");
+    setScaledContents(true);
+    setPixmap(picture);
 }
 
 void TimerWidget::_initConnections()

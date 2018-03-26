@@ -71,7 +71,7 @@ bool VideoWidget::isEnabled()
 void VideoWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() != Qt::LeftButton) return;
-    dynamic_cast<MainWidget*>(this->parent())->swapCameras(index);
+    dynamic_cast<CamerasControlWidget*>(this->parent())->swapCameras(index);
 }
 
 void VideoWidget::_createMenu()
