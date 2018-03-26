@@ -19,7 +19,7 @@ void VideoStreamParser::process()
 
     *_enable = true;
 
-   for(;;){
+    for(;;){
         static std::queue<std::pair<int64_t, double> > ptsDb;
 
         AVPacket pkt;
@@ -39,8 +39,9 @@ void VideoStreamParser::process()
           auto mFrame = av_frame_alloc();
           avcodec_decode_video2(_mVideoDecodeContext, mFrame, &got_frame, &pkt);
 
-          QPixmap pixmap = frameToQPixmap(mFrame, _dec_ctx);
-          emit(pixmap);
+          QPixmap pixmap = frameToQPixmap(mFrame, _mVideoDecodeContext);
+          std::cout << "stream: " << pixmap.width() << "x" << pixmap.height() << std::endl;
+          emit(repaint(pixmap));
 
           av_free_packet(&pkt);
           av_frame_free(&mFrame);
@@ -56,9 +57,8 @@ QPixmap VideoStreamParser::frameToQPixmap(AVFrame* src_frame, AVCodecContext* de
 
     int numBytes= avpicture_get_size(AV_PIX_FMT_RGB24,
           dec->width, dec->height);
-    QScopedPointer<const uint8_t> buffer(new uint8_t[numBytes]);
-
-    avpicture_fill((AVPicture*)pFrameRGB, buffer.data(), AV_PIX_FMT_RGB24,
+    uint8_t *buffer = (uint8_t*)malloc(numBytes);
+    avpicture_fill((AVPicture*)pFrameRGB, buffer, AV_PIX_FMT_RGB24,
                   dec->width, dec->height);
 
     int dst_fmt = AV_PIX_FMT_RGB24;
@@ -67,13 +67,13 @@ QPixmap VideoStreamParser::frameToQPixmap(AVFrame* src_frame, AVCodecContext* de
 
     SwsContext *img_convert_ctx_temp;
     img_convert_ctx_temp = sws_getContext(
-    dec->width, dec->height,
-    dec->pix_fmt,
-    dst_w, dst_h, (AVPixelFormat)dst_fmt,
-    SWS_BICUBIC, NULL, NULL, NULL);
+        dec->width, dec->height,
+        dec->pix_fmt,
+        dst_w, dst_h, (AVPixelFormat)dst_fmt,
+        SWS_BICUBIC, NULL, NULL, NULL);
 
 
-    QScopedPointer<QImage> myImage(new QImage(dst_w, dst_h, QImage::Format_RGB32));
+    QImage myImage(dst_w, dst_h, QImage::Format_RGB32);
 
     sws_scale(img_convert_ctx_temp,
               src_frame->data, src_frame->linesize, 0, dec->height,
@@ -83,7 +83,7 @@ QPixmap VideoStreamParser::frameToQPixmap(AVFrame* src_frame, AVCodecContext* de
     uint8_t* src = (uint8_t*)(pFrameRGB->data[0]);
     for (int y = 0; y < dst_h; y++)
     {
-        QRgb *scanLine = (QRgb *) myImage->scanLine(y);
+        QRgb *scanLine = (QRgb *) myImage.scanLine(y);
         for (int x = 0; x < dst_w; x=x+1)
         {
             scanLine[x] = qRgb(src[3*x], src[3*x+1], src[3*x+2]);
@@ -91,10 +91,11 @@ QPixmap VideoStreamParser::frameToQPixmap(AVFrame* src_frame, AVCodecContext* de
         src += pFrameRGB->linesize[0];
     }
 
-    QPixmap result = QPixmap::fromImage(*myImage);
+    QPixmap result = QPixmap::fromImage(myImage);
 
     sws_freeContext(img_convert_ctx_temp);
     av_frame_free(&pFrameRGB);
+    free(buffer);
     return result;
 }
 
@@ -119,5 +120,11 @@ bool VideoStreamParser::_init()
     _mVideoDecodeContext = videoStream->codec;
 
     _mDataStreamIdx = av_find_best_stream(_mFormatContext, AVMEDIA_TYPE_DATA, -1, -1, nullptr, 0);
+
+    if (!_mVideoDecodeContext->width){
+        avformat_close_input(&_mFormatContext);
+        return false;
+    }
+
     return true;
 }

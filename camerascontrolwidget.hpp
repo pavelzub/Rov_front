@@ -23,7 +23,7 @@ public:
 
 private:
     const int CAMERA_PORT_1 = 1234;
-    const int CAMERA_PORT_2 = 2;
+    const int CAMERA_PORT_2 = 1;
 
     void refreshCamerasInfo();
     void _initCameras();
