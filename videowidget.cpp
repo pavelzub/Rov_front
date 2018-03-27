@@ -8,9 +8,9 @@ VideoWidget::VideoWidget(int index, QWidget *parent):
     _detector(new ImageDetector(this)),
     _timer(new QTimer(this))
 {
+    this->index = index;
     _createMenu();
     _initConnections();
-    this->index = index;
     setPriority(Sub);
 }
 
@@ -32,12 +32,17 @@ void VideoWidget::paintEvent(QPaintEvent *event)
     painter->setPen(pen);
 
     painter->drawText(0, 20, "Камера " + QString::number(index + 1));
-    if (_timer->isActive() && _detector->figureIsFound())
+    if (_timer->isActive())
     {
-        painter->drawRect(_detector->getRect());
-        font.setPointSize(10);
-        painter->setFont(font);
-        painter->drawText(_detector->getRect(), Qt::AlignTop, FIGURENAMES[_detector->getType() - 1]);
+        painter->setBrush(QBrush(Qt::red));
+        painter->drawEllipse(0, 0,20, 20);
+        if (_detector->figureIsFound())
+        {
+            painter->drawRect(_detector->getRect());
+            font.setPointSize(10);
+            painter->setFont(font);
+            painter->drawText(_detector->getRect(), Qt::AlignTop, FIGURENAMES[_detector->getType() - 1]);
+        }
     }
 
     painter->end();
@@ -77,6 +82,7 @@ void VideoWidget::mouseReleaseEvent(QMouseEvent *event)
 void VideoWidget::_createMenu()
 {
     _findAction = new QAction(STARTTIMETTEXT, this);
+    _findAction->setShortcut(QKeySequence(QString::number(index + 1)));
     this->addAction(_findAction);
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
 }
@@ -105,8 +111,4 @@ void VideoWidget::_initConnections()
 void VideoWidget::_findImage()
 {
     _detector->detectImage(getPixmap());
-//    if (_detector->figureIsFound())
-//        std::cout << FIGURENAMES[_detector->getType()- 1].toStdString() << std::endl;
-//    else
-//        std::cout << "NONE" << std::endl;
 }

@@ -31,7 +31,8 @@ private:
     QLineEdit* _startAngle;
     QLineEdit* _time;
     QPushButton* _calculateBtn;
-    QLabel* _result;
+    QLabel* _resultAngle;
+    QLabel* _resultLen;
 
 };
 

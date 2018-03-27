@@ -9,8 +9,11 @@
 
 TimerWidget::TimerWidget(QWidget *parent):
     QLabel(parent),
-    _timer(new QTimer(this))
+    _timer(new QTimer(this)),
+    _startAct(new QAction(this)),
+    _restartAct(new QAction(this))
 {
+    _initActions();
     _initConnections();
     QPixmap picture("C:\\MATE\\Rov_front\\image\\timer.jpg");
     setScaledContents(true);
@@ -20,6 +23,8 @@ TimerWidget::TimerWidget(QWidget *parent):
 void TimerWidget::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &TimerWidget::_updateTimer);
+    connect(_startAct, &QAction::triggered, this, &TimerWidget::_startPause);
+    connect(_restartAct, &QAction::triggered, this, &TimerWidget::_restart);
 }
 
 void TimerWidget::_updateTimer()
@@ -29,9 +34,16 @@ void TimerWidget::_updateTimer()
     repaint();
 }
 
-void TimerWidget::mousePressEvent(QMouseEvent *event)
+void TimerWidget::_initActions()
 {
-    if (event->button() != Qt::LeftButton) return;
+    _startAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    _restartAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+    addAction(_startAct);
+    addAction(_restartAct);
+}
+
+void TimerWidget::_startPause()
+{
     if (_timer->isActive()){
         _timer->stop();
         _time = _timeLeft;
@@ -40,6 +52,18 @@ void TimerWidget::mousePressEvent(QMouseEvent *event)
     _timeLeft = _time;
     _lastTime = QTime::currentTime();
     _timer->start(100);
+}
+
+void TimerWidget::_restart()
+{
+    _timeLeft = _time = _lastTime = INITTIME;
+    repaint();
+}
+
+void TimerWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() != Qt::LeftButton) return;
+    _startPause();
 }
 
 void TimerWidget::paintEvent(QPaintEvent *event)

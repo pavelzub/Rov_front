@@ -19,7 +19,8 @@ CalculationWindow::CalculationWindow(QWidget *parent) :
     _startAngle(new QLineEdit(this)),
     _time(new QLineEdit(this)),
     _calculateBtn(new QPushButton(this)),
-    _result(new QLabel(this))
+    _resultAngle(new QLabel(this)),
+    _resultLen(new QLabel(this))
 {
     _createLayouts();
     _initConnections();
@@ -36,6 +37,7 @@ void CalculationWindow::_createLayouts()
     QLayout* fallLayout = _createBlock("Падение", "Вертикальная скорость", _fallUpSpeed, "Горизонтальная скорость", _fallHorSpeed);
     QLayout* initLayout = _createBlock("Данные старта", "Угол", _startAngle, "Время", _time);
     QLayout* windLayout = _createBlock("Ветер", "Угол", _windAngle, "Уравнение скорости", _windSpeed);
+    QVBoxLayout* resultLayout  = new QVBoxLayout(this);
 
     _startUpSpeed->setValidator(new QDoubleValidator(0, 100000, 400, this));
     _startHorSpeed->setValidator(new QDoubleValidator(0, 100000, 400, this));
@@ -45,17 +47,23 @@ void CalculationWindow::_createLayouts()
     _startAngle->setValidator(new QDoubleValidator(0, 100000, 400, this));
     _time->setValidator(new QDoubleValidator(0, 100000, 400, this));
 
-    _result->setFixedHeight(150);
+    _resultAngle->setFixedHeight(75);
+    _resultLen->setFixedHeight(75);
     _calculateBtn->setText("Расчитать");
+    _resultLen->setStyleSheet("font: 18pt;");
+    _resultAngle->setStyleSheet("font: 18pt;");
     _calculateBtn->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    _result->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+    _resultAngle->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+    _resultLen->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
 
     Layout_1->addLayout(startLayout);
     Layout_1->addLayout(fallLayout);
     Layout_2->addLayout(windLayout);
     Layout_2->addLayout(initLayout);
+    resultLayout->addWidget(_resultAngle);
+    resultLayout->addWidget(_resultLen);
     Layout_3->addWidget(_calculateBtn);
-    Layout_3->addWidget(_result);
+    Layout_3->addLayout(resultLayout);
     mainLayout->addLayout(Layout_1);
     mainLayout->addLayout(Layout_2);
     mainLayout->addLayout(Layout_3);
@@ -101,7 +109,8 @@ void CalculationWindow::_calculate()
             || !_fallHorSpeed->text().size() || !_fallUpSpeed->text().size()
             || !_startAngle->text().size() || !_windAngle->text().size()
             || !_time->text().size() || !_windSpeed->text().size()){
-        _result->setText("Не все поля заполнены");
+        _resultAngle->setText("Не все поля заполнены");
+        _resultLen->clear();
         return;
     }
 
@@ -115,14 +124,15 @@ void CalculationWindow::_calculate()
     QString speed = _windSpeed->text();
 
     double fallTime = t * v1 / v2;
-    speed = "/python/main.py \"print (integrate(" + speed + ", (t, 0, " + QString::number(fallTime) + ")))\"";
-    proc.start("python " + QDir::currentPath() + speed);
-    proc.waitForFinished(500);
+    QString request = QString("/python/main.py \"print (integrate(%1, (t, 0, %2)))\"").arg(speed, QString::number(fallTime));
+    proc.start("python " + QDir::currentPath() + request);
+    proc.waitForFinished(-1);
     QString out = proc.readAllStandardOutput();
     QString err = proc.readAllStandardError();
     if (err.size() || !out.size()){
-        _result->setText(QDir::currentPath() + speed);
-        QApplication::clipboard()->setText(QDir::currentPath() + speed);
+        _resultAngle->setText(QDir::currentPath() + request);
+        _resultLen->clear();
+        QApplication::clipboard()->setText(QDir::currentPath() + request);
         return;
     }
 
@@ -135,10 +145,7 @@ void CalculationWindow::_calculate()
 
     QLineF res(0, 0, windx + startx + fallx, windy + starty + fally);
 
-    std::cout << qSin(b) << " " << fallTime << " " << v1 << " " << v2 << " " << a << " " << b << std::endl;
-    std::cout << res.length() << " " << res.angle() + 90 << " " << windx + startx + fallx << " " << windy + starty + fally << " " << a << " " << b << std::endl;
-    std::cout << windx << " " << windy << " " << startx << " " << starty << " " << fallx << " " << fally << std::endl;
-
-    _result->setText(QString::number(res.length()) + " " + QString::number(res.angle() + 90));
+    _resultAngle->setText("Angle: " + QString::number(res.angle()));
+    _resultLen->setText("Length: " + QString::number(res.length()));
 }
 
