@@ -20,7 +20,7 @@ private:
 
     CalculationWindow* _calcWindow;
     MainWidget* _mainWidget;
-    MyGamepadManager *_gamepadManager;
+    GamepadManager *_gamepadManager;
 };
 
 #endif // MAINWINDOW_HPP

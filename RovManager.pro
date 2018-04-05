@@ -11,11 +11,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = RovManager
 TEMPLATE = app
 
-INCLUDEPATH += $$PWD/SDL-1.2/include/SDL \
+INCLUDEPATH += \
+    $$PWD/SDL-1.2/include/SDL \
+#    $$PWD/SDL/include \
     $$PWD/OpenCV/include \
-    $$PWD/ffmpeg/include \
-    $$PWD/python/include
-LIBS += -L$$PWD/SDL-1.2/bin -lSDL \
+    $$PWD/ffmpeg/include
+LIBS += \
+#    -L$$PWD/SDL -lSDL2 \
+    -L$$PWD/SDL-1.2/bin -lSDL \
     -L$$PWD/OpenCV/lib \
     -lopencv_highgui2413 \
     -lopencv_calib3d2413 \
@@ -70,7 +73,13 @@ SOURCES += \
     ethernetcamerawidget.cpp \
     videostreamparser.cpp \
     camerascontrolwidget.cpp \
-    calculationwindow.cpp
+    calculationwindow.cpp \
+    binary_stream.cpp \
+    crc.cpp \
+    rov_data_types.cpp \
+    serializable.cpp \
+    datastore.cpp \
+    tcpconnetor.cpp
 
 HEADERS += \
         mainwindow.hpp \
@@ -84,4 +93,10 @@ HEADERS += \
     ethernetcamerawidget.hpp \
     videostreamparser.hpp \
     camerascontrolwidget.hpp \
-    calculationwindow.hpp
+    calculationwindow.hpp \
+    binary_stream.hpp \
+    crc.hpp \
+    rov_data_types.hpp \
+    serializable.hpp \
+    datastore.hpp \
+    tcpconnetor.hpp

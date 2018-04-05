@@ -1,4 +1,5 @@
 #include "finder.hpp"
+#include <QRgb>
 #include <algorithm>
 #include <iostream>
 
@@ -59,6 +60,22 @@ void Finder::_detectFigure(QPixmap pixmap)
 
 void Finder::_detectText(QPixmap pixmap)
 {
+//    QImage image = pixmap.toImage();
+//    for (int i = 0; i < image.width(); i++)
+//        for (int j = 0; j < image.height(); j++){
+//            QColor color = image.pixel(i, j);
+//            double distance = std::sqrt(sqr(color.green()) +
+//                                        sqr(color.red()) +
+//                                        sqr(color.blue()));
+//            if (distance < 200)
+//                image.setPixel(i, j, qRgb(0, 0, 0));
+//            else
+//                image.setPixel(i, j, qRgb(255, 255, 255));
+//        }
+//    cv::Mat im = _getGrauScaleMat(image);
+//    cv::imshow("test", im);
+//    cv::waitKey(2);
+
     try {
         cv::Mat img_scene = _getGrauScaleMat(pixmap.toImage());
         std::vector<cv::KeyPoint> keypoints_scene;

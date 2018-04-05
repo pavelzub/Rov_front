@@ -36,6 +36,7 @@ void VideoWidget::paintEvent(QPaintEvent *event)
     {
         painter->setBrush(QBrush(Qt::red));
         painter->drawEllipse(0, 0,20, 20);
+        painter->setBrush(Qt::BrushStyle::NoBrush);
         if (_detector->figureIsFound())
         {
             painter->drawRect(_detector->getRect());

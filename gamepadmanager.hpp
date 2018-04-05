@@ -5,11 +5,11 @@
 #include <QTimer>
 #include <SDL.h>
 
-class MyGamepadManager : public QObject
+class GamepadManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit MyGamepadManager(QObject *parent = nullptr);
+    explicit GamepadManager(QObject *parent = nullptr);
 
 signals:
     void GamepadConnect();

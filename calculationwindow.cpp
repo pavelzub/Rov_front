@@ -28,16 +28,16 @@ CalculationWindow::CalculationWindow(QWidget *parent) :
 
 void CalculationWindow::_createLayouts()
 {
-    QWidget* mainWidget = new QWidget(this);
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    QHBoxLayout* Layout_1 = new QHBoxLayout(this);
-    QHBoxLayout* Layout_2 = new QHBoxLayout(this);
-    QHBoxLayout* Layout_3 = new QHBoxLayout(this);
+    QWidget* mainWidget = new QWidget;
+    QVBoxLayout* mainLayout = new QVBoxLayout;
+    QHBoxLayout* Layout_1 = new QHBoxLayout;
+    QHBoxLayout* Layout_2 = new QHBoxLayout;
+    QHBoxLayout* Layout_3 = new QHBoxLayout;
     QLayout* startLayout = _createBlock("Взлет", "Вертикальная скорость", _startUpSpeed, "Горизонтальная скорость", _startHorSpeed);
     QLayout* fallLayout = _createBlock("Падение", "Вертикальная скорость", _fallUpSpeed, "Горизонтальная скорость", _fallHorSpeed);
     QLayout* initLayout = _createBlock("Данные старта", "Угол", _startAngle, "Время", _time);
     QLayout* windLayout = _createBlock("Ветер", "Угол", _windAngle, "Уравнение скорости", _windSpeed);
-    QVBoxLayout* resultLayout  = new QVBoxLayout(this);
+    QVBoxLayout* resultLayout  = new QVBoxLayout;
 
     _startUpSpeed->setValidator(new QDoubleValidator(0, 100000, 400, this));
     _startHorSpeed->setValidator(new QDoubleValidator(0, 100000, 400, this));
@@ -52,6 +52,8 @@ void CalculationWindow::_createLayouts()
     _calculateBtn->setText("Расчитать");
     _resultLen->setStyleSheet("font: 18pt;");
     _resultAngle->setStyleSheet("font: 18pt;");
+
+
     _calculateBtn->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     _resultAngle->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
     _resultLen->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
@@ -78,17 +80,17 @@ void CalculationWindow::_initConnections()
 
 QLayout *CalculationWindow::_createBlock(QString name, QString firstFieldName, QWidget *firstFieldVal, QString secondFieldName, QWidget *secondFieldVal)
 {
-    QVBoxLayout* Layout = new QVBoxLayout(this);
-    QLabel* Name = new QLabel(this);
-    QLabel* Lable_1 = new QLabel(this);
-    QLabel* Lable_2 = new QLabel(this);
+    QVBoxLayout* Layout = new QVBoxLayout;
+    QLabel* Name = new QLabel;
+    QLabel* Lable_1 = new QLabel;
+    QLabel* Lable_2 = new QLabel;
     Name->setAlignment(Qt::AlignHCenter);
     Name->setStyleSheet("font: 18pt;");
     Name->setText(name);
     Lable_1->setText(firstFieldName);
     Lable_2->setText(secondFieldName);
-    QHBoxLayout* Layout_1 = new QHBoxLayout(this);
-    QHBoxLayout* Layout_2 = new QHBoxLayout(this);
+    QHBoxLayout* Layout_1 = new QHBoxLayout;
+    QHBoxLayout* Layout_2 = new QHBoxLayout;
 
     Layout->addWidget(Name);
     Layout->addLayout(Layout_1);

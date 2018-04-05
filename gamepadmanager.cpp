@@ -2,7 +2,7 @@
 #include <QMetaObject>
 #include <iostream>
 
-MyGamepadManager::MyGamepadManager(QObject *parent)
+GamepadManager::GamepadManager(QObject *parent)
     : QObject(parent),
       m_timer(new QTimer(this))
 {
@@ -10,7 +10,7 @@ MyGamepadManager::MyGamepadManager(QObject *parent)
     initializeConnetions();
 }
 
-void MyGamepadManager::setConnectionStatus(bool isConnect)
+void GamepadManager::setConnectionStatus(bool isConnect)
 {
     if (!m_isGamepadConnect && isConnect)
         emit GamepadConnect();
@@ -20,7 +20,7 @@ void MyGamepadManager::setConnectionStatus(bool isConnect)
     m_isGamepadConnect = isConnect;
 }
 
-void MyGamepadManager::refreshGamepadInfo()
+void GamepadManager::refreshGamepadInfo()
 {
     SDL_Quit();
     SDL_Init(SDL_INIT_JOYSTICK);
@@ -42,7 +42,7 @@ void MyGamepadManager::refreshGamepadInfo()
     setConnectionStatus(true);
 }
 
-void MyGamepadManager::refreshAxisInfo(SDL_Joystick* joystik)
+void GamepadManager::refreshAxisInfo(SDL_Joystick* joystik)
 {
     for (int i = 0; i < SDL_JoystickNumAxes(joystik); i++)
     {
@@ -57,7 +57,7 @@ void MyGamepadManager::refreshAxisInfo(SDL_Joystick* joystik)
     }
 }
 
-void MyGamepadManager::refreshButtonInfo(SDL_Joystick* joystik)
+void GamepadManager::refreshButtonInfo(SDL_Joystick* joystik)
 {
     for (int i = 0; i < SDL_JoystickNumButtons(joystik); i++)
     {
@@ -72,7 +72,7 @@ void MyGamepadManager::refreshButtonInfo(SDL_Joystick* joystik)
     }
 }
 
-void MyGamepadManager::refreshHatInfo(SDL_Joystick* joystik)
+void GamepadManager::refreshHatInfo(SDL_Joystick* joystik)
 {
     for (int i = 0; i < SDL_JoystickNumHats(joystik); i++)
     {
@@ -87,12 +87,12 @@ void MyGamepadManager::refreshHatInfo(SDL_Joystick* joystik)
     }
 }
 
-void MyGamepadManager::initializeConnetions()
+void GamepadManager::initializeConnetions()
 {
-    connect(m_timer, &QTimer::timeout, this, &MyGamepadManager::refreshGamepadInfo);
+    connect(m_timer, &QTimer::timeout, this, &GamepadManager::refreshGamepadInfo);
 }
 
-void MyGamepadManager::initializeTimer()
+void GamepadManager::initializeTimer()
 {
     m_timer->start(20);
 }
