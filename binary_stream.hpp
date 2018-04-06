@@ -7,7 +7,9 @@
 
 #include <vector>
 #include <cstdint>
+#include <stddef.h>
 #include <cstring>
+//#include <stdfloat.h>
 #include <iostream>
 namespace rov_types {
     class binary_stream {
@@ -27,28 +29,45 @@ namespace rov_types {
 
         void change_byte_ordering(byte_ordering t);
 
-        template<typename T>
-        binary_stream &operator>>(T &val) {
-            if ((m_data.size() - m_counter) >= sizeof(T))
-                read(val);
-            return *this;
-        }
+        binary_stream &operator>>(uint8_t &val);
+        binary_stream &operator>>(int8_t &val);
+        binary_stream &operator>>(uint16_t &val);
+        binary_stream &operator>>(int16_t &val);
+        binary_stream &operator>>(uint32_t &val);
+        binary_stream &operator>>(int32_t &val);
+        binary_stream &operator>>(uint64_t &val);
+        binary_stream &operator>>(int64_t &val);
+        binary_stream &operator>>(float &val);
+        binary_stream &operator>>(double &val);
+        binary_stream &operator>>(long double &val);
+
+        binary_stream &operator<<(const uint8_t &val);
+        binary_stream &operator<<(const int8_t &val);
+        binary_stream &operator<<(const uint16_t &val);
+        binary_stream &operator<<(const int16_t &val);
+        binary_stream &operator<<(const uint32_t &val);
+        binary_stream &operator<<(const int32_t &val);
+        binary_stream &operator<<(const uint64_t &val);
+        binary_stream &operator<<(const int64_t &val);
+        binary_stream &operator<<(const float &val);
+        binary_stream &operator<<(const double &val);
+        binary_stream &operator<<(const long double &val);
+
+        binary_stream &operator<<(uint8_t &val);
+        binary_stream &operator<<(int8_t &val);
+        binary_stream &operator<<(uint16_t &val);
+        binary_stream &operator<<(int16_t &val);
+        binary_stream &operator<<(uint32_t &val);
+        binary_stream &operator<<(int32_t &val);
+        binary_stream &operator<<(uint64_t &val);
+        binary_stream &operator<<(int64_t &val);
+        binary_stream &operator<<(float &val);
+        binary_stream &operator<<(double &val);
+        binary_stream &operator<<(long double &val);
+
 
         template<typename T>
-        binary_stream &operator<<(const T &val) {
-            write(val);
-            return *this;
-        }
-
-    private:
-        byte_ordering m_system_type;
-        byte_ordering m_ordering;
-        std::size_t m_counter;
-        std::vector<std::uint8_t> m_data;
-
-
-        template<typename T>
-        inline T swap_endian(T u) {
+        static inline T swap_endian(T u) {
             union {
                 T u;
                 unsigned char u8[sizeof(T)];
@@ -62,11 +81,17 @@ namespace rov_types {
             return dest.u;
         }
 
+    private:
+        byte_ordering m_system_type;
+        byte_ordering m_ordering;
+        std::size_t m_counter;
+        std::vector<std::uint8_t> m_data;
+
         template<typename T>
         inline void read(T &data) {
             std::memcpy((void *) (&data), (void *) (m_data.data() + m_counter), sizeof(T));
             if (m_ordering != m_system_type) {
-                data = swap_endian(data);
+                data = swap_endian<T>(data);
             }
             m_counter += sizeof(T);
         }
@@ -76,7 +101,7 @@ namespace rov_types {
             T loc = data;
 
             if (m_ordering != m_system_type) {
-                loc = swap_endian(loc);
+                loc = swap_endian<T>(loc);
             }
 
             union {

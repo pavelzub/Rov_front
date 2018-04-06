@@ -21,8 +21,6 @@ namespace rov_types {
             wrong_id
         };
 
-//        virtual ~serializable();
-
         static bool check_for_success(error_code err);
 
         virtual std::vector<std::uint8_t> serialize() = 0;

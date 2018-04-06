@@ -28,22 +28,22 @@ void DataStore::SetAxisW(int axis)
 
 void DataStore::SetManRotateRigth(int axis)
 {
-
+    _control.manipulator_rotate = static_cast<char>(axis);
 }
 
 void DataStore::SetManRotateLLeft(int axis)
 {
-
+    _control.manipulator_rotate = static_cast<char>(-axis);
 }
 
 void DataStore::SetManOpen(int axis)
 {
-
+    _control.manipulator_open_close = static_cast<char>(axis);
 }
 
 void DataStore::SetManClose(int axis)
 {
-
+    _control.manipulator_open_close = static_cast<char>(-axis);
 }
 
 void DataStore::_initTimer()
@@ -60,8 +60,8 @@ void DataStore::_initConnections()
 
 void DataStore::_onTick()
 {
-    std::cout << "controll:" << (int)_control.axis_x << " " << (int)_control.axis_y << " " << (int)_control.axis_z << " " << (int)_control.axis_w;
-    std::cout << "\t\t\t telemetry:"  << _telimetry.pitch << " " << _telimetry.roll << " " << _telimetry.yaw;
+    std::cout << "controll:" << (int)_control.axis_x << " " << (int)_control.axis_y << " " << (int)_control.axis_z << " " << (int)_control.axis_w << " " << (int)_control.manipulator_rotate << " " << (int)_control.manipulator_open_close;
+    std::cout << "\t\t\t telemetry:"  << _telimetry.pitch << " " << _telimetry.roll << " " << _telimetry.yaw << " " << _telimetry.depth;
     _connector.Send(_control.serialize());
     std::cout << std::endl;
 }
@@ -69,7 +69,7 @@ void DataStore::_onTick()
 void DataStore::_getPackage(const std::vector<uint8_t> &package)
 {
     switch (package[0]) {
-        case rov_types::rov_telimetry::packet_id:
+        case rov_types::rov_telimetry::meta().packet_id:
             _telimetry.deserialize(package);
             emit(telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll));
             break;
