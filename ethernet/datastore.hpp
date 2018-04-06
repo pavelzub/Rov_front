@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
-#include "rov_data_types.hpp"
+#include "rov_data_types/rov_data_types.hpp"
 #include "tcpconnetor.hpp"
 
 class DataStore : public QObject

@@ -2,10 +2,10 @@
 #define CAMERASCONTROLWIDGET_H
 
 #include <QWidget>
-#include "usbcamerawidget.hpp"
-#include "ethernetcamerawidget.hpp"
-#include "videowidget.hpp"
-#include "videostreamparser.hpp"
+#include "video/usbcamerawidget.hpp"
+#include "video/ethernetcamerawidget.hpp"
+#include "video/videowidget.hpp"
+#include "video/videostreamparser.hpp"
 
 #include <QWidget>
 #include <QTextEdit>
@@ -33,7 +33,6 @@ private:
     void _initConnections();
     void _initFfmpeg();
 
-    ImageDetector* _detector;
     QTimer* _timer;
     VideoWidget* _cameras[4];
     int _mainCameraIndex = 0;

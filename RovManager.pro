@@ -14,30 +14,10 @@ TEMPLATE = app
 INCLUDEPATH += \
     $$PWD/SDL-1.2/include/SDL \
 #    $$PWD/SDL/include \
-    $$PWD/OpenCV/include \
     $$PWD/ffmpeg/include
 LIBS += \
 #    -L$$PWD/SDL -lSDL2 \
     -L$$PWD/SDL-1.2/bin -lSDL \
-    -L$$PWD/OpenCV/lib \
-    -lopencv_highgui2413 \
-    -lopencv_calib3d2413 \
-    -lopencv_contrib2413 \
-    -lopencv_core2413 \
-    -lopencv_features2d2413 \
-    -lopencv_flann2413 \
-    -lopencv_gpu2413 \
-    -lopencv_imgproc2413 \
-    -lopencv_legacy2413 \
-    -lopencv_ml2413 \
-    -lopencv_nonfree2413 \
-    -lopencv_objdetect2413 \
-    -lopencv_ocl2413 \
-    -lopencv_photo2413 \
-    -lopencv_stitching2413 \
-    -lopencv_superres2413 \
-    -lopencv_video2413 \
-    -lopencv_videostab2413 \
     -L$$PWD/ffmpeg/lib \
     -lavcodec \
     -lavdevice \
@@ -61,42 +41,40 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
     mainwidget.cpp \
-    gamepadmanager.cpp \
-    imagedetector.cpp \
-    videowidget.cpp \
-    usbcamerawidget.cpp \
+    video/videowidget.cpp \
+    video/usbcamerawidget.cpp \
     timerwidget.cpp \
-    finder.cpp \
-    ethernetcamerawidget.cpp \
-    videostreamparser.cpp \
+    video/ethernetcamerawidget.cpp \
+    video/videostreamparser.cpp \
     camerascontrolwidget.cpp \
     calculationwindow.cpp \
-    binary_stream.cpp \
-    crc.cpp \
-    rov_data_types.cpp \
-    serializable.cpp \
-    datastore.cpp \
-    tcpconnetor.cpp
+    rov_data_types/binary_stream.cpp \
+    rov_data_types/crc.cpp \
+    rov_data_types/rov_data_types.cpp \
+    rov_data_types/serializable.cpp \
+    ethernet/datastore.cpp \
+    ethernet/tcpconnetor.cpp \
+    joystick/joystickmanager.cpp \
+    joystick/joystickmediator.cpp
 
 HEADERS += \
-        mainwindow.hpp \
+    mainwindow.hpp \
     mainwidget.hpp \
-    gamepadmanager.hpp \
-    imagedetector.hpp \
-    videowidget.hpp \
-    usbcamerawidget.hpp \
+    joystick\joystickmanager.hpp \
+    video/videowidget.hpp \
+    video/usbcamerawidget.hpp \
     timerwidget.hpp \
-    finder.hpp \
-    ethernetcamerawidget.hpp \
-    videostreamparser.hpp \
+    video/ethernetcamerawidget.hpp \
+    video/videostreamparser.hpp \
     camerascontrolwidget.hpp \
     calculationwindow.hpp \
-    binary_stream.hpp \
-    crc.hpp \
-    rov_data_types.hpp \
-    serializable.hpp \
-    datastore.hpp \
-    tcpconnetor.hpp
+    rov_data_types/binary_stream.hpp \
+    rov_data_types/crc.hpp \
+    rov_data_types/rov_data_types.hpp \
+    rov_data_types/serializable.hpp \
+    ethernet/datastore.hpp \
+    ethernet/tcpconnetor.hpp \
+    joystick/joystickmediator.hpp

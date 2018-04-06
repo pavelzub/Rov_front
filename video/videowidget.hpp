@@ -1,8 +1,6 @@
 #ifndef VIDEOWIDGET_HPP
 #define VIDEOWIDGET_HPP
 
-#include "imagedetector.hpp"
-
 #include <QObject>
 #include <QWidget>
 #include <QVideoWidget>
@@ -45,7 +43,6 @@ private:
     void _swap();
 
     QAction* _swapAct;
-    ImageDetector* _detector;
     QAction* _findAction;
     CameraPriority _priority = Sub;
     QTimer* _timer;

@@ -7,7 +7,6 @@
 VideoWidget::VideoWidget(int index, QWidget *parent):
     QVideoWidget(parent),
     _swapAct(new QAction(this)),
-    _detector(new ImageDetector(this)),
     _timer(new QTimer(this))
 {
     this->index = index;

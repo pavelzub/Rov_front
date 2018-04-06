@@ -6,8 +6,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       _calcWindow(new CalculationWindow),
-      _mainWidget(new MainWidget(this)),
-      _gamepadManager(new GamepadManager(this))
+      _mainWidget(new MainWidget(this))
 {
     setCentralWidget(_mainWidget);
     setFixedSize(WINDOWWIDTH, WINDOWHEIGTH);

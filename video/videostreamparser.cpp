@@ -19,6 +19,7 @@ void VideoStreamParser::process()
 
     *_enable = true;
 
+    auto mFrame = av_frame_alloc();
     for(;;){
         static std::queue<std::pair<int64_t, double> > ptsDb;
 
@@ -36,7 +37,6 @@ void VideoStreamParser::process()
         if (pkt.stream_index == _mVideoStreamIdx)
         {
           int got_frame = 0;
-          auto mFrame = av_frame_alloc();
           avcodec_decode_video2(_mVideoDecodeContext, mFrame, &got_frame, &pkt);
 
           QPixmap pixmap = frameToQPixmap(mFrame, _mVideoDecodeContext);
@@ -44,9 +44,9 @@ void VideoStreamParser::process()
           emit(repaint(pixmap));
 
           av_free_packet(&pkt);
-          av_frame_free(&mFrame);
         }
     }
+    av_frame_free(&mFrame);
 
     emit(finished());
 }

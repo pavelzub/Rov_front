@@ -5,7 +5,6 @@
 
 CamerasControlWidget::CamerasControlWidget(QWidget *parent) :
       QWidget(parent),
-      _detector(new ImageDetector(this)),
       _timer(new QTimer(this))
 {
     setFixedSize(WIDTH, HEIGHT);

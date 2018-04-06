@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include "gamepadmanager.hpp"
 #include "mainwidget.hpp"
 #include "calculationwindow.hpp"
 
@@ -23,7 +22,6 @@ private:
 
     CalculationWindow* _calcWindow;
     MainWidget* _mainWidget;
-    GamepadManager *_gamepadManager;
 };
 
 #endif // MAINWINDOW_HPP
