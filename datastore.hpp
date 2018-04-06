@@ -15,6 +15,10 @@ public:
     void SetAxisY(int axis);
     void SetAxisZ(int axis);
     void SetAxisW(int axis);
+    void SetManRotateRigth(int axis);
+    void SetManRotateLLeft(int axis);
+    void SetManOpen(int axis);
+    void SetManClose(int axis);
 
 signals:
     void telimetryUpdate(float yaw, float pitch, float roll);

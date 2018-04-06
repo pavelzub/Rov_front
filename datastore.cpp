@@ -26,6 +26,26 @@ void DataStore::SetAxisW(int axis)
     _control.axis_w = static_cast<std::int8_t>(axis * 100 / SHRT_MAX);
 }
 
+void DataStore::SetManRotateRigth(int axis)
+{
+
+}
+
+void DataStore::SetManRotateLLeft(int axis)
+{
+
+}
+
+void DataStore::SetManOpen(int axis)
+{
+
+}
+
+void DataStore::SetManClose(int axis)
+{
+
+}
+
 void DataStore::_initTimer()
 {
     _timer = new QTimer(this);
