@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
       _gamepadManager(new GamepadManager(this))
 {
     setCentralWidget(_mainWidget);
+    setFixedSize(WINDOWWIDTH, WINDOWHEIGTH);
 
     QAction* act = new QAction("Расчитать падение", this);
     auto fileMenu = menuBar()->addMenu("Файл");

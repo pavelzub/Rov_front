@@ -17,7 +17,7 @@ signals:
 
 private:
     const quint16 HOST_PORT = 2090;
-    const QString HOST = "192.168.88.254";
+    const QString HOST = "192.168.88.18";
 
     void _initConnections();
     void _connect();

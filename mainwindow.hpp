@@ -18,6 +18,9 @@ public:
 private:
     void test();
 
+    const int WINDOWHEIGTH = 720;
+    const int WINDOWWIDTH = 1280;
+
     CalculationWindow* _calcWindow;
     MainWidget* _mainWidget;
     GamepadManager *_gamepadManager;

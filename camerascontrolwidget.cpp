@@ -8,6 +8,8 @@ CamerasControlWidget::CamerasControlWidget(QWidget *parent) :
       _detector(new ImageDetector(this)),
       _timer(new QTimer(this))
 {
+    setFixedSize(WIDTH, HEIGHT);
+
     _initCameras();
     _createLayout();
     _initConnections();
@@ -71,17 +73,21 @@ void CamerasControlWidget::_initCameras()
 
 void CamerasControlWidget::_createLayout()
 {
-    QVBoxLayout* camerasLayout = new QVBoxLayout;
+    QHBoxLayout* camerasLayout = new QHBoxLayout(this);
     _mainCameraLayout = new QVBoxLayout;
-    _subCamerasLayout = new QHBoxLayout;
+    _subCamerasLayout = new QVBoxLayout;
 
     _mainCameraLayout->addWidget(_cameras[0]);
     _subCamerasLayout->addWidget(_cameras[1]);
+    _subCamerasLayout->addSpacing(1);
     _subCamerasLayout->addWidget(_cameras[2]);
+    _subCamerasLayout->addSpacing(1);
     _subCamerasLayout->addWidget(_cameras[3]);
 
     camerasLayout->addLayout(_mainCameraLayout);
+    camerasLayout->setSpacing(20);
     camerasLayout->addLayout(_subCamerasLayout);
+    camerasLayout->setMargin(0);
 
     this->setLayout(camerasLayout);
 }

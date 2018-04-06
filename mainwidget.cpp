@@ -7,7 +7,7 @@ MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
     _gamepadManager(this),
     _dataStore(this),
-    _timerWidget(new TimerWidget(this)),
+//    _timerWidget(new TimerWidget(this)),
     _camerasControlWidget(new CamerasControlWidget(this))
 {
     _createLayout();
@@ -16,20 +16,21 @@ MainWidget::MainWidget(QWidget *parent)
 
 void MainWidget::_createLayout()
 {
-    QHBoxLayout* mainLayout = new QHBoxLayout;
-
+    QHBoxLayout* mainLayout = new QHBoxLayout(this);
     QVBoxLayout* leftLayout = new QVBoxLayout;
-    QVBoxLayout* rigthLayout = new QVBoxLayout;
+//    std::cout << _camerasControlWidget->x() << " " << _camerasControlWidget->y() << std::endl;
+//    QVBoxLayout* rigthLayout = new QVBoxLayout;
 
-    rigthLayout->addWidget(_timerWidget);
-    _timerWidget->setFixedSize(200, 200);
+//    rigthLayout->addWidget(_timerWidget);
+//    _timerWidget->setFixedSize(200, 200);
 
     leftLayout->addWidget(_camerasControlWidget);
-    _camerasControlWidget->setFixedSize(500, 500);
+    leftLayout->addStretch(1);
 //    camWidget->setFixedSize(500, 500);
 //    leftLayout->addLayout(camerasLayout);
     mainLayout->addLayout(leftLayout);
-    mainLayout->addLayout(rigthLayout);
+    mainLayout->setMargin(0);
+//    mainLayout->addLayout(rigthLayout);
 
     this->setLayout(mainLayout);
 }

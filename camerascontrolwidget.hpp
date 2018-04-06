@@ -24,6 +24,8 @@ public:
 private:
     const int CAMERA_PORT_1 = 1234;
     const int CAMERA_PORT_2 = 1;
+    const int WIDTH  = 1280;
+    const int HEIGHT = 542;
 
     void refreshCamerasInfo();
     void _initCameras();
@@ -36,7 +38,7 @@ private:
     VideoWidget* _cameras[4];
     int _mainCameraIndex = 0;
     QVBoxLayout* _mainCameraLayout;
-    QHBoxLayout* _subCamerasLayout;
+    QVBoxLayout* _subCamerasLayout;
 
 };
 
