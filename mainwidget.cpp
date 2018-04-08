@@ -5,7 +5,8 @@
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
-    _joystickMediator(this),
+    _settings(new QSettings(".ini", QSettings::IniFormat)),
+    _joystickMediator(new JoystickMediator(_settings, this)),
     _dataStore(this),
 //    _timerWidget(new TimerWidget(this)),
     _camerasControlWidget(new CamerasControlWidget(this))
@@ -30,13 +31,13 @@ void MainWidget::_createLayout()
 
 void MainWidget::_initConnections()
 {
-//    connect(&_gamepadManager, &GamepadManager::ChangeAxis_0, &_dataStore, &DataStore::SetAxisX);
-//    connect(&_gamepadManager, &GamepadManager::ChangeAxis_1, &_dataStore, &DataStore::SetAxisY);
-//    connect(&_gamepadManager, &GamepadManager::ChangeAxis_2, &_dataStore, &DataStore::SetAxisZ);
-//    connect(&_gamepadManager, &GamepadManager::ChangeAxis_3, &_dataStore, &DataStore::SetAxisW);
-//    connect(&_gamepadManager, &GamepadManager::ChangeButton_0, &_dataStore, &DataStore::SetManClose);
-//    connect(&_gamepadManager, &GamepadManager::ChangeButton_1, &_dataStore, &DataStore::SetManOpen);
-//    connect(&_gamepadManager, &GamepadManager::ChangeButton_2, &_dataStore, &DataStore::SetManRotateLLeft);
-//    connect(&_gamepadManager, &GamepadManager::ChangeButton_3, &_dataStore, &DataStore::SetManRotateRigth);
+    connect(_joystickMediator, &JoystickMediator::AxisXChange, &_dataStore, &DataStore::SetAxisX);
+    connect(_joystickMediator, &JoystickMediator::AxisYChange, &_dataStore, &DataStore::SetAxisY);
+    connect(_joystickMediator, &JoystickMediator::AxisZChange, &_dataStore, &DataStore::SetAxisZ);
+    connect(_joystickMediator, &JoystickMediator::AxisWChange, &_dataStore, &DataStore::SetAxisW);
+    connect(_joystickMediator, &JoystickMediator::ManClose, &_dataStore, &DataStore::SetManClose);
+    connect(_joystickMediator, &JoystickMediator::ManOpen, &_dataStore, &DataStore::SetManOpen);
+    connect(_joystickMediator, &JoystickMediator::ManRotateLeft, &_dataStore, &DataStore::SetManRotateLLeft);
+    connect(_joystickMediator, &JoystickMediator::ManRotateRight, &_dataStore, &DataStore::SetManRotateRigth);
 }
 

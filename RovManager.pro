@@ -16,8 +16,8 @@ INCLUDEPATH += \
 #    $$PWD/SDL/include \
     $$PWD/ffmpeg/include
 LIBS += \
-#    -L$$PWD/SDL -lSDL2 \
     -L$$PWD/SDL-1.2/bin -lSDL \
+#    -L$$PWD/SDL -lSDL2 \
     -L$$PWD/ffmpeg/lib \
     -lavcodec \
     -lavdevice \

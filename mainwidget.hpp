@@ -4,13 +4,14 @@
 #include "timerwidget.hpp"
 #include "camerascontrolwidget.hpp"
 #include "joystick/joystickmediator.hpp"
+#include "ethernet/datastore.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QTimer>
-#include "ethernet/datastore.hpp"
+#include <QSettings>
 
 class MainWidget : public QWidget
 {
@@ -22,7 +23,8 @@ private:
     void _createLayout();
     void _initConnections();
 
-    JoystickMediator _joystickMediator;
+    QSettings* _settings;
+    JoystickMediator* _joystickMediator;
     DataStore _dataStore;
     TimerWidget* _timerWidget;
     CamerasControlWidget*  _camerasControlWidget;
