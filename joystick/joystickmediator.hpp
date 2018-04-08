@@ -5,19 +5,16 @@
 #include <QSettings>
 #include <QMap>
 
-#include "joystick/joystickmanager.hpp"
+#include "joystickmanager.hpp"
+#include "joystickconfigdialog.hpp"
 
 class JoystickMediator : public QObject
 {
     Q_OBJECT
-    typedef void(*f)(int val);
 
 public:
-    explicit JoystickMediator(QSettings* settings, QObject *parent = nullptr);
-    const QList<QString> availableSlots = {"_manRotateRight", "_manRotateLeft", "_manOpen", "_manClose",
-                                           "_axisXChange", "_axisYChange", "_axisZChange", "_axisWChange"};
-    const QList<QString> defaultSignals = {"ChangeAxis_0", "ChangeButton_1", "ChangeButton_2", "ChangeButton_3",
-                                           "ChangeButton_4", "ChangeButton_5", "ChangeButton_6", "ChangeButton_7"};
+    explicit JoystickMediator(QSettings* settings, QWidget *parent = nullptr);
+    void ShowDialog();
 
 signals:
     void ManRotateRight(int);
@@ -28,24 +25,29 @@ signals:
     void AxisYChange(int);
     void AxisZChange(int);
     void AxisWChange(int);
+    void JoystickConnect();
+    void JoystickDisconnect();
 
 private slots:
-    void _manRotateRight(int val);
-    void _manRotateLeft(int val);
-    void _manOpen(int val);
-    void _manClose(int val);
-    void _axisXChange(int val);
-    void _axisYChange(int val);
-    void _axisZChange(int val);
-    void _axisWChange(int val);
+    void _manRotateRight(int val, int step);
+    void _manRotateLeft(int val, int step);
+    void _manOpen(int val, int step);
+    void _manClose(int val, int step);
+    void _axisXChange(int val, int step);
+    void _axisYChange(int val, int step);
+    void _axisZChange(int val, int step);
+    void _axisWChange(int val, int step);
 
 private:
     void _changeConnection(QString signal, QString slot, bool connect = true);
-    void _loadSettings();
+    void _updateSettings();
+    void _initConnections();
 
+    QMap<QString, QString> _connects;
     QMap<QString, bool> _inverts;
     QSettings* _settings;
     JoystickManager* _joysticManager;
+    JoystickConfigDialog* _configDialog;
 };
 
 #endif // JOYSTICKMEDIATOR_HPP

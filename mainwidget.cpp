@@ -15,6 +15,11 @@ MainWidget::MainWidget(QWidget *parent)
     _initConnections();
 }
 
+void MainWidget::ShowJoysticConfig()
+{
+    _joystickMediator->ShowDialog();
+}
+
 void MainWidget::_createLayout()
 {
     QHBoxLayout* mainLayout = new QHBoxLayout(this);

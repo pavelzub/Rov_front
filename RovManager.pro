@@ -58,7 +58,9 @@ SOURCES += \
     ethernet/datastore.cpp \
     ethernet/tcpconnetor.cpp \
     joystick/joystickmanager.cpp \
-    joystick/joystickmediator.cpp
+    joystick/joystickmediator.cpp \
+    joystick/joystickconfigdialog.cpp \
+    joystick/clickablelabel.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -77,4 +79,6 @@ HEADERS += \
     rov_data_types/serializable.hpp \
     ethernet/datastore.hpp \
     ethernet/tcpconnetor.hpp \
-    joystick/joystickmediator.hpp
+    joystick/joystickmediator.hpp \
+    joystick/joystickconfigdialog.hpp \
+    joystick/clickablelabel.hpp

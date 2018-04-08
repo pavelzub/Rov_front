@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     auto fileMenu = menuBar()->addMenu("Файл");
     fileMenu->addAction(act);
 
-    connect(act, &QAction::triggered, this, &MainWindow::test);
+    connect(act, &QAction::triggered, _mainWidget, &MainWidget::ShowJoysticConfig);
 }
 
 MainWindow::~MainWindow()
