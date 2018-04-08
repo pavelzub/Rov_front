@@ -59,6 +59,7 @@ private:
     int m_hats[HATSCOUNT];
     void setConnectionStatus(bool isConnect);
     void refreshGamepadInfo();
+    SDL_Joystick* joystik;
     void refreshAxisInfo(SDL_Joystick *joystik);
     void refreshButtonInfo(SDL_Joystick* joystik);
     void refreshHatInfo(SDL_Joystick *joystik);

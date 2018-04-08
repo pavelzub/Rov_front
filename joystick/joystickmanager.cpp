@@ -22,18 +22,18 @@ void JoystickManager::setConnectionStatus(bool isConnect)
 
 void JoystickManager::refreshGamepadInfo()
 {
-    SDL_Quit();
-    SDL_Init(SDL_INIT_JOYSTICK);
+//    SDL_Quit();
+//    SDL_Init(SDL_INIT_JOYSTICK);
 
+    SDL_JoystickUpdate();
     if (SDL_NumJoysticks() == 0)
     {
         setConnectionStatus(false);
         return;
     };
 
-    SDL_Joystick* joystik = SDL_JoystickOpen(0);
+    joystik = SDL_JoystickOpen(0);
 
-    SDL_JoystickUpdate();
 
     refreshAxisInfo(joystik);
     refreshButtonInfo(joystik);
@@ -66,7 +66,7 @@ void JoystickManager::refreshButtonInfo(SDL_Joystick* joystik)
         {
             m_buttons[i] = buttonVal;
             const char* signalName = QString("ChangeButton_" + QString::number(i)).toStdString().c_str();
-            emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, buttonVal));
+            emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, buttonVal * SHRT_MAX));
 //            std::cout << QString("ChangeButton_" + QString::number(i)).toStdString() << ": " << buttonVal << std::endl;
         }
     }
@@ -95,4 +95,5 @@ void JoystickManager::initializeConnetions()
 void JoystickManager::initializeTimer()
 {
     m_timer->start(20);
+    SDL_Init(SDL_INIT_JOYSTICK);
 }
