@@ -50,7 +50,6 @@ SOURCES += \
     video/ethernetcamerawidget.cpp \
     video/videostreamparser.cpp \
     camerascontrolwidget.cpp \
-    calculationwindow.cpp \
     rov_data_types/binary_stream.cpp \
     rov_data_types/crc.cpp \
     rov_data_types/rov_data_types.cpp \
@@ -73,7 +72,6 @@ HEADERS += \
     video/ethernetcamerawidget.hpp \
     video/videostreamparser.hpp \
     camerascontrolwidget.hpp \
-    calculationwindow.hpp \
     rov_data_types/binary_stream.hpp \
     rov_data_types/crc.hpp \
     rov_data_types/rov_data_types.hpp \

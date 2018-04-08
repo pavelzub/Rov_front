@@ -5,7 +5,6 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
-      _calcWindow(new CalculationWindow),
       _mainWidget(new MainWidget(this))
 {
     setCentralWidget(_mainWidget);
@@ -16,11 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-}
-
-void MainWindow::test()
-{
-    _calcWindow->show();
 }
 
 void MainWindow::_createMenu()
