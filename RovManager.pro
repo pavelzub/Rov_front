@@ -60,7 +60,8 @@ SOURCES += \
     joystick/joystickmanager.cpp \
     joystick/joystickmediator.cpp \
     joystick/joystickconfigdialog.cpp \
-    joystick/clickablelabel.cpp
+    joystick/clickablelabel.cpp \
+    video/camerasconfigdialog.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -81,4 +82,5 @@ HEADERS += \
     ethernet/tcpconnetor.hpp \
     joystick/joystickmediator.hpp \
     joystick/joystickconfigdialog.hpp \
-    joystick/clickablelabel.hpp
+    joystick/clickablelabel.hpp \
+    video/camerasconfigdialog.hpp

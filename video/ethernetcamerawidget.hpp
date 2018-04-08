@@ -5,6 +5,8 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QSettings>
+#include <QThread>
 
 extern "C" {
     #define __STDC_CONSTANT_MACROS
@@ -15,13 +17,18 @@ extern "C" {
 class EthernetCameraWidget : public VideoWidget
 {
 public:
-    EthernetCameraWidget(int index, QString  url, QWidget *parent = nullptr);
+    EthernetCameraWidget(int index, QSettings *settings, QWidget *parent = nullptr);
+    void UpdateConfig();
 
 private:
     void _update(QPixmap pixmap);
     void _onStopEvent();
     void paintEvent(QPaintEvent *event) override;
     QPixmap getPixmap() override;
+
+    QString _url;
+    QThread* thread = nullptr;
+    QSettings* _settings;
     QPixmap _pixmap;
 };
 

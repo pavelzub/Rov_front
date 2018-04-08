@@ -16,6 +16,7 @@ public:
 
 private:
     void test();
+    void _createMenu();
 
     const int WINDOWHEIGTH = 720;
     const int WINDOWWIDTH = 1280;

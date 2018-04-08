@@ -11,19 +11,26 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(_mainWidget);
     setFixedSize(WINDOWWIDTH, WINDOWHEIGTH);
 
-    QAction* act = new QAction("Расчитать падение", this);
-    auto fileMenu = menuBar()->addMenu("Файл");
-    fileMenu->addAction(act);
-
-    connect(act, &QAction::triggered, _mainWidget, &MainWidget::ShowJoysticConfig);
+    _createMenu();
 }
 
 MainWindow::~MainWindow()
 {
-
 }
 
 void MainWindow::test()
 {
     _calcWindow->show();
+}
+
+void MainWindow::_createMenu()
+{
+    QAction* djAct = new QAction("Джостик", this);
+    QAction* camAct = new QAction("Камеры", this);
+    auto fileMenu = menuBar()->addMenu("Настроки");
+    fileMenu->addAction(djAct);
+    fileMenu->addAction(camAct);
+
+    connect(djAct, &QAction::triggered, _mainWidget, &MainWidget::ShowJoysticConfig);
+    connect(camAct, &QAction::triggered, _mainWidget, &MainWidget::ShowCamerasConfig);
 }

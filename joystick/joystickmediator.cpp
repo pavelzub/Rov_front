@@ -14,7 +14,7 @@ JoystickMediator::JoystickMediator(QSettings *settings, QWidget *parent) :
     _initConnections();
 }
 
-void JoystickMediator::ShowDialog()
+void JoystickMediator::showDialog()
 {
     _configDialog->show();
 }

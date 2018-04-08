@@ -19,6 +19,7 @@ class MainWidget : public QWidget
 public:
     explicit MainWidget(QWidget *parent = nullptr);
     void ShowJoysticConfig();
+    void ShowCamerasConfig();
 
 private:
     void _createLayout();

@@ -14,7 +14,7 @@ class JoystickMediator : public QObject
 
 public:
     explicit JoystickMediator(QSettings* settings, QWidget *parent = nullptr);
-    void ShowDialog();
+    void showDialog();
 
 signals:
     void ManRotateRight(int);

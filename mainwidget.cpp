@@ -9,7 +9,7 @@ MainWidget::MainWidget(QWidget *parent)
     _joystickMediator(new JoystickMediator(_settings, this)),
     _dataStore(this),
 //    _timerWidget(new TimerWidget(this)),
-    _camerasControlWidget(new CamerasControlWidget(this))
+    _camerasControlWidget(new CamerasControlWidget(_settings, this))
 {
     _createLayout();
     _initConnections();
@@ -17,7 +17,12 @@ MainWidget::MainWidget(QWidget *parent)
 
 void MainWidget::ShowJoysticConfig()
 {
-    _joystickMediator->ShowDialog();
+    _joystickMediator->showDialog();
+}
+
+void MainWidget::ShowCamerasConfig()
+{
+    _camerasControlWidget->showConfigDialog();
 }
 
 void MainWidget::_createLayout()
