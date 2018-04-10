@@ -14,6 +14,8 @@ public:
 
 signals:
     void dataUpdate(const std::vector<std::uint8_t> data);
+    void Connect();
+    void Disconnect();
 
 private:
     const quint16 HOST_PORT = 2090;

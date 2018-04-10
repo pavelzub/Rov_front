@@ -17,24 +17,27 @@ class VideoWidget : public QVideoWidget
 {
     Q_OBJECT
 public:
-    VideoWidget(int index, QWidget *parent = nullptr);
+    VideoWidget(int _index, QWidget *parent = nullptr);
     void setPriority(CameraPriority priority);
     void setEnabled(bool flag);
     bool isEnabled();
-    void setIndex(int index);
-    int index;
+    void setIndex(int _index);
+
+signals:
+    void needSwap(int);
 
 protected:
     void paintEvent(QPaintEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-    virtual QPixmap getPixmap() = 0;
 
+    int _index;
+    QPixmap* _pixmap;
     bool _isEnabled = false;
     QSize _resolution = {1920, 1080};
 
 private:
-    const int MAINWIDTH= 962;
-    const int SUBWIDTH = 308;
+    const int MAINWIDTH= 817;
+    const int SUBWIDTH = 244;
     const QString STARTTIMETTEXT = "Начать распознавание";
     const QString STOPTIMETTEXT = "Остановить распознавание";
 

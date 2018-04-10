@@ -15,9 +15,9 @@ TimerWidget::TimerWidget(QWidget *parent):
 {
     _initActions();
     _initConnections();
-    QPixmap picture("C:\\MATE\\Rov_front\\image\\timer.jpg");
     setScaledContents(true);
-    setPixmap(picture);
+    setFixedSize(WIDTH, HEIGHT);
+    move(48, 77);
 }
 
 void TimerWidget::_initConnections()
@@ -77,15 +77,14 @@ void TimerWidget::paintEvent(QPaintEvent *event)
     QLabel::paintEvent(event);
     QPainter* painter = new QPainter(this);
 
-    QPen pen(Qt::black);
-    QFont font = painter->font();
-    font.setPixelSize(20);
+    QPen pen(Qt::white);
+    QFont font = QFont("After Disaster");
+    font.setPixelSize(40);
     if (_timeLeft <= CRITICALTIME || znak == "-"){
         pen = QPen(Qt::red);
-        font.setPointSize(26);
     }
     painter->setPen(pen);
     painter->setFont(font);
-    painter->drawText(this->rect(), Qt::AlignCenter, znak + time.toString("mm:ss.zzz"));
+    painter->drawText(this->rect(), Qt::AlignCenter, znak + time.toString("mm:ss:zzz"));
     painter->end();
 }

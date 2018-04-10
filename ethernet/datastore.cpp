@@ -56,6 +56,8 @@ void DataStore::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &DataStore::_onTick);
     connect(&_connector, &TcpConnector::dataUpdate, this, &DataStore::_getPackage);
+    connect(&_connector, &TcpConnector::Connect, [this](){emit tcpConnect();});
+    connect(&_connector, &TcpConnector::Disconnect, [this](){emit tcpDisconnect();});
 }
 
 void DataStore::_onTick()

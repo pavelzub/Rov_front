@@ -2,24 +2,26 @@
 #define USBCAMERAWIDGET_HPP
 
 #include "videowidget.hpp"
+#include "videosurface.hpp"
 
 #include <QObject>
 #include <QWidget>
+#include <QTimer>
 
 class USBCameraWidget : public VideoWidget
 {
 public:
-    USBCameraWidget(int index, QCameraInfo camInfo, QWidget *parent = nullptr);
-    USBCameraWidget(int index, QWidget *parent = nullptr);
+    USBCameraWidget(int _index, QWidget *parent = nullptr);
     QString getDeviceName();
     void setCamera(QCameraInfo camInfo);
 
-protected:
-    QPixmap getPixmap() override;
-
 private:
+    void _initConnections();
+
     QString _deviceName;
     QCamera* _camera = nullptr;
+    VideoSurface* _videoSurface;
+    QTimer* _timer;
 };
 
 #endif // USBCAMERAWIDGET_HPP

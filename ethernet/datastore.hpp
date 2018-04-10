@@ -22,6 +22,8 @@ public:
 
 signals:
     void telimetryUpdate(float yaw, float pitch, float roll);
+    void tcpConnect();
+    void tcpDisconnect();
 
 private:
     void _initTimer();

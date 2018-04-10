@@ -41,12 +41,12 @@ void TcpConnector::_onReadyRead()
 
 void TcpConnector::_onConnected()
 {
-    std::cout << "Easy connect to " << HOST.toStdString() << ":" << HOST_PORT << std::endl;
+    emit Connect();
 }
 
 void TcpConnector::_onDisconnected()
 {
-    std::cout << "Disconnect" << std::endl;
+    emit Disconnect();
     _connect();
 }
 

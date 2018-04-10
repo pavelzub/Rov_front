@@ -23,13 +23,16 @@ public:
 
 private:
     void _createLayout();
+    void _createIcons();
     void _initConnections();
 
     QSettings* _settings;
     JoystickMediator* _joystickMediator;
-    DataStore _dataStore;
+    DataStore* _dataStore;
     TimerWidget* _timerWidget;
     CamerasControlWidget*  _camerasControlWidget;
+    QLabel* _joysticIcon;
+    QLabel* _ethernetIcon;
 };
 
 #endif // MYMAINWIDGET_HPP

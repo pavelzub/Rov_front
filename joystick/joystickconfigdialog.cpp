@@ -90,8 +90,9 @@ void JoystickConfigDialog::_initConnections()
 
 void JoystickConfigDialog::_selectLabel(int i)
 {
+    //#353535
     for (auto &i : _buttons)
-         i->setStyleSheet("background-color: #353535;");
+         i->setStyleSheet("background-color: transparent;");
     _selectIndex = i;
     if (i != -1) _buttons[i]->setStyleSheet("background-color:red;");
 }

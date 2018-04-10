@@ -29,7 +29,7 @@ private:
     const int CAMERA_PORT_1 = 1234;
     const int CAMERA_PORT_2 = 1;
     const int WIDTH  = 1280;
-    const int HEIGHT = 542;
+    const int HEIGHT = 720;
 
     void refreshCamerasInfo();
     void _initCameras();
@@ -41,6 +41,9 @@ private:
     CamerasConfigDialog* _camerasConfigDialog;
     QTimer* _timer;
     VideoWidget* _cameras[4];
+    QWidget* _widgets[4];
+    const QPoint _camerasCoord[4] = {{402, 45}, {402, 550}, {688, 550}, {973, 550}};
+    int _cam_wid[4] = {0, 1, 2, 3};
     int _mainCameraIndex = 0;
     QVBoxLayout* _mainCameraLayout;
     QVBoxLayout* _subCamerasLayout;

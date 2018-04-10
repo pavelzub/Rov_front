@@ -12,7 +12,7 @@ EthernetCameraWidget::EthernetCameraWidget(int index, QSettings* settings, QWidg
 
 void EthernetCameraWidget::UpdateConfig()
 {
-    QString url = "udp://" + _settings->value("CAMERAS/cam_" + QString::number(index + 1) + "_url", "192.168.1.255:1234").toString();
+    QString url = "udp://" + _settings->value("CAMERAS/cam_" + QString::number(_index + 1) + "_url", "192.168.1.255:1234").toString();
     if (_url == url) return;
 
     _url = url;
@@ -34,28 +34,11 @@ void EthernetCameraWidget::UpdateConfig()
 
 void EthernetCameraWidget::_update(QPixmap pixmap)
 {
-    _pixmap = pixmap;
+    *_pixmap = pixmap;
     repaint();
 }
 
 void EthernetCameraWidget::_onStopEvent()
 {
     setEnabled(false);
-}
-
-void EthernetCameraWidget::paintEvent(QPaintEvent *event)
-{
-    QPainter* painter = new QPainter(this);
-
-    if (_pixmap.size() != QSize(0, 0)){
-        painter->drawPixmap(rect(), _pixmap);
-    }
-    painter->end();
-
-    VideoWidget::paintEvent(event);
-}
-
-QPixmap EthernetCameraWidget::getPixmap()
-{
-    return _pixmap;
 }

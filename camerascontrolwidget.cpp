@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QCameraInfo>
 #include <QVideoWidget>
+#include <QLabel>
 
 CamerasControlWidget::CamerasControlWidget(QSettings* settings, QWidget *parent) :
       QWidget(parent),
@@ -19,13 +20,15 @@ CamerasControlWidget::CamerasControlWidget(QSettings* settings, QWidget *parent)
 
 void CamerasControlWidget::swapCameras(int index)
 {
-    _mainCameraLayout->removeWidget(_cameras[_mainCameraIndex]);
-    _subCamerasLayout->replaceWidget(_cameras[index], _cameras[_mainCameraIndex]);
-    _mainCameraLayout->addWidget(_cameras[index]);
+    _widgets[0]->layout()->removeWidget(_cameras[_mainCameraIndex]);
+    _widgets[_cam_wid[index]]->layout()->replaceWidget(_cameras[index], _cameras[_mainCameraIndex]);
+    _widgets[0]->layout()->addWidget(_cameras[index]);
 
     _cameras[_mainCameraIndex]->setPriority(CameraPriority::Sub);
     _cameras[index]->setPriority(CameraPriority::Main);
 
+    _cam_wid[_mainCameraIndex] = _cam_wid[index];
+    _cam_wid[index] = 0;
     _mainCameraIndex = index;
 }
 
@@ -85,29 +88,24 @@ void CamerasControlWidget::_initCameras()
 
 void CamerasControlWidget::_createLayout()
 {
-    QHBoxLayout* camerasLayout = new QHBoxLayout(this);
-    _mainCameraLayout = new QVBoxLayout;
-    _subCamerasLayout = new QVBoxLayout;
+    for (int i = 0; i < 4; i++){
+        _widgets[i] = new QWidget(this);
+        QVBoxLayout* layout = new QVBoxLayout(this);
+        layout->setMargin(0);
+        layout->addWidget(_cameras[i]);
 
-    _mainCameraLayout->addWidget(_cameras[0]);
-    _subCamerasLayout->addWidget(_cameras[1]);
-    _subCamerasLayout->addSpacing(1);
-    _subCamerasLayout->addWidget(_cameras[2]);
-    _subCamerasLayout->addSpacing(1);
-    _subCamerasLayout->addWidget(_cameras[3]);
-
-    camerasLayout->addLayout(_mainCameraLayout);
-    camerasLayout->setSpacing(20);
-    camerasLayout->addLayout(_subCamerasLayout);
-    camerasLayout->setMargin(0);
-
-    this->setLayout(camerasLayout);
+        _widgets[i]->setLayout(layout);
+        _widgets[i]->move(_camerasCoord[i]);
+    }
 }
 
 void CamerasControlWidget::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &CamerasControlWidget::refreshCamerasInfo);
     connect(_camerasConfigDialog, &CamerasConfigDialog::configUpdate, this, &CamerasControlWidget::updateConfig);
+
+    for (int i = 0; i < 4; i++)
+        connect(_cameras[i], &VideoWidget::needSwap, this, &CamerasControlWidget::swapCameras);
 }
 
 void CamerasControlWidget::_initFfmpeg()

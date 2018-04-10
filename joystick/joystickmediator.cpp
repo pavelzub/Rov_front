@@ -1,7 +1,7 @@
 #include "joystickmediator.hpp"
 
 #include <QMetaMethod>
-#include <QDir>
+#include <QLabel>
 #include <iostream>
 
 JoystickMediator::JoystickMediator(QSettings *settings, QWidget *parent) :

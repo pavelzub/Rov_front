@@ -17,19 +17,16 @@ extern "C" {
 class EthernetCameraWidget : public VideoWidget
 {
 public:
-    EthernetCameraWidget(int index, QSettings *settings, QWidget *parent = nullptr);
+    EthernetCameraWidget(int _index, QSettings *settings, QWidget *parent = nullptr);
     void UpdateConfig();
 
 private:
     void _update(QPixmap pixmap);
     void _onStopEvent();
-    void paintEvent(QPaintEvent *event) override;
-    QPixmap getPixmap() override;
 
     QString _url;
     QThread* thread = nullptr;
     QSettings* _settings;
-    QPixmap _pixmap;
 };
 
 #endif // ITHERNETCAMERAWIDGET_HPP
