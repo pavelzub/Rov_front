@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QTimer>
 #include <QTime>
-#include <QAction>
+#include <QShortcut>
 
 class TimerWidget : public QLabel
 {
@@ -16,7 +16,7 @@ public:
 private:
     void _initConnections();
     void _updateTimer();
-    void _initActions();
+    void _createShortcuts();
     void _startPause();
     void _restart();
     void mousePressEvent(QMouseEvent* event);
@@ -30,8 +30,8 @@ private:
     QTime _lastTime = QTime(0, 0);
     QTime _time = INITTIME;
     QTime _timeLeft = INITTIME;
-    QAction* _startAct;
-    QAction* _restartAct;
+    QShortcut* _startAct;
+    QShortcut* _restartAct;
 };
 
 #endif // TIMERWIDGET_HPP

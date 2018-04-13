@@ -15,17 +15,17 @@ namespace rov_types {
     public:
         typedef meta_traits<packet_id_, payload_size_, packet_size_> meta;
 
-        std::vector<std::uint8_t> serialize() override final  {
+        virtual std::vector<std::uint8_t> serialize() override  {
             binary_stream bs;
             bs << meta().packet_id;
 
             data_serialize(bs);
 
-            bs << crc::calculateCRC(bs.data().data(), meta().payload_size);
+            bs << crc::calculateCRC(bs.data().data(), bs.data().size());
             return bs.data();
         }
 
-        error_code deserialize(const std::vector<std::uint8_t> &input) override final {
+        virtual error_code deserialize(const std::vector<std::uint8_t> &input) override {
             binary_stream bs(input);
             std::uint8_t packet_id;
 

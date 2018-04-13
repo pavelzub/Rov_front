@@ -220,4 +220,20 @@ namespace rov_types {
         write<long double>(val);
         return *this;
     }
+
+    binary_stream &binary_stream::operator>>(char &val) {
+        if ((m_data.size() - m_counter) >= sizeof(char))
+            read<char>(val);
+        return *this;
+    }
+
+    binary_stream &binary_stream::operator<<(const char &val) {
+        write<char>(val);
+        return *this;
+    }
+
+    binary_stream &binary_stream::operator<<(char &val) {
+        write<char>(val);
+        return *this;
+    }
 }

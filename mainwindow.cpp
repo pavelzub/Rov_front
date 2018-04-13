@@ -3,6 +3,7 @@
 #include <iostream>
 #include <QMenuBar>
 #include <QPainter>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -12,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(_mainWidget);
     setFixedSize(WINDOWWIDTH, WINDOWHEIGTH);
 
-    _createMenu();
+    _createShortcuts();
 }
 
 
@@ -28,22 +29,15 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::_createMenu()
+void MainWindow::_createShortcuts()
 {
-    QAction* ExitAct = new QAction("Джостик", this);
-    QAction* djAct = new QAction("Джостик", this);
-    QAction* camAct = new QAction("Камеры", this);
-    ExitAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
-    djAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_J));
-    camAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_K));
-    addAction(ExitAct);
-    addAction(djAct);
-    addAction(camAct);
-//    auto fileMenu = menuBar()->addMenu("Настроки");
-//    fileMenu->addAction(djAct);
-//    fileMenu->addAction(camAct);
+    QShortcut* ExitAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this);
+    QShortcut* joystickConfigAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_J), this);
+    QShortcut* joystickDebugAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_D), this);
+    QShortcut* camerasConfigAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_K), this);
 
-    connect(ExitAct, &QAction::triggered, [this](){exit(0);});
-    connect(djAct, &QAction::triggered, _mainWidget, &MainWidget::ShowJoysticConfig);
-    connect(camAct, &QAction::triggered, _mainWidget, &MainWidget::ShowCamerasConfig);
+    connect(ExitAct, &QShortcut::activated, [this](){exit(0);});
+    connect(joystickConfigAct, &QShortcut::activated, _mainWidget, &MainWidget::ShowJoysticConfig);
+    connect(joystickDebugAct, &QShortcut::activated, _mainWidget, &MainWidget::ShowJoysticDebug);
+    connect(camerasConfigAct, &QShortcut::activated, _mainWidget, &MainWidget::ShowCamerasConfig);
 }

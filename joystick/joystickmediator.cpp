@@ -14,7 +14,7 @@ JoystickMediator::JoystickMediator(QSettings *settings, QWidget *parent) :
     _initConnections();
 }
 
-void JoystickMediator::showDialog()
+void JoystickMediator::showConfigDialog()
 {
     _configDialog->show();
 }
@@ -68,23 +68,83 @@ void JoystickMediator::_manClose(int val, int step) {
 }
 
 void JoystickMediator::_axisXChange(int val, int step) {
+    val = val * 100 / SHRT_MAX;
     if (_inverts["_axisXChange"]) val *= -1;
     emit AxisXChange(val);
 }
 
 void JoystickMediator::_axisYChange(int val, int step) {
+    val = val * 100 / SHRT_MAX;
     if (_inverts["_axisYChange"]) val *= -1;
     emit AxisYChange(val);
 }
 
 void JoystickMediator::_axisZChange(int val, int step) {
+    val = val * 100 / SHRT_MAX;
     if (_inverts["_axisZChange"]) val *= -1;
     emit AxisZChange(val);
 }
 
 void JoystickMediator::_axisWChange(int val, int step) {
+    val = val * 100 / SHRT_MAX;
     if (_inverts["_axisWChange"]) val *= -1;
     emit AxisWChange(val);
+}
+
+void JoystickMediator::_camera1RotateRight(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_camera1RotateRight"]) val *= -1;
+    emit Camera1RotateRight(val);
+}
+
+void JoystickMediator::_camera1RotateLeft(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_camera1RotateLeft"]) val *= -1;
+    emit Camera1RotateLeft(val);
+}
+
+void JoystickMediator::_camera2RotateRight(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_camera2RotateRight"]) val *= -1;
+    emit Camera2RotateRight(val);
+}
+
+void JoystickMediator::_camera2RotateLeft(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_camera2RotateLeft"]) val *= -1;
+    emit Camera2RotateLeft(val);
+}
+
+void JoystickMediator::_magnetOn(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_magnetOn"]) val *= -1;
+    emit MagnetOn(val);
+}
+
+void JoystickMediator::_magnetOff(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_magnetOff"]) val *= -1;
+    emit MagnetOff(val);
+}
+
+void JoystickMediator::_acousticOn(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_acousticOn"]) val *= -1;
+    emit AcousticOn(val);
+}
+
+void JoystickMediator::_acousticOff(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_acousticOff"]) val *= -1;
+    emit AcousticOff(val);
 }
 
 void JoystickMediator::_changeConnection(QString signalName, QString slotName, bool needConnect)

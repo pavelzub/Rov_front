@@ -5,6 +5,7 @@
 #include <QString>
 #include <QPushButton>
 #include <iostream>
+#include <QShortcut>
 
 CamerasConfigDialog::CamerasConfigDialog(QSettings* settings, QWidget *parent):
     QDialog(parent)

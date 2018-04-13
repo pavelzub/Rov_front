@@ -12,6 +12,7 @@ JoystickConfigDialog::JoystickConfigDialog(JoystickManager *joysticManager, QSet
     _settings = settings;
     _createLayouts();
     _initConnections();
+
 }
 
 void JoystickConfigDialog::_changeConfig(int val, int step)
@@ -32,11 +33,13 @@ void JoystickConfigDialog::_changeConfig(int val, int step)
 
 void JoystickConfigDialog::_createLayouts()
 {
-    QVBoxLayout* mainLayout(new QVBoxLayout(this));
+    QHBoxLayout* mainLayout(new QHBoxLayout(this));
+    QVBoxLayout* nameLayout(new QVBoxLayout);
+    QVBoxLayout* valLayout(new QVBoxLayout);
+    QVBoxLayout* invertLayout(new QVBoxLayout);
 
     _settings->beginGroup("JOYSTICK");
     for (int i = 0; i < availableSlots.size(); i++){
-        QHBoxLayout* vLayout = new QHBoxLayout();
         QLabel* name = new QLabel(this);
         _buttons.push_back(new ClickableLabel(this));
         _checkBoxs.push_back(new QCheckBox(this));
@@ -47,12 +50,15 @@ void JoystickConfigDialog::_createLayouts()
         bool ischeck = _settings->value(availableSlots[i] + "Invert", 0).toInt();
         _checkBoxs.back()->setChecked(ischeck);
 
-        vLayout->addWidget(name);
-        vLayout->addWidget(_buttons[i]);
-        vLayout->addWidget(_checkBoxs[i]);
-        mainLayout->addLayout(vLayout);
+        nameLayout->addWidget(name);
+        valLayout->addWidget(_buttons[i]);
+        invertLayout->addWidget(_checkBoxs[i]);
     }
     _settings->endGroup();
+
+    mainLayout->addLayout(nameLayout);
+    mainLayout->addLayout(valLayout);
+    mainLayout->addLayout(invertLayout);
     setLayout(mainLayout);
 
 }

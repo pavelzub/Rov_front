@@ -5,6 +5,7 @@
 #include "camerascontrolwidget.hpp"
 #include "joystick/joystickmediator.hpp"
 #include "ethernet/datastore.hpp"
+#include "joystick/joystickdebugdialog.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -19,7 +20,12 @@ class MainWidget : public QWidget
 public:
     explicit MainWidget(QWidget *parent = nullptr);
     void ShowJoysticConfig();
+    void ShowJoysticDebug();
     void ShowCamerasConfig();
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 private:
     void _createLayout();
@@ -31,6 +37,7 @@ private:
     DataStore* _dataStore;
     TimerWidget* _timerWidget;
     CamerasControlWidget*  _camerasControlWidget;
+    JoystickDebugDialog* _joystickDebugDialog;
     QLabel* _joysticIcon;
     QLabel* _ethernetIcon;
 };

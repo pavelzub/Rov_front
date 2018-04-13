@@ -9,11 +9,9 @@
 
 TimerWidget::TimerWidget(QWidget *parent):
     QLabel(parent),
-    _timer(new QTimer(this)),
-    _startAct(new QAction(this)),
-    _restartAct(new QAction(this))
+    _timer(new QTimer(this))
 {
-    _initActions();
+    _createShortcuts();
     _initConnections();
     setScaledContents(true);
     setFixedSize(WIDTH, HEIGHT);
@@ -23,8 +21,8 @@ TimerWidget::TimerWidget(QWidget *parent):
 void TimerWidget::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &TimerWidget::_updateTimer);
-    connect(_startAct, &QAction::triggered, this, &TimerWidget::_startPause);
-    connect(_restartAct, &QAction::triggered, this, &TimerWidget::_restart);
+    connect(_startAct, &QShortcut::activated, this, &TimerWidget::_startPause);
+    connect(_restartAct, &QShortcut::activated, this, &TimerWidget::_restart);
 }
 
 void TimerWidget::_updateTimer()
@@ -34,12 +32,10 @@ void TimerWidget::_updateTimer()
     repaint();
 }
 
-void TimerWidget::_initActions()
+void TimerWidget::_createShortcuts()
 {
-    _startAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
-    _restartAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
-    addAction(_startAct);
-    addAction(_restartAct);
+    _startAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this);
+    _restartAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R), this);
 }
 
 void TimerWidget::_startPause()

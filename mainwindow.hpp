@@ -17,7 +17,7 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    void _createMenu();
+    void _createShortcuts();
 
     const int WINDOWHEIGTH = 720;
     const int WINDOWWIDTH = 1280;

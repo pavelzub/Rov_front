@@ -61,7 +61,9 @@ SOURCES += \
     joystick/joystickconfigdialog.cpp \
     joystick/clickablelabel.cpp \
     video/camerasconfigdialog.cpp \
-    video/videosurface.cpp
+    video/videosurface.cpp \
+    joystick/joystickdebugdialog.cpp \
+    ethernet/datadebugdialog.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -83,4 +85,6 @@ HEADERS += \
     joystick/joystickconfigdialog.hpp \
     joystick/clickablelabel.hpp \
     video/camerasconfigdialog.hpp \
-    video/videosurface.hpp
+    video/videosurface.hpp \
+    joystick/joystickdebugdialog.hpp \
+    ethernet/datadebugdialog.hpp

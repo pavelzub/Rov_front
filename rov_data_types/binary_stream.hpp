@@ -31,6 +31,7 @@ namespace rov_types {
 
         binary_stream &operator>>(uint8_t &val);
         binary_stream &operator>>(int8_t &val);
+        binary_stream &operator>>(char &val);
         binary_stream &operator>>(uint16_t &val);
         binary_stream &operator>>(int16_t &val);
         binary_stream &operator>>(uint32_t &val);
@@ -43,6 +44,7 @@ namespace rov_types {
 
         binary_stream &operator<<(const uint8_t &val);
         binary_stream &operator<<(const int8_t &val);
+        binary_stream &operator<<(const char &val);
         binary_stream &operator<<(const uint16_t &val);
         binary_stream &operator<<(const int16_t &val);
         binary_stream &operator<<(const uint32_t &val);
@@ -55,6 +57,7 @@ namespace rov_types {
 
         binary_stream &operator<<(uint8_t &val);
         binary_stream &operator<<(int8_t &val);
+        binary_stream &operator<<(char &val);
         binary_stream &operator<<(uint16_t &val);
         binary_stream &operator<<(int16_t &val);
         binary_stream &operator<<(uint32_t &val);

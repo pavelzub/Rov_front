@@ -37,7 +37,7 @@ QList<QVideoFrame::PixelFormat> VideoSurface::supportedPixelFormats(QAbstractVid
             << QVideoFrame::Format_AdobeDng;
 }
 
-bool VideoSurface::present(const QVideoFrame &frame)
+bool VideoSurface:: present(const QVideoFrame &frame)
 {
     if (frame.isValid()) {
         QVideoFrame cloneFrame(frame);
