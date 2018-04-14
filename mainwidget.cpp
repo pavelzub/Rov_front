@@ -1,4 +1,4 @@
-#include "mainwidget.hpp"
+#include "mainwidget.hpp" 
 #include <iostream>
 #include <QCameraInfo>
 #include <QVideoWidget>
@@ -11,7 +11,8 @@ MainWidget::MainWidget(QWidget *parent)
     _dataStore(new DataStore(this)),
     _timerWidget(new TimerWidget(this)),
     _camerasControlWidget(new CamerasControlWidget(_settings, this)),
-    _joystickDebugDialog(new JoystickDebugDialog(_joystickMediator, this))
+    _joystickDebugDialog(new JoystickDebugDialog(_joystickMediator, this)),
+    _sensorWidget(new SensorsWidget(this))
 {
     _createLayout();
     _initConnections();
@@ -145,7 +146,9 @@ void MainWidget::_initConnections()
 
     connect(_joystickMediator, &JoystickMediator::JoystickConnect, [this](){_joysticIcon->setVisible(true);});
     connect(_joystickMediator, &JoystickMediator::JoystickDisconnect, [this](){_joysticIcon->setVisible(false);});
+
     connect(_dataStore, &DataStore::tcpConnect, [this](){_ethernetIcon->setVisible(true);});
     connect(_dataStore, &DataStore::tcpDisconnect, [this](){_ethernetIcon->setVisible(false);});
+    connect(_dataStore, &DataStore::telimetryUpdate, _sensorWidget, &SensorsWidget::TelimetryChange);
 }
 

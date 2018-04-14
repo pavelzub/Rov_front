@@ -63,7 +63,8 @@ SOURCES += \
     video/camerasconfigdialog.cpp \
     video/videosurface.cpp \
     joystick/joystickdebugdialog.cpp \
-    ethernet/datadebugdialog.cpp
+    ethernet/datadebugdialog.cpp \
+    sensorswidget.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -87,4 +88,5 @@ HEADERS += \
     video/camerasconfigdialog.hpp \
     video/videosurface.hpp \
     joystick/joystickdebugdialog.hpp \
-    ethernet/datadebugdialog.hpp
+    ethernet/datadebugdialog.hpp \
+    sensorswidget.hpp

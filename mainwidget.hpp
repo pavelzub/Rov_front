@@ -6,6 +6,7 @@
 #include "joystick/joystickmediator.hpp"
 #include "ethernet/datastore.hpp"
 #include "joystick/joystickdebugdialog.hpp"
+#include "sensorswidget.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -38,6 +39,7 @@ private:
     TimerWidget* _timerWidget;
     CamerasControlWidget*  _camerasControlWidget;
     JoystickDebugDialog* _joystickDebugDialog;
+    SensorsWidget* _sensorWidget;
     QLabel* _joysticIcon;
     QLabel* _ethernetIcon;
 };

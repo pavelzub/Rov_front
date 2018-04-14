@@ -13,7 +13,7 @@ bool TcpConnector::Send(const std::vector<uint8_t> data)
 {
     if (_socket->state() != QTcpSocket::ConnectedState) return false;
 
-    std::cout << "\t+";
+    std::cout << data.size() << std::endl;
     _socket->write((const char*)data.data(), data.size());
     return true;
 }
@@ -29,7 +29,6 @@ void TcpConnector::_initConnections()
 void TcpConnector::_connect()
 {
     if (_socket->state() == QTcpSocket::ConnectedState) return;
-    std::cout << "connecting" << std::endl;
     _socket->connectToHost(HOST, HOST_PORT);
 }
 
@@ -52,6 +51,5 @@ void TcpConnector::_onDisconnected()
 
 void TcpConnector::_onError(QAbstractSocket::SocketError error)
 {
-    std::cout << "error" << std::endl;
     _connect();
 }

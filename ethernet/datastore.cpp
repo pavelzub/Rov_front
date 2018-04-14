@@ -143,7 +143,6 @@ void DataStore::_sendHardwareFirmware(QString fileName)
     }
     QTextStream in(&file);
     _hardware_firmware.firmware = in.readAll().toStdString();
-
     _connector.Send(_hardware_firmware.serialize());
     std::cout << "Poslan!" << std::endl;
 }
