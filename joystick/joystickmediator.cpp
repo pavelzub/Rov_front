@@ -91,32 +91,32 @@ void JoystickMediator::_axisWChange(int val, int step) {
     emit AxisWChange(val);
 }
 
-void JoystickMediator::_camera1RotateRight(int val, int step)
+void JoystickMediator::_mainCameraRotateRight(int val, int step)
 {
     val = val ? val/abs(val) : 0;
-    if (_inverts["_camera1RotateRight"]) val *= -1;
-    emit Camera1RotateRight(val);
+    if (_inverts["_mainCameraRotateRight"]) val *= -1;
+    emit MainCameraRotateRight(val);
 }
 
-void JoystickMediator::_camera1RotateLeft(int val, int step)
+void JoystickMediator::_mainCameraRotateLeft(int val, int step)
 {
     val = val ? val/abs(val) : 0;
-    if (_inverts["_camera1RotateLeft"]) val *= -1;
-    emit Camera1RotateLeft(val);
+    if (_inverts["_mainCameraRotateLeft"]) val *= -1;
+    emit MainCameraRotateLeft(val);
 }
 
-void JoystickMediator::_camera2RotateRight(int val, int step)
+void JoystickMediator::_subCameraRotateRight(int val, int step)
 {
     val = val ? val/abs(val) : 0;
-    if (_inverts["_camera2RotateRight"]) val *= -1;
-    emit Camera2RotateRight(val);
+    if (_inverts["_subCameraRotateRight"]) val *= -1;
+    emit SubCameraRotateRight(val);
 }
 
-void JoystickMediator::_camera2RotateLeft(int val, int step)
+void JoystickMediator::_subCameraRotateLeft(int val, int step)
 {
     val = val ? val/abs(val) : 0;
-    if (_inverts["_camera2RotateLeft"]) val *= -1;
-    emit Camera2RotateLeft(val);
+    if (_inverts["_subCameraRotateLeft"]) val *= -1;
+    emit SubCameraRotateLeft(val);
 }
 
 void JoystickMediator::_magnetOn(int val, int step)

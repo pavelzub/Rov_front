@@ -39,10 +39,10 @@ void JoystickDebugDialog::_initConnection(JoystickMediator *joysticMediator)
     connect(joysticMediator, &JoystickMediator::AxisYChange, [this](int val){_updateVal(5, val);});
     connect(joysticMediator, &JoystickMediator::AxisZChange, [this](int val){_updateVal(6, val);});
     connect(joysticMediator, &JoystickMediator::AxisWChange, [this](int val){_updateVal(7, val);});
-    connect(joysticMediator, &JoystickMediator::Camera1RotateRight, [this](int val){_updateVal(8, val);});
-    connect(joysticMediator, &JoystickMediator::Camera1RotateLeft, [this](int val){_updateVal(9, val);});
-    connect(joysticMediator, &JoystickMediator::Camera2RotateRight, [this](int val){_updateVal(10, val);});
-    connect(joysticMediator, &JoystickMediator::Camera2RotateLeft, [this](int val){_updateVal(11, val);});
+    connect(joysticMediator, &JoystickMediator::MainCameraRotateRight, [this](int val){_updateVal(8, val);});
+    connect(joysticMediator, &JoystickMediator::MainCameraRotateLeft, [this](int val){_updateVal(9, val);});
+    connect(joysticMediator, &JoystickMediator::SubCameraRotateRight, [this](int val){_updateVal(10, val);});
+    connect(joysticMediator, &JoystickMediator::SubCameraRotateLeft, [this](int val){_updateVal(11, val);});
     connect(joysticMediator, &JoystickMediator::MagnetOn, [this](int val){_updateVal(12, val);});
     connect(joysticMediator, &JoystickMediator::MagnetOff, [this](int val){_updateVal(13, val);});
     connect(joysticMediator, &JoystickMediator::AcousticOn, [this](int val){_updateVal(14, val);});

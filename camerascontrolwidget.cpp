@@ -30,6 +30,8 @@ void CamerasControlWidget::swapCameras(int index)
     _cam_wid[_mainCameraIndex] = _cam_wid[index];
     _cam_wid[index] = 0;
     _mainCameraIndex = index;
+
+    emit changeMainCameraIndex(_mainCameraIndex == 1 ? 1 : 0);
 }
 
 void CamerasControlWidget::updateConfig()

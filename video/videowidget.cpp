@@ -69,7 +69,7 @@ bool VideoWidget::isEnabled()
     return _isEnabled;
 }
 
-void VideoWidget::mouseReleaseEvent(QMouseEvent *event)
+void VideoWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() != Qt::LeftButton) return;
     _swap();

@@ -28,7 +28,7 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
     int _index;
     QPixmap* _pixmap;

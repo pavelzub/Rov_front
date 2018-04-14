@@ -13,12 +13,12 @@ DataStore::DataStore(QWidget *parent) :
 
 void DataStore::SetAxisX(int axis)
 {
-    _control.axis_x = static_cast<std::int8_t>(axis);
+    _control.axis_x = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex);
 }
 
 void DataStore::SetAxisY(int axis)
 {
-    _control.axis_y = static_cast<std::int8_t>(axis);
+    _control.axis_y = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex );
 }
 
 void DataStore::SetAxisZ(int axis)
@@ -28,7 +28,7 @@ void DataStore::SetAxisZ(int axis)
 
 void DataStore::SetAxisW(int axis)
 {
-    _control.axis_w = static_cast<std::int8_t>(axis);
+    _control.axis_w = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex);
 }
 
 void DataStore::SetManRotateRigth(int val)
@@ -51,24 +51,24 @@ void DataStore::SetManClose(int val)
     _control.manipulator_open_close = static_cast<char>(-val);
 }
 
-void DataStore::SetCamera1RotateRight(int val)
+void DataStore::SetMainCameraRotateRight(int val)
 {
-    _control.camera_rotate[0] = static_cast<char>(val);
+    _control.camera_rotate[_mainCameraIndex] = static_cast<char>(val);
 }
 
-void DataStore::SetCamera1RotateLeft(int val)
+void DataStore::SetMainCameraRotateLeft(int val)
 {
-    _control.camera_rotate[0] = static_cast<char>(-val);
+    _control.camera_rotate[_mainCameraIndex] = static_cast<char>(-val);
 }
 
-void DataStore::SetCamera2RotateRight(int val)
+void DataStore::SetSubCameraRotateRight(int val)
 {
-    _control.camera_rotate[1] = static_cast<char>(val);
+    _control.camera_rotate[(_mainCameraIndex + 1) % 2] = static_cast<char>(val);
 }
 
-void DataStore::SetCamera2RotateLeft(int val)
+void DataStore::SetSubCameraRotateLeft(int val)
 {
-    _control.camera_rotate[1] = static_cast<char>(-val);
+    _control.camera_rotate[(_mainCameraIndex + 1) % 2] = static_cast<char>(-val);
 }
 
 void DataStore::SetMagnetOn(int val)
@@ -94,6 +94,11 @@ void DataStore::SetAcousticOff(int val)
 void DataStore::SetTwisting_motors(int index, int val)
 {
     _control.twisting_motors[index] = static_cast<char>(val);
+}
+
+void DataStore::SetMainCameraIndex(int index)
+{
+    _mainCameraIndex = index;
 }
 
 void DataStore::_initTimer()
@@ -143,6 +148,7 @@ void DataStore::_sendHardwareFirmware(QString fileName)
     }
     QTextStream in(&file);
     _hardware_firmware.firmware = in.readAll().toStdString();
+    _hardware_firmware.size = _hardware_firmware.firmware.size();
     _connector.Send(_hardware_firmware.serialize());
     std::cout << "Poslan!" << std::endl;
 }

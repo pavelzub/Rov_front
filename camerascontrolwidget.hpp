@@ -25,6 +25,9 @@ public:
     void updateConfig();
     void showConfigDialog();
 
+signals:
+    void changeMainCameraIndex(int);
+
 private:
     const int CAMERA_PORT_1 = 1234;
     const int CAMERA_PORT_2 = 1;

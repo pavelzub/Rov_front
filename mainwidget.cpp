@@ -37,7 +37,6 @@ void MainWidget::ShowCamerasConfig()
 
 void MainWidget::keyPressEvent(QKeyEvent *event)
 {
-    std::cout << event->key() << std::endl;
     switch (event->key()) {
         case Qt::Key_Z:
             _dataStore->SetTwisting_motors(0, 1);
@@ -135,10 +134,10 @@ void MainWidget::_initConnections()
     connect(_joystickMediator, &JoystickMediator::ManOpen, _dataStore, &DataStore::SetManOpen);
     connect(_joystickMediator, &JoystickMediator::ManRotateLeft, _dataStore, &DataStore::SetManRotateLLeft);
     connect(_joystickMediator, &JoystickMediator::ManRotateRight, _dataStore, &DataStore::SetManRotateRigth);
-    connect(_joystickMediator, &JoystickMediator::Camera1RotateRight, _dataStore, &DataStore::SetCamera1RotateRight);
-    connect(_joystickMediator, &JoystickMediator::Camera1RotateLeft, _dataStore, &DataStore::SetCamera1RotateLeft);
-    connect(_joystickMediator, &JoystickMediator::Camera2RotateRight, _dataStore, &DataStore::SetCamera2RotateRight);
-    connect(_joystickMediator, &JoystickMediator::Camera2RotateLeft, _dataStore, &DataStore::SetCamera2RotateLeft);
+    connect(_joystickMediator, &JoystickMediator::MainCameraRotateRight, _dataStore, &DataStore::SetMainCameraRotateRight);
+    connect(_joystickMediator, &JoystickMediator::MainCameraRotateLeft, _dataStore, &DataStore::SetMainCameraRotateLeft);
+    connect(_joystickMediator, &JoystickMediator::SubCameraRotateRight, _dataStore, &DataStore::SetSubCameraRotateRight);
+    connect(_joystickMediator, &JoystickMediator::SubCameraRotateLeft, _dataStore, &DataStore::SetSubCameraRotateLeft);
     connect(_joystickMediator, &JoystickMediator::MagnetOn, _dataStore, &DataStore::SetMagnetOn);
     connect(_joystickMediator, &JoystickMediator::MagnetOff, _dataStore, &DataStore::SetMagnetOff);
     connect(_joystickMediator, &JoystickMediator::AcousticOn, _dataStore, &DataStore::SetAcousticOn);
@@ -146,6 +145,8 @@ void MainWidget::_initConnections()
 
     connect(_joystickMediator, &JoystickMediator::JoystickConnect, [this](){_joysticIcon->setVisible(true);});
     connect(_joystickMediator, &JoystickMediator::JoystickDisconnect, [this](){_joysticIcon->setVisible(false);});
+
+    connect(_camerasControlWidget, &CamerasControlWidget::changeMainCameraIndex, _dataStore, &DataStore::SetMainCameraIndex);
 
     connect(_dataStore, &DataStore::tcpConnect, [this](){_ethernetIcon->setVisible(true);});
     connect(_dataStore, &DataStore::tcpDisconnect, [this](){_ethernetIcon->setVisible(false);});

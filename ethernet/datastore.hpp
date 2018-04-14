@@ -22,15 +22,16 @@ public:
     void SetManRotateLLeft(int val);
     void SetManOpen(int val);
     void SetManClose(int val);
-    void SetCamera1RotateRight(int val);
-    void SetCamera1RotateLeft(int val);
-    void SetCamera2RotateRight(int val);
-    void SetCamera2RotateLeft(int val);
+    void SetMainCameraRotateRight(int val);
+    void SetMainCameraRotateLeft(int val);
+    void SetSubCameraRotateRight(int val);
+    void SetSubCameraRotateLeft(int val);
     void SetMagnetOn(int val);
     void SetMagnetOff(int val);
     void SetAcousticOn(int val);
     void SetAcousticOff(int val);
     void SetTwisting_motors(int index, int val);
+    void SetMainCameraIndex(int index);
 
 signals:
     void telimetryUpdate(float yaw, float pitch, float roll);
@@ -52,6 +53,7 @@ private:
     rov_types::rov_telimetry _telimetry;
     rov_types::rov_control _control;
     rov_types::rov_hardware_firmware _hardware_firmware;
+    int _mainCameraIndex = 0;
 };
 
 #endif // DATASTORE_HPP

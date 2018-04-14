@@ -3,7 +3,7 @@
 
 SensorsWidget::SensorsWidget(QWidget *parent) : QWidget(parent)
 {
-   setFixedSize(1280, 720);
+   setFixedSize(390, 720);
    _initPixmaps();
    _createVals();
    _createLabels();
