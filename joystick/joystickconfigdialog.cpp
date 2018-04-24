@@ -31,6 +31,12 @@ void JoystickConfigDialog::_changeConfig(int val, int step)
     emit configUpdate();
 }
 
+void JoystickConfigDialog::closeEvent(QCloseEvent *event)
+{
+    QDialog::closeEvent(event);
+    _selectLabel(-1);
+}
+
 void JoystickConfigDialog::_createLayouts()
 {
     QHBoxLayout* mainLayout(new QHBoxLayout(this));

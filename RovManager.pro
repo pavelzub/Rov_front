@@ -64,7 +64,9 @@ SOURCES += \
     video/videosurface.cpp \
     joystick/joystickdebugdialog.cpp \
     ethernet/datadebugdialog.cpp \
-    sensorswidget.cpp
+    sensorswidget.cpp \
+    ethernet/packagedebugdialog.cpp \
+    infowidget.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -89,4 +91,6 @@ HEADERS += \
     video/videosurface.hpp \
     joystick/joystickdebugdialog.hpp \
     ethernet/datadebugdialog.hpp \
-    sensorswidget.hpp
+    sensorswidget.hpp \
+    ethernet/packagedebugdialog.hpp \
+    infowidget.hpp

@@ -7,6 +7,7 @@
 #include "ethernet/datastore.hpp"
 #include "joystick/joystickdebugdialog.hpp"
 #include "sensorswidget.hpp"
+#include "infowidget.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -40,6 +41,7 @@ private:
     CamerasControlWidget*  _camerasControlWidget;
     JoystickDebugDialog* _joystickDebugDialog;
     SensorsWidget* _sensorWidget;
+    InfoWidget* _infoWidget;
     QLabel* _joysticIcon;
     QLabel* _ethernetIcon;
 };

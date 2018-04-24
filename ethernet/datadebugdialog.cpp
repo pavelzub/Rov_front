@@ -13,10 +13,10 @@ DataDebugDialog::DataDebugDialog(rov_types::rov_telimetry *telimetry, rov_types:
 
 void DataDebugDialog::Update()
 {
-    _telimetryVals[0]->setText(QString::number(_telimetry->yaw));
-    _telimetryVals[1]->setText(QString::number(_telimetry->pitch));
-    _telimetryVals[2]->setText(QString::number(_telimetry->roll));
-    _telimetryVals[3]->setText(QString::number(_telimetry->depth));
+    _telimetryVals[0]->setText(QString::number(static_cast<double>(_telimetry->yaw)));
+    _telimetryVals[1]->setText(QString::number(static_cast<double>(_telimetry->pitch)));
+    _telimetryVals[2]->setText(QString::number(static_cast<double>(_telimetry->roll)));
+    _telimetryVals[3]->setText(QString::number(static_cast<double>(_telimetry->depth)));
     _telimetryVals[4]->setText(QString::number(_telimetry->mega_communication));
     _telimetryVals[5]->setText(QString::number(_telimetry->mini_communication));
     _telimetryVals[6]->setText(QString::number(_telimetry->esp_communication));

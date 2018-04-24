@@ -4,7 +4,8 @@
 DataStore::DataStore(QWidget *parent) :
     QObject(parent),
     _debugDialog(new DataDebugDialog(&_telimetry, &_control, parent)),
-    _fileDialog(new QFileDialog(parent))
+    _fileDialog(new QFileDialog(parent)),
+    _packageDebugDialog(new PackageDebugDialog(&_debug, parent))
 {
     _initTimer();
     _initConnections();
@@ -114,18 +115,20 @@ void DataStore::_initConnections()
     connect(&_connector, &TcpConnector::Connect, [this](){emit tcpConnect();});
     connect(&_connector, &TcpConnector::Disconnect, [this](){emit tcpDisconnect();});
     connect(_fileDialog, &QFileDialog::fileSelected, this, &DataStore::_sendHardwareFirmware);
+    connect(_packageDebugDialog, &PackageDebugDialog::visibleChange, [this](bool f){ _debugMode = f; });
 }
 
 void DataStore::_onTick()
 {
     _debugDialog->Update();
-    _connector.Send(_control.serialize());
+    _connector.Send(_debugMode ? _debug.serialize() : _control.serialize());
 }
 
 void DataStore::_createShortcuts()
 {
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_1), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_debugDialog->show();});
-    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_fileDialog->show();});
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_2), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_packageDebugDialog->show();});
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_9), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_fileDialog->show();});
 }
 
 void DataStore::_getPackage(const std::vector<uint8_t> &package)

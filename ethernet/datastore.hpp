@@ -8,6 +8,7 @@
 #include "rov_data_types/rov_data_types.hpp"
 #include "tcpconnetor.hpp"
 #include "datadebugdialog.hpp"
+#include "packagedebugdialog.hpp"
 
 class DataStore : public QObject
 {
@@ -50,9 +51,12 @@ private:
     QTimer* _timer;
     DataDebugDialog* _debugDialog;
     QFileDialog* _fileDialog;
+    PackageDebugDialog* _packageDebugDialog;
     rov_types::rov_telimetry _telimetry;
     rov_types::rov_control _control;
     rov_types::rov_hardware_firmware _hardware_firmware;
+    rov_types::rov_debug _debug;
+    bool _debugMode = false;
     int _mainCameraIndex = 0;
 };
 

@@ -118,6 +118,43 @@ void rov_types::rov_hardware_control::data_deserialize(rov_types::binary_stream 
     }
 }
 
+
+void rov_types::rov_hardware_telimetry::data_serialize(rov_types::binary_stream &bs) {
+    bs << depth;
+    bs << mega_communication;
+    bs << mini_communication;
+    bs << esp_communication;
+    bs << esp_state;
+    bs << manipulator_rotated;
+    bs << manipulator_opened_closed;
+    for(auto & b : camera_rotate) {
+        bs << b;
+    }
+    bs << magnet;
+    bs << acoustic;
+    for (auto & b : twisting_motors) {
+        bs << b;
+    }
+}
+
+void rov_types::rov_hardware_telimetry::data_deserialize(rov_types::binary_stream &bs) {
+    bs >> depth;
+    bs >> mega_communication;
+    bs >> mini_communication;
+    bs >> esp_communication;
+    bs >> esp_state;
+    bs >> manipulator_rotated;
+    bs >> manipulator_opened_closed;
+    for(auto & b : camera_rotate) {
+        bs >> b;
+    }
+    bs >> magnet;
+    bs >> acoustic;
+    for (auto & b : twisting_motors) {
+        bs >> b;
+    }
+}
+
 void rov_types::rov_hardware_firmware::data_serialize(rov_types::binary_stream &bs) {
     bs << size;
     for (const auto & byte : firmware) {
@@ -164,74 +201,52 @@ rov_types::serializable::error_code rov_types::rov_hardware_firmware::deserializ
     return success;
 }
 
-void rov_types::rov_hardware_telimetry::data_serialize(rov_types::binary_stream &bs) {
-    bs << depth;
-    bs << mega_communication;
-    bs << mini_communication;
-    bs << esp_communication;
-    bs << esp_state;
-    bs << manipulator_rotated;
-    bs << manipulator_opened_closed;
-    for(auto & b : camera_rotate) {
+void rov_types::rov_mini_telimetry::data_serialize(rov_types::binary_stream &bs) {
+    for(auto & b : twisting_motors_feedback) {
         bs << b;
     }
     bs << magnet;
-    bs << acoustic;
-}
-
-void rov_types::rov_hardware_telimetry::data_deserialize(rov_types::binary_stream &bs) {
-    bs >> depth;
-    bs >> mega_communication;
-    bs >> mini_communication;
-    bs >> esp_communication;
-    bs >> esp_state;
-    bs >> manipulator_rotated;
-    bs >> manipulator_opened_closed;
-    for(auto & b : camera_rotate) {
-        bs >> b;
-    }
-    bs >> magnet;
-    bs >> acoustic;
-}
-
-void rov_types::rov_mini_telimetry::data_serialize(rov_types::binary_stream &bs) {
-    for(auto & b : pins) {
-        bs << b;
-    }
-    for(auto & b : value) {
-        bs << b;
-    }
     bs << acoustics;
     bs << mini_communicator_feedback;
+    bs << manipulator_feedback;
 }
 
 void rov_types::rov_mini_telimetry::data_deserialize(rov_types::binary_stream &bs) {
-    for(auto & b : pins) {
+    for(auto & b : twisting_motors_feedback) {
         bs >> b;
     }
-    for(auto & b : value) {
-        bs >> b;
-    }
+    bs >> magnet;
     bs >> acoustics;
     bs >> mini_communicator_feedback;
+    bs >> manipulator_feedback;
 }
 
 void rov_types::rov_mini_control::data_serialize(rov_types::binary_stream &bs) {
-    for(auto & b : pins) {
+    for(auto & b : twisting_motors) {
         bs << b;
     }
-    for(auto & b : value) {
-        bs << b;
-    }
+    bs << magnet;
     bs << acoustics;
+    bs << manipulator;
 }
 
 void rov_types::rov_mini_control::data_deserialize(rov_types::binary_stream &bs) {
-    for(auto & b : pins) {
+    for(auto & b : twisting_motors) {
         bs >> b;
     }
-    for(auto & b : value) {
-        bs >> b;
-    }
+    bs >> magnet;
     bs >> acoustics;
+    bs >> manipulator;
+}
+
+void rov_types::rov_debug::data_serialize(rov_types::binary_stream &bs) {
+    for (auto &b : thruster_power) {
+        bs << b;
+    }
+}
+
+void rov_types::rov_debug::data_deserialize(rov_types::binary_stream &bs) {
+    for (auto &b : thruster_power) {
+        bs >> b;
+    }
 }

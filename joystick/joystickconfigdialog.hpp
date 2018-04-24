@@ -39,6 +39,9 @@ signals:
 private slots:
     void _changeConfig(int val, int step);
 
+protected:
+    void closeEvent(QCloseEvent * event);
+
 private:
     void _createLayouts();
     void _initConnections();

@@ -31,13 +31,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::_createShortcuts()
 {
-    QShortcut* ExitAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this);
-    QShortcut* joystickConfigAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_J), this);
-    QShortcut* joystickDebugAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_D), this);
-    QShortcut* camerasConfigAct = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_K), this);
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this), &QShortcut::activated, [this](){exit(0);});
 
-    connect(ExitAct, &QShortcut::activated, [this](){exit(0);});
-    connect(joystickConfigAct, &QShortcut::activated, _mainWidget, &MainWidget::ShowJoysticConfig);
-    connect(joystickDebugAct, &QShortcut::activated, _mainWidget, &MainWidget::ShowJoysticDebug);
-    connect(camerasConfigAct, &QShortcut::activated, _mainWidget, &MainWidget::ShowCamerasConfig);
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_7), this), &QShortcut::activated, _mainWidget, &MainWidget::ShowJoysticConfig);
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_8), this), &QShortcut::activated, _mainWidget, &MainWidget::ShowCamerasConfig);
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_3), this), &QShortcut::activated, _mainWidget, &MainWidget::ShowJoysticDebug);
 }

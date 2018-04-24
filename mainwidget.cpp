@@ -12,12 +12,14 @@ MainWidget::MainWidget(QWidget *parent)
     _timerWidget(new TimerWidget(this)),
     _camerasControlWidget(new CamerasControlWidget(_settings, this)),
     _joystickDebugDialog(new JoystickDebugDialog(_joystickMediator, this)),
-    _sensorWidget(new SensorsWidget(this))
+    _sensorWidget(new SensorsWidget(this)),
+    _infoWidget(new InfoWidget(this))
 {
     _createLayout();
     _initConnections();
     _createIcons();
     setFocusPolicy(Qt::ClickFocus);
+    setFixedSize(1280, 720);
 }
 
 void MainWidget::ShowJoysticConfig()
@@ -38,6 +40,9 @@ void MainWidget::ShowCamerasConfig()
 void MainWidget::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
+        case Qt::Key_Control:
+            _infoWidget->show();
+            break;
         case Qt::Key_Z:
             _dataStore->SetTwisting_motors(0, 1);
             break;
@@ -97,16 +102,7 @@ void MainWidget::keyReleaseEvent(QKeyEvent *event)
 
 void MainWidget::_createLayout()
 {
-    QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    QVBoxLayout* leftLayout = new QVBoxLayout;
-
-    leftLayout->addWidget(_camerasControlWidget);
-    leftLayout->addStretch(1);
-
-    mainLayout->addLayout(leftLayout);
-    mainLayout->setMargin(0);
-
-    this->setLayout(mainLayout);
+    _infoWidget->hide();
 }
 
 void MainWidget::_createIcons()
