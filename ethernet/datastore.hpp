@@ -38,6 +38,7 @@ public:
     void SetTwisting_motors(int index, int val);
     void SetMainCameraIndex(int index);
     void SetEnablePd(int index);
+    void ChangeEnable();
 
 signals:
     void telimetryUpdate(float yaw, float pitch, float roll);

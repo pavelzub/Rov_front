@@ -104,6 +104,10 @@ void DataStore::SetAcousticOff(int val)
 void DataStore::SetPower(int val)
 {
     _power = val;
+    _control.axis_x = static_cast<int8_t>(_control.axis_x * (_power / 100));
+    _control.axis_y = static_cast<int8_t>(_control.axis_y * (_power / 100));
+    _control.axis_z = static_cast<int8_t>(_control.axis_z * (_power / 100));
+    _control.axis_w = static_cast<int8_t>(_control.axis_w * (_power / 100));
 }
 
 void DataStore::SetSalto(int val)
@@ -156,10 +160,18 @@ void DataStore::SetEnablePd(int index)
     _connector.Send(pkg.serialize());
 }
 
+void DataStore::ChangeEnable()
+{
+    if (!_timer->isActive())
+        _timer->start(20);
+    else
+        _timer->stop();
+}
+
 void DataStore::_initTimer()
 {
     _timer = new QTimer(this);
-    _timer->start(20);
+    ChangeEnable();
 }
 
 void DataStore::_initConnections()
@@ -180,6 +192,7 @@ void DataStore::_onTick()
 {
     _debugDialog->Update();
     _connector.Send(_debugMode ? _debug.serialize() : _control.serialize());
+//    qDebug() << "AnusPes";
 }
 
 void DataStore::_createShortcuts()
@@ -188,6 +201,7 @@ void DataStore::_createShortcuts()
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_2), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_packageDebugDialog->show();});
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_9), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_fileDialog->show();});
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_6), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_pdDialog->show();});
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_D), static_cast<QWidget*>(parent())), &QShortcut::activated, this, &DataStore::ChangeEnable);
 }
 
 void DataStore::_getPackage(const std::vector<uint8_t> &package)
