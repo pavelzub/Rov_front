@@ -32,6 +32,7 @@ public:
     void SetMagnetOff(int val);
     void SetAcousticOn(int val);
     void SetAcousticOff(int val);
+    void SetPower(int val);
     void SetTwisting_motors(int index, int val);
     void SetMainCameraIndex(int index);
     void SetEnablePd(int index);
@@ -53,6 +54,7 @@ private:
     void _sendPd(rovTypes::rov_pd pd);
     void _updatePd();
 
+    int AXISTOLERANCE = 7;
     TcpConnector _connector;
     QTimer* _timer;
     DataDebugDialog* _debugDialog;
@@ -67,6 +69,7 @@ private:
     rovTypes::rov_pd _pd;
     bool _debugMode = false;
     int _mainCameraIndex = 0;
+    int _power = 100;
 };
 
 #endif // DATASTORE_HPP

@@ -5,6 +5,10 @@
 #include <QTimer>
 #include <SDL.h>
 
+const static int AXISCOUNT = 10;
+const static int BUTTONSCOUNT = 40;
+const static int HATSCOUNT = 2;
+
 class JoystickManager : public QObject
 {
     Q_OBJECT
@@ -68,10 +72,6 @@ signals:
     void ChangeHat_1(int, int);
 
 private:
-    const static int AXISCOUNT = 10;
-    const static int BUTTONSCOUNT = 40;
-    const static int HATSCOUNT = 2;
-
     QTimer* m_timer;
     bool m_isGamepadConnect;
     int m_axis[AXISCOUNT];

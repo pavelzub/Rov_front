@@ -15,22 +15,29 @@ DataStore::DataStore(QWidget *parent) :
 
 void DataStore::SetAxisX(int axis)
 {
+    axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
+    axis *= (_power / 100.0);
     _control.axis_x = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex);
 }
 
 void DataStore::SetAxisY(int axis)
 {
+    axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
+    axis *= (_power / 100.0);
     _control.axis_y = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex );
 }
 
 void DataStore::SetAxisZ(int axis)
 {
-    axis = abs(axis) < 10 ? 0 : axis;
+    axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
+    axis *= (_power / 100.0);
     _control.axis_z = static_cast<std::int8_t>(axis);
 }
 
 void DataStore::SetAxisW(int axis)
 {
+    axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
+    axis *= (_power / 100.0);
     _control.axis_w = static_cast<std::int8_t>(axis);
 }
 
@@ -94,6 +101,11 @@ void DataStore::SetAcousticOff(int val)
     _control.acoustic = static_cast<char>(-val);
 }
 
+void DataStore::SetPower(int val)
+{
+    _power = val;
+}
+
 void DataStore::SetTwisting_motors(int index, int val)
 {
     _control.twisting_motors[index] = static_cast<char>(val);
@@ -127,7 +139,7 @@ void DataStore::SetEnablePd(int index)
 void DataStore::_initTimer()
 {
     _timer = new QTimer(this);
-//    _timer->start(20);
+    _timer->start(20);
 }
 
 void DataStore::_initConnections()

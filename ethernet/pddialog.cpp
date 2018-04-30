@@ -60,7 +60,7 @@ void PdDialog::_createLayout()
         _needUpdate.push_back(new QCheckBox(this));
 
         _names.back()->setText(NAMES[i] + ": ");
-        _vals.back()->setValidator(new QDoubleValidator(0, 100000, 400, this));
+        _vals.back()->setValidator(new QDoubleValidator(-10000, 10000, 400, this));
         _vals.back()->setEnabled(false);
         _needUpdate.back()->setChecked(false);
 //        _needUpdate.back()->setStyleSheet("background:transparent;border:0");

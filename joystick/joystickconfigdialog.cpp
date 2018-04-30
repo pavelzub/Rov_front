@@ -83,17 +83,17 @@ void JoystickConfigDialog::_initConnections()
     int index = this->metaObject()->indexOfSlot(QMetaObject::normalizedSignature(qPrintable("_changeConfig(int, int)")));
     QMetaMethod slot = this->metaObject()->method(index);
 
-    for (int i = 0; i < 20; i++){
+    for (int i = 0; i < BUTTONSCOUNT; i++){
         index = _joysticManager->metaObject()->indexOfSignal(QMetaObject::normalizedSignature(qPrintable("ChangeButton_" + QString::number(i) + "(int, int)")));
         QMetaMethod signal = _joysticManager->metaObject()->method(index);
         connect(_joysticManager, signal, this, slot);
     }
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < AXISCOUNT; i++){
         index = _joysticManager->metaObject()->indexOfSignal(QMetaObject::normalizedSignature(qPrintable("ChangeAxis_" + QString::number(i) + "(int, int)")));
         QMetaMethod signal = _joysticManager->metaObject()->method(index);
         connect(_joysticManager, signal, this, slot);
     }
-    for (int i = 0; i < 2; i++){
+    for (int i = 0; i < HATSCOUNT; i++){
         index = _joysticManager->metaObject()->indexOfSignal(QMetaObject::normalizedSignature(qPrintable("ChangeHat_" + QString::number(i) + "(int, int)")));
         QMetaMethod signal = _joysticManager->metaObject()->method(index);
         connect(_joysticManager, signal, this, slot);

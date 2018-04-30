@@ -147,6 +147,13 @@ void JoystickMediator::_acousticOff(int val, int step)
     emit AcousticOff(val);
 }
 
+void JoystickMediator::_powerChange(int val, int step)
+{
+    if (_inverts["_powerChange"]) val *= -1;
+    val = static_cast<int>(val * 100 / SHRT_MAX * 0.45 + 55);
+    emit PowerChange(val);
+}
+
 void JoystickMediator::_changeConnection(QString signalName, QString slotName, bool needConnect)
 {
     int index = _joysticManager->metaObject()->indexOfSignal(QMetaObject::normalizedSignature(qPrintable(signalName + "(int, int)")));

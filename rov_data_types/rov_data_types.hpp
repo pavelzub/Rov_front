@@ -50,10 +50,6 @@ namespace rovTypes {
         void data_deserialize(binary_stream &bs) override final;
     };
 
-
-
-
-
     struct rov_hardware_firmware : public base_packet_t<0x3E, 9, 11> {
         std::size_t size;
         std::string firmware;

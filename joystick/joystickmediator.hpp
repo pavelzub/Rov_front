@@ -33,6 +33,7 @@ signals:
     void MagnetOff(int);
     void AcousticOn(int);
     void AcousticOff(int);
+    void PowerChange(int);
     void JoystickConnect();
     void JoystickDisconnect();
 
@@ -53,6 +54,7 @@ private slots:
     void _magnetOff(int val, int step);
     void _acousticOn(int val, int step);
     void _acousticOff(int val, int step);
+    void _powerChange(int val, int step);
 
 private:
     void _changeConnection(QString signal, QString slot, bool connect = true);
