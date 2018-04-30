@@ -9,7 +9,7 @@
 #include "meta.hpp"
 #include "binary_stream.hpp"
 #include "crc.hpp"
-namespace rov_types {
+namespace rovTypes {
     template <uint8_t packet_id_, uint8_t payload_size_, uint16_t packet_size_>
     class base_packet_t : public serializable {
     public:

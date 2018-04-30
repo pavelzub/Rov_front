@@ -5,7 +5,7 @@
 #include "rov_data_types.hpp"
 
 
-void rov_types::rov_telimetry::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_telimetry::data_serialize(rovTypes::binary_stream &bs) {
     bs << roll;
     bs << pitch;
     bs << yaw;
@@ -25,7 +25,7 @@ void rov_types::rov_telimetry::data_serialize(rov_types::binary_stream &bs) {
 
 }
 
-void rov_types::rov_telimetry::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_telimetry::data_deserialize(rovTypes::binary_stream &bs) {
     bs >> roll;
     bs >> pitch;
     bs >> yaw;
@@ -45,7 +45,7 @@ void rov_types::rov_telimetry::data_deserialize(rov_types::binary_stream &bs) {
 }
 
 
-void rov_types::rov_control::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_control::data_serialize(rovTypes::binary_stream &bs) {
     bs << axis_x;
     bs << axis_y;
     bs << axis_z;
@@ -63,7 +63,7 @@ void rov_types::rov_control::data_serialize(rov_types::binary_stream &bs) {
     bs << secondary_maninpulator;
 }
 
-void rov_types::rov_control::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_control::data_deserialize(rovTypes::binary_stream &bs) {
     bs >> axis_x;
     bs >> axis_y;
     bs >> axis_z;
@@ -81,7 +81,7 @@ void rov_types::rov_control::data_deserialize(rov_types::binary_stream &bs) {
     bs >> secondary_maninpulator;
 }
 
-void rov_types::rov_hardware_control::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_hardware_control::data_serialize(rovTypes::binary_stream &bs) {
     for(auto & p : horizontal_power) {
         bs << p;
     }
@@ -100,7 +100,7 @@ void rov_types::rov_hardware_control::data_serialize(rov_types::binary_stream &b
     }
 }
 
-void rov_types::rov_hardware_control::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_hardware_control::data_deserialize(rovTypes::binary_stream &bs) {
     for(auto & p : horizontal_power) {
         bs >> p;
     }
@@ -121,7 +121,7 @@ void rov_types::rov_hardware_control::data_deserialize(rov_types::binary_stream 
 }
 
 
-void rov_types::rov_hardware_telimetry::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_hardware_telimetry::data_serialize(rovTypes::binary_stream &bs) {
     bs << depth;
     bs << mega_communication;
     bs << mini_communication;
@@ -139,7 +139,7 @@ void rov_types::rov_hardware_telimetry::data_serialize(rov_types::binary_stream 
     }
 }
 
-void rov_types::rov_hardware_telimetry::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_hardware_telimetry::data_deserialize(rovTypes::binary_stream &bs) {
     bs >> depth;
     bs >> mega_communication;
     bs >> mini_communication;
@@ -157,14 +157,14 @@ void rov_types::rov_hardware_telimetry::data_deserialize(rov_types::binary_strea
     }
 }
 
-void rov_types::rov_hardware_firmware::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_hardware_firmware::data_serialize(rovTypes::binary_stream &bs) {
     bs << size;
     for (const auto & byte : firmware) {
         bs << byte;
     }
 }
 
-void rov_types::rov_hardware_firmware::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_hardware_firmware::data_deserialize(rovTypes::binary_stream &bs) {
     bs >> size;
     if (size != 0) {
         firmware.resize(size);
@@ -174,7 +174,7 @@ void rov_types::rov_hardware_firmware::data_deserialize(rov_types::binary_stream
     }
 }
 
-rov_types::serializable::error_code rov_types::rov_hardware_firmware::deserialize(const std::vector<uint8_t> &input) {
+rovTypes::serializable::error_code rovTypes::rov_hardware_firmware::deserialize(const std::vector<uint8_t> &input) {
     binary_stream bs(input);
     std::uint8_t packet_id;
 
@@ -203,7 +203,7 @@ rov_types::serializable::error_code rov_types::rov_hardware_firmware::deserializ
     return success;
 }
 
-void rov_types::rov_mini_telimetry::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_mini_telimetry::data_serialize(rovTypes::binary_stream &bs) {
     for(auto & b : twisting_motors_feedback) {
         bs << b;
     }
@@ -213,7 +213,7 @@ void rov_types::rov_mini_telimetry::data_serialize(rov_types::binary_stream &bs)
     bs << manipulator_feedback;
 }
 
-void rov_types::rov_mini_telimetry::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_mini_telimetry::data_deserialize(rovTypes::binary_stream &bs) {
     for(auto & b : twisting_motors_feedback) {
         bs >> b;
     }
@@ -223,7 +223,7 @@ void rov_types::rov_mini_telimetry::data_deserialize(rov_types::binary_stream &b
     bs >> manipulator_feedback;
 }
 
-void rov_types::rov_mini_control::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_mini_control::data_serialize(rovTypes::binary_stream &bs) {
     for(auto & b : twisting_motors) {
         bs << b;
     }
@@ -232,7 +232,7 @@ void rov_types::rov_mini_control::data_serialize(rov_types::binary_stream &bs) {
     bs << manipulator;
 }
 
-void rov_types::rov_mini_control::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_mini_control::data_deserialize(rovTypes::binary_stream &bs) {
     for(auto & b : twisting_motors) {
         bs >> b;
     }
@@ -241,19 +241,19 @@ void rov_types::rov_mini_control::data_deserialize(rov_types::binary_stream &bs)
     bs >> manipulator;
 }
 
-void rov_types::rov_debug::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_debug::data_serialize(rovTypes::binary_stream &bs) {
     for (auto &b : thruster_power) {
         bs << b;
     }
 }
 
-void rov_types::rov_debug::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_debug::data_deserialize(rovTypes::binary_stream &bs) {
     for (auto &b : thruster_power) {
         bs >> b;
     }
 }
 
-void rov_types::rov_pd::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_pd::data_serialize(rovTypes::binary_stream &bs) {
     bs << yaw_p;
     bs << yaw_d;
 
@@ -270,7 +270,7 @@ void rov_types::rov_pd::data_serialize(rov_types::binary_stream &bs) {
 
 }
 
-void rov_types::rov_pd::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_pd::data_deserialize(rovTypes::binary_stream &bs) {
     bs >> yaw_p;
     bs >> yaw_d;
 
@@ -286,14 +286,14 @@ void rov_types::rov_pd::data_deserialize(rov_types::binary_stream &bs) {
     bs >> pitch_to_set;
 }
 
-void rov_types::rov_enable_pd::data_serialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_enable_pd::data_serialize(rovTypes::binary_stream &bs) {
     bs << yaw_pd;
     bs << depth_pd;
     bs << pitch_pd;
     bs << roll_pd;
 }
 
-void rov_types::rov_enable_pd::data_deserialize(rov_types::binary_stream &bs) {
+void rovTypes::rov_enable_pd::data_deserialize(rovTypes::binary_stream &bs) {
     bs >> yaw_pd;
     bs >> depth_pd;
     bs >> pitch_pd;

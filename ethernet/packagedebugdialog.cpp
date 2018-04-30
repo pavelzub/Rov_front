@@ -2,7 +2,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-PackageDebugDialog::PackageDebugDialog(rov_types::rov_debug *rovDebug, QWidget *parent):
+PackageDebugDialog::PackageDebugDialog(rovTypes::rov_debug *rovDebug, QWidget *parent):
     QDialog (parent)
 {
     _rovDebug = rovDebug;

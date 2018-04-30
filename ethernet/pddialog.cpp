@@ -2,45 +2,46 @@
 
 #include <QDoubleValidator>
 #include <QHBoxLayout>
+#include <QDebug>
 
-PdDialog::PdDialog(rov_types::rov_enable_pd* rovEnablePd, rov_types::rov_pd *rovPd, QWidget* parent):
+PdDialog::PdDialog(QWidget* parent):
     QDialog(parent),
     _sendBtn(new QPushButton(this)),
     _updateBtn(new QPushButton(this))
 {
-    _rovEnablePd = rovEnablePd;
-    _rovPd = rovPd;
     _createLayout();
     _initConnections();
-    UpdatePd();
 }
 
-void PdDialog::UpdatePd()
+void PdDialog::UpdatePd(rovTypes::rov_pd pd)
 {
-    _vals[0]->setText(QString::number(_rovPd->yaw_p));
-    _vals[1]->setText(QString::number(_rovPd->yaw_d));
-    _vals[2]->setText(QString::number(_rovPd->depth_p));
-    _vals[3]->setText(QString::number(_rovPd->depth_d));
-    _vals[4]->setText(QString::number(_rovPd->roll_p));
-    _vals[5]->setText(QString::number(_rovPd->roll_d));
-    _vals[6]->setText(QString::number(_rovPd->roll_to_set));
-    _vals[7]->setText(QString::number(_rovPd->pitch_p));
-    _vals[8]->setText(QString::number(_rovPd->pitch_d));
-    _vals[9]->setText(QString::number(_rovPd->pitch_to_set));
+    _vals[0]->setText(QString::number(pd.yaw_p));
+    _vals[1]->setText(QString::number(pd.yaw_d));
+    _vals[2]->setText(QString::number(pd.depth_p));
+    _vals[3]->setText(QString::number(pd.depth_d));
+    _vals[4]->setText(QString::number(pd.roll_p));
+    _vals[5]->setText(QString::number(pd.roll_d));
+    _vals[6]->setText(QString::number(pd.roll_to_set));
+    _vals[7]->setText(QString::number(pd.pitch_p));
+    _vals[8]->setText(QString::number(pd.pitch_d));
+    _vals[9]->setText(QString::number(pd.pitch_to_set));
+}
 
+void PdDialog::UpdateEnablePd(rovTypes::rov_enable_pd enablePd)
+{
     for (int i = 0; i < 2; i++)
-        _names[i]->setStyleSheet(_rovEnablePd->yaw_pd < 1 ? "color : red;" : "color : green;");
+        _names[i]->setStyleSheet(enablePd.yaw_pd < 1 ? "color : red;" : "color : green;");
     for (int i = 2; i < 4; i++)
-        _names[i]->setStyleSheet(_rovEnablePd->depth_pd < 1 ? "color : red;" : "color : green;");
+        _names[i]->setStyleSheet(enablePd.depth_pd < 1 ? "color : red;" : "color : green;");
     for (int i = 4; i < 7; i++)
-        _names[i]->setStyleSheet(_rovEnablePd->roll_pd < 1 ? "color : red;" : "color : green;");
+        _names[i]->setStyleSheet(enablePd.roll_pd < 1 ? "color : red;" : "color : green;");
     for (int i = 7; i < 10; i++)
-        _names[i]->setStyleSheet(_rovEnablePd->pitch_pd < 1 ? "color : red;" : "color : green;");
+        _names[i]->setStyleSheet(enablePd.pitch_pd < 1 ? "color : red;" : "color : green;");
 }
 
 void PdDialog::showEvent(QShowEvent *event)
 {
-    _updateData();
+    emit NeedUpdate();
 }
 
 void PdDialog::_createLayout()
@@ -95,7 +96,7 @@ void PdDialog::_initConnections()
 
 void PdDialog::_sendData()
 {
-    rov_types::rov_pd package;
+    rovTypes::rov_pd package;
 
     if (_needUpdate[0]->isChecked()) package.yaw_p = _vals[0]->text().toFloat();
     if (_needUpdate[1]->isChecked()) package.yaw_d = _vals[1]->text().toFloat();
@@ -113,6 +114,5 @@ void PdDialog::_sendData()
 
 void PdDialog::_updateData()
 {
-    rov_types::rov_pd package;
-    emit PdChange(package);
+    emit NeedUpdate();
 }

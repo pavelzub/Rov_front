@@ -11,7 +11,7 @@
 #include <cstring>
 //#include <stdfloat.h>
 #include <iostream>
-namespace rov_types {
+namespace rovTypes {
     class binary_stream {
     public:
         enum class byte_ordering {

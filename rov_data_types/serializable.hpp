@@ -9,7 +9,7 @@
 #include <iostream>
 #include <vector>
 #include "binary_stream.hpp"
-namespace rov_types {
+namespace rovTypes {
 
     struct serializable {
         enum error_code : uint8_t {

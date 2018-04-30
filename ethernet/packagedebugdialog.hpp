@@ -11,7 +11,7 @@ class PackageDebugDialog : public QDialog
 {
     Q_OBJECT
 public:
-    PackageDebugDialog(rov_types::rov_debug* rovDebug, QWidget* parent = nullptr);
+    PackageDebugDialog(rovTypes::rov_debug* rovDebug, QWidget* parent = nullptr);
 
 signals:
     void visibleChange(bool);
@@ -21,7 +21,7 @@ protected:
     void showEvent(QShowEvent * event);
     void _createLayout();
 
-    rov_types::rov_debug* _rovDebug;
+    rovTypes::rov_debug* _rovDebug;
     QSlider* _power[8];
 };
 

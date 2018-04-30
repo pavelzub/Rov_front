@@ -67,6 +67,18 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Comma:
             _dataStore->SetTwisting_motors(3, -1);
             break;
+        case Qt::Key_A:
+            _dataStore->SetEnablePd(0);
+            break;
+        case Qt::Key_S:
+            _dataStore->SetEnablePd(1);
+            break;
+        case Qt::Key_D:
+            _dataStore->SetEnablePd(2);
+            break;
+        case Qt::Key_F:
+            _dataStore->SetEnablePd(3);
+            break;
     }
 }
 

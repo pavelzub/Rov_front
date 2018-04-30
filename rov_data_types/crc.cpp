@@ -3,7 +3,7 @@
 //
 
 #include "crc.hpp"
-namespace rov_types {
+namespace rovTypes {
     namespace crc {
         namespace prvt {
 

@@ -13,7 +13,6 @@ bool TcpConnector::Send(const std::vector<uint8_t> data)
 {
     if (_socket->state() != QTcpSocket::ConnectedState) return false;
 
-    std::cout << data.size() << std::endl;
     _socket->write((const char*)data.data(), data.size());
     return true;
 }

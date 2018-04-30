@@ -9,7 +9,7 @@
 #include "base_packet_t.hpp"
 
 
-namespace rov_types {
+namespace rovTypes {
     struct rov_telimetry : public base_packet_t<0x1E, 27, 29> {
 
         float yaw = 0; //-180, 180
@@ -87,7 +87,7 @@ namespace rov_types {
     };
 
 
-    struct rov_pd : public base_packet_t<0x4E, 41, 43> {
+    struct rov_pd : public base_packet_t<0x5E, 41, 43> {
         float yaw_p = -1;
         float yaw_d = 1;
 
