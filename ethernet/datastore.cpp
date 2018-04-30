@@ -5,7 +5,8 @@ DataStore::DataStore(QWidget *parent) :
     QObject(parent),
     _debugDialog(new DataDebugDialog(&_telimetry, &_control, parent)),
     _fileDialog(new QFileDialog(parent)),
-    _packageDebugDialog(new PackageDebugDialog(&_debug, parent))
+    _packageDebugDialog(new PackageDebugDialog(&_debug, parent)),
+    _pdDialog(new PdDialog(&_enable_pd, &_pd, parent))
 {
     _initTimer();
     _initConnections();
@@ -24,12 +25,13 @@ void DataStore::SetAxisY(int axis)
 
 void DataStore::SetAxisZ(int axis)
 {
+    axis = abs(axis) < 10 ? 0 : axis;
     _control.axis_z = static_cast<std::int8_t>(axis);
 }
 
 void DataStore::SetAxisW(int axis)
 {
-    _control.axis_w = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex);
+    _control.axis_w = static_cast<std::int8_t>(axis);
 }
 
 void DataStore::SetManRotateRigth(int val)
@@ -129,6 +131,7 @@ void DataStore::_createShortcuts()
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_1), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_debugDialog->show();});
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_2), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_packageDebugDialog->show();});
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_9), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_fileDialog->show();});
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_6), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_pdDialog->show();});
 }
 
 void DataStore::_getPackage(const std::vector<uint8_t> &package)
@@ -138,6 +141,14 @@ void DataStore::_getPackage(const std::vector<uint8_t> &package)
             _telimetry.deserialize(package);
             emit(telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll));
             break;
+        case rov_types::rov_pd::meta().packet_id:
+            _telimetry.deserialize(package);
+            emit(telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll));
+            break;
+//        case rov_types::rov_enable_pd::meta().packet_id:
+//            _telimetry.deserialize(package);
+//            emit(telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll));
+//            break;
     }
 }
 

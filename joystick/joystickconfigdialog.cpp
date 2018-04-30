@@ -53,7 +53,7 @@ void JoystickConfigDialog::_createLayouts()
         name->setText(rusNames[i] + ": ");
         QString signalName = _settings->value(availableSlots[i], defaultSignals[i]).toString();
         _buttons.back()->setText(signalName);
-        bool ischeck = _settings->value(availableSlots[i] + "Invert", 0).toInt();
+        bool ischeck = _settings->value(availableSlots[i] + "Invert", 0).toBool();
         _checkBoxs.back()->setChecked(ischeck);
 
         nameLayout->addWidget(name);

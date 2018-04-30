@@ -66,7 +66,8 @@ SOURCES += \
     ethernet/datadebugdialog.cpp \
     sensorswidget.cpp \
     ethernet/packagedebugdialog.cpp \
-    infowidget.cpp
+    infowidget.cpp \
+    ethernet/pddialog.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -93,4 +94,5 @@ HEADERS += \
     ethernet/datadebugdialog.hpp \
     sensorswidget.hpp \
     ethernet/packagedebugdialog.hpp \
-    infowidget.hpp
+    infowidget.hpp \
+    ethernet/pddialog.hpp

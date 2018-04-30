@@ -48,6 +48,9 @@ bool VideoSurface:: present(const QVideoFrame &frame)
                      QVideoFrame::imageFormatFromPixelFormat(cloneFrame.pixelFormat()));
 
         QPixmap pixmap = QPixmap::fromImage(img.mirrored(false, true));
+        QTransform tr;
+        tr = tr.rotate(180);
+        pixmap = pixmap.transformed(tr);
         pixmap = pixmap.scaled(960, 540, Qt::IgnoreAspectRatio,Qt::FastTransformation);
         *_pixmap = pixmap;
 

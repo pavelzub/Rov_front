@@ -30,7 +30,7 @@ void JoystickMediator::_updateSettings()
             _connects[availableSlots[i]] = signalName;
             _changeConnection(signalName, availableSlots[i]);
         }
-        _inverts[availableSlots[i]] = _settings->value(availableSlots[i] + "Invert", 0).toInt();
+        _inverts[availableSlots[i]] = _settings->value(availableSlots[i] + "Invert", 0).toBool();
     }
 
     _settings->endGroup();

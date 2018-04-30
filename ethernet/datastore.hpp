@@ -9,6 +9,7 @@
 #include "tcpconnetor.hpp"
 #include "datadebugdialog.hpp"
 #include "packagedebugdialog.hpp"
+#include "pddialog.hpp"
 
 class DataStore : public QObject
 {
@@ -36,6 +37,7 @@ public:
 
 signals:
     void telimetryUpdate(float yaw, float pitch, float roll);
+//    void
     void tcpConnect();
     void tcpDisconnect();
 
@@ -52,10 +54,13 @@ private:
     DataDebugDialog* _debugDialog;
     QFileDialog* _fileDialog;
     PackageDebugDialog* _packageDebugDialog;
+    PdDialog* _pdDialog;
     rov_types::rov_telimetry _telimetry;
     rov_types::rov_control _control;
     rov_types::rov_hardware_firmware _hardware_firmware;
     rov_types::rov_debug _debug;
+    rov_types::rov_enable_pd _enable_pd;
+    rov_types::rov_pd _pd;
     bool _debugMode = false;
     int _mainCameraIndex = 0;
 };

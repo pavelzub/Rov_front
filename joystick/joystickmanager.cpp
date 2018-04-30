@@ -53,7 +53,7 @@ void JoystickManager::refreshAxisInfo(SDL_Joystick* joystik)
             m_axis[i] = axisVal;
             const char* signalName = QString("ChangeAxis_" + QString::number(i)).toStdString().c_str();
             emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, axisVal), Q_ARG(int, step));
-//            std::cout << QString("ChangeAxis_" + QString::number(i)).toStdString() << ": " << axisVal << std::endl;
+            std::cout << QString("ChangeAxis_" + QString::number(i)).toStdString() << ": " << axisVal << std::endl;
         }
     }
 }
@@ -69,7 +69,7 @@ void JoystickManager::refreshButtonInfo(SDL_Joystick* joystik)
             m_buttons[i] = buttonVal;
             const char* signalName = QString("ChangeButton_" + QString::number(i)).toStdString().c_str();
             emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, buttonVal), Q_ARG(int, step));
-//            std::cout << QString("ChangeButton_" + QString::number(i)).toStdString() << ": " << buttonVal << std::endl;
+            std::cout << QString("ChangeButton_" + QString::number(i)).toStdString() << ": " << buttonVal << std::endl;
         }
     }
 }
@@ -85,7 +85,7 @@ void JoystickManager::refreshHatInfo(SDL_Joystick* joystik)
             m_hats[i] = hatVal;
             const char* signalName = QString("ChangeHat_" + QString::number(i)).toStdString().c_str();
             emit QMetaObject::invokeMethod(this, signalName, Qt::DirectConnection, Q_ARG(int, hatVal), Q_ARG(int, step));
-//            std::cout << QString("ChangeHat_" + QString::number(i)).toStdString() << ": " << hatVal << std::endl;
+            std::cout << QString("ChangeHat_" + QString::number(i)).toStdString() << ": " << hatVal << std::endl;
         }
     }
 }

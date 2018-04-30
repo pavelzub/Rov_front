@@ -44,12 +44,32 @@ signals:
     void ChangeButton_17(int, int);
     void ChangeButton_18(int, int);
     void ChangeButton_19(int, int);
+    void ChangeButton_20(int, int);
+    void ChangeButton_21(int, int);
+    void ChangeButton_22(int, int);
+    void ChangeButton_23(int, int);
+    void ChangeButton_24(int, int);
+    void ChangeButton_25(int, int);
+    void ChangeButton_26(int, int);
+    void ChangeButton_27(int, int);
+    void ChangeButton_28(int, int);
+    void ChangeButton_29(int, int);
+    void ChangeButton_30(int, int);
+    void ChangeButton_31(int, int);
+    void ChangeButton_32(int, int);
+    void ChangeButton_33(int, int);
+    void ChangeButton_34(int, int);
+    void ChangeButton_35(int, int);
+    void ChangeButton_36(int, int);
+    void ChangeButton_37(int, int);
+    void ChangeButton_38(int, int);
+    void ChangeButton_39(int, int);
     void ChangeHat_0(int, int);
     void ChangeHat_1(int, int);
 
 private:
     const static int AXISCOUNT = 10;
-    const static int BUTTONSCOUNT = 20;
+    const static int BUTTONSCOUNT = 40;
     const static int HATSCOUNT = 2;
 
     QTimer* m_timer;
