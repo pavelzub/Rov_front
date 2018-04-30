@@ -4,7 +4,7 @@
 
 #include "binary_stream.hpp"
 #include <iostream>
-namespace rovTypes {
+namespace rov_types {
 
     binary_stream::binary_stream():
             m_counter(0){

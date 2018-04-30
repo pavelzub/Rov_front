@@ -17,11 +17,11 @@ class PdDialog : public QDialog
     Q_OBJECT
 public:
     PdDialog(QWidget* parent = nullptr);
-    void UpdatePd(rovTypes::rov_pd pd);
-    void UpdateEnablePd(rovTypes::rov_enable_pd enablePd);
+    void UpdatePd(rov_types::rov_pd pd);
+    void UpdateEnablePd(rov_types::rov_enable_pd enablePd);
 
 signals:
-    void PdChange(rovTypes::rov_pd);
+    void PdChange(rov_types::rov_pd);
     void NeedUpdate();
 
 protected:

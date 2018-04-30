@@ -33,14 +33,16 @@ public:
     void SetAcousticOn(int val);
     void SetAcousticOff(int val);
     void SetPower(int val);
+    void SetSalto(int val);
+    void SetBochka(int val);
     void SetTwisting_motors(int index, int val);
     void SetMainCameraIndex(int index);
     void SetEnablePd(int index);
 
 signals:
     void telimetryUpdate(float yaw, float pitch, float roll);
-    void pdUpdate(rovTypes::rov_pd);
-    void enablePdUpdate(rovTypes::rov_enable_pd);
+    void pdUpdate(rov_types::rov_pd);
+    void enablePdUpdate(rov_types::rov_enable_pd);
     void tcpConnect();
     void tcpDisconnect();
 
@@ -51,7 +53,7 @@ private:
     void _createShortcuts();
     void _getPackage(const std::vector<std::uint8_t> &package);
     void _sendHardwareFirmware(QString fileName);
-    void _sendPd(rovTypes::rov_pd pd);
+    void _sendPd(rov_types::rov_pd pd);
     void _updatePd();
 
     int AXISTOLERANCE = 7;
@@ -61,12 +63,12 @@ private:
     QFileDialog* _fileDialog;
     PackageDebugDialog* _packageDebugDialog;
     PdDialog* _pdDialog;
-    rovTypes::rov_telimetry _telimetry;
-    rovTypes::rov_control _control;
-    rovTypes::rov_hardware_firmware _hardware_firmware;
-    rovTypes::rov_debug _debug;
-    rovTypes::rov_enable_pd _enable_pd;
-    rovTypes::rov_pd _pd;
+    rov_types::rov_telimetry _telimetry;
+    rov_types::rov_control _control;
+    rov_types::rov_hardware_firmware _hardware_firmware;
+    rov_types::rov_debug _debug;
+    rov_types::rov_enable_pd _enable_pd;
+    rov_types::rov_pd _pd;
     bool _debugMode = false;
     int _mainCameraIndex = 0;
     int _power = 100;

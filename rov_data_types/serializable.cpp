@@ -5,7 +5,7 @@
 #include "serializable.hpp"
 
 
-std::string rovTypes::serializable::error_to_string(rovTypes::serializable::error_code err) {
+std::string rov_types::serializable::error_to_string(rov_types::serializable::error_code err) {
     std::string str_to_ret;
     switch (err) {
         case error_code::success: str_to_ret = "success";
@@ -25,7 +25,7 @@ std::string rovTypes::serializable::error_to_string(rovTypes::serializable::erro
     return str_to_ret;
 }
 
-bool rovTypes::serializable::check_for_success(rovTypes::serializable::error_code err) {
+bool rov_types::serializable::check_for_success(rov_types::serializable::error_code err) {
     return (err == success) || (err == success_size_greater);
 
 }

@@ -2,7 +2,7 @@
 #include <QVBoxLayout>
 #include <iostream>
 
-DataDebugDialog::DataDebugDialog(rovTypes::rov_telimetry *telimetry, rovTypes::rov_control *control, QWidget *parent):
+DataDebugDialog::DataDebugDialog(rov_types::rov_telimetry *telimetry, rov_types::rov_control *control, QWidget *parent):
     QDialog (parent)
 {
     _control = control;

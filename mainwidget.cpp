@@ -151,6 +151,8 @@ void MainWidget::_initConnections()
     connect(_joystickMediator, &JoystickMediator::AcousticOn, _dataStore, &DataStore::SetAcousticOn);
     connect(_joystickMediator, &JoystickMediator::AcousticOff, _dataStore, &DataStore::SetAcousticOff);
     connect(_joystickMediator, &JoystickMediator::PowerChange, _dataStore, &DataStore::SetPower);
+    connect(_joystickMediator, &JoystickMediator::SaltoChange, _dataStore, &DataStore::SetSalto);
+    connect(_joystickMediator, &JoystickMediator::BochkaChange, _dataStore, &DataStore::SetBochka);
 
     connect(_joystickMediator, &JoystickMediator::JoystickConnect, [this](){_joysticIcon->setVisible(true);});
     connect(_joystickMediator, &JoystickMediator::JoystickDisconnect, [this](){_joysticIcon->setVisible(false);});

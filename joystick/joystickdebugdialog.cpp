@@ -48,6 +48,8 @@ void JoystickDebugDialog::_initConnection(JoystickMediator *joysticMediator)
     connect(joysticMediator, &JoystickMediator::AcousticOn, [this](int val){_updateVal(14, val);});
     connect(joysticMediator, &JoystickMediator::AcousticOff, [this](int val){_updateVal(15, val);});
     connect(joysticMediator, &JoystickMediator::PowerChange, [this](int val){_updateVal(16, val);});
+    connect(joysticMediator, &JoystickMediator::SaltoChange, [this](int val){_updateVal(17, val);});
+    connect(joysticMediator, &JoystickMediator::BochkaChange, [this](int val){_updateVal(18, val);});
 }
 
 void JoystickDebugDialog::_updateVal(int index, int val)

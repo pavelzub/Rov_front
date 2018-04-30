@@ -2,11 +2,17 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-PackageDebugDialog::PackageDebugDialog(rovTypes::rov_debug *rovDebug, QWidget *parent):
+PackageDebugDialog::PackageDebugDialog(rov_types::rov_debug *rovDebug, QWidget *parent):
     QDialog (parent)
 {
     _rovDebug = rovDebug;
     _createLayout();
+}
+
+void PackageDebugDialog::Update()
+{
+    for (int i = 0; i < 8; i++)
+        _power[i]->setValue(_rovDebug->thruster_power[i]);
 }
 
 void PackageDebugDialog::closeEvent(QCloseEvent *event)

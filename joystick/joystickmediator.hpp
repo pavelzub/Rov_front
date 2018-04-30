@@ -34,8 +34,11 @@ signals:
     void AcousticOn(int);
     void AcousticOff(int);
     void PowerChange(int);
+    void SaltoChange(int);
+    void BochkaChange(int);
     void JoystickConnect();
     void JoystickDisconnect();
+
 
 private slots:
     void _manRotateRight(int val, int step);
@@ -55,6 +58,10 @@ private slots:
     void _acousticOn(int val, int step);
     void _acousticOff(int val, int step);
     void _powerChange(int val, int step);
+    void _saltoChange(int val, int step);
+    void _bochkaChange(int val, int step);
+
+
 
 private:
     void _changeConnection(QString signal, QString slot, bool connect = true);

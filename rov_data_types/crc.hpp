@@ -6,7 +6,7 @@
 #define RC_ROV_SERVER_CRC_HPP
 
 #include <cstdint>
-namespace rovTypes {
+namespace rov_types {
     namespace crc {
         std::int16_t calculateCRC(const uint8_t *data, std::size_t len);
     };

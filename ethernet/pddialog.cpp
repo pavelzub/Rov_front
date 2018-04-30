@@ -13,7 +13,7 @@ PdDialog::PdDialog(QWidget* parent):
     _initConnections();
 }
 
-void PdDialog::UpdatePd(rovTypes::rov_pd pd)
+void PdDialog::UpdatePd(rov_types::rov_pd pd)
 {
     _vals[0]->setText(QString::number(pd.yaw_p));
     _vals[1]->setText(QString::number(pd.yaw_d));
@@ -27,7 +27,7 @@ void PdDialog::UpdatePd(rovTypes::rov_pd pd)
     _vals[9]->setText(QString::number(pd.pitch_to_set));
 }
 
-void PdDialog::UpdateEnablePd(rovTypes::rov_enable_pd enablePd)
+void PdDialog::UpdateEnablePd(rov_types::rov_enable_pd enablePd)
 {
     for (int i = 0; i < 2; i++)
         _names[i]->setStyleSheet(enablePd.yaw_pd < 1 ? "color : red;" : "color : green;");
@@ -96,7 +96,7 @@ void PdDialog::_initConnections()
 
 void PdDialog::_sendData()
 {
-    rovTypes::rov_pd package;
+    rov_types::rov_pd package;
 
     if (_needUpdate[0]->isChecked()) package.yaw_p = _vals[0]->text().toFloat();
     if (_needUpdate[1]->isChecked()) package.yaw_d = _vals[1]->text().toFloat();

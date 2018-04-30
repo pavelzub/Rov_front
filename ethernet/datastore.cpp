@@ -106,6 +106,26 @@ void DataStore::SetPower(int val)
     _power = val;
 }
 
+void DataStore::SetSalto(int val)
+{
+    val = abs(val) < AXISTOLERANCE ? 0 : val;
+    _debug.thruster_power[4] = static_cast<int8_t>(val);
+    _debug.thruster_power[5] = static_cast<int8_t>(val);
+    _debug.thruster_power[6] = static_cast<int8_t>(-val);
+    _debug.thruster_power[7] = static_cast<int8_t>(-val);
+    _packageDebugDialog->Update();
+}
+
+void DataStore::SetBochka(int val)
+{
+    val = abs(val) < AXISTOLERANCE ? 0 : val;
+    _debug.thruster_power[4] = static_cast<int8_t>(val);
+    _debug.thruster_power[6] = static_cast<int8_t>(val);
+    _debug.thruster_power[5] = static_cast<int8_t>(-val);
+    _debug.thruster_power[7] = static_cast<int8_t>(-val);
+    _packageDebugDialog->Update();
+}
+
 void DataStore::SetTwisting_motors(int index, int val)
 {
     _control.twisting_motors[index] = static_cast<char>(val);
@@ -118,7 +138,7 @@ void DataStore::SetMainCameraIndex(int index)
 
 void DataStore::SetEnablePd(int index)
 {
-    rovTypes::rov_enable_pd pkg(_enable_pd);
+    rov_types::rov_enable_pd pkg(_enable_pd);
     switch (index) {
         case 0:
             pkg.yaw_pd = _enable_pd.yaw_pd == 1 ? 0 : 1;
@@ -173,16 +193,16 @@ void DataStore::_createShortcuts()
 void DataStore::_getPackage(const std::vector<uint8_t> &package)
 {
     switch (package[0]) {
-        case rovTypes::rov_telimetry::meta().packet_id:
+        case rov_types::rov_telimetry::meta().packet_id:
             _telimetry.deserialize(package);
             emit telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll);
             break;
-        case rovTypes::rov_pd::meta().packet_id:
+        case rov_types::rov_pd::meta().packet_id:
             _pd.deserialize(package);
             qDebug() << "Pd is update";
             emit pdUpdate(_pd);
             break;
-        case rovTypes::rov_enable_pd::meta().packet_id:
+        case rov_types::rov_enable_pd::meta().packet_id:
             _enable_pd.deserialize(package);
             qDebug() << "Enable is update";
             emit enablePdUpdate(_enable_pd);
@@ -205,7 +225,7 @@ void DataStore::_sendHardwareFirmware(QString fileName)
     std::cout << "Poslan!" << std::endl;
 }
 
-void DataStore::_sendPd(rovTypes::rov_pd pd)
+void DataStore::_sendPd(rov_types::rov_pd pd)
 {
     _connector.Send(pd.serialize());
 }
@@ -213,9 +233,9 @@ void DataStore::_sendPd(rovTypes::rov_pd pd)
 void DataStore::_updatePd()
 {
     qDebug() << "update";
-    rovTypes::rov_pd pkg;
+    rov_types::rov_pd pkg;
     _connector.Send(pkg.serialize());
 
-    rovTypes::rov_enable_pd pkge;
+    rov_types::rov_enable_pd pkge;
     _connector.Send(pkge.serialize());
 }

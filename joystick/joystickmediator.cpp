@@ -154,6 +154,20 @@ void JoystickMediator::_powerChange(int val, int step)
     emit PowerChange(val);
 }
 
+void JoystickMediator::_saltoChange(int val, int step)
+{
+    if (_inverts["_saltoChange"]) val *= -1;
+    val = val * 100 / SHRT_MAX;
+    emit SaltoChange(val);
+}
+
+void JoystickMediator::_bochkaChange(int val, int step)
+{
+    if (_inverts["_bochkaChange"]) val *= -1;
+    val = val * 100 / SHRT_MAX;
+    emit BochkaChange(val);
+}
+
 void JoystickMediator::_changeConnection(QString signalName, QString slotName, bool needConnect)
 {
     int index = _joysticManager->metaObject()->indexOfSignal(QMetaObject::normalizedSignature(qPrintable(signalName + "(int, int)")));
