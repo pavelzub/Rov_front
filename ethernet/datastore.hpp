@@ -52,7 +52,7 @@ private:
     void _initConnections();
     void _onTick();
     void _createShortcuts();
-    void _getPackage(const std::vector<std::uint8_t> &package);
+    void _parsePackage(const std::vector<std::uint8_t> &package);
     void _sendHardwareFirmware(QString fileName);
     void _sendPd(rov_types::rov_pd pd);
     void _updatePd();

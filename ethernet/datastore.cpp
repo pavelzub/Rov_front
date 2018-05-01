@@ -177,7 +177,7 @@ void DataStore::_initTimer()
 void DataStore::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &DataStore::_onTick);
-    connect(&_connector, &TcpConnector::dataUpdate, this, &DataStore::_getPackage);
+    connect(&_connector, &TcpConnector::dataUpdate, this, &DataStore::_parsePackage);
     connect(&_connector, &TcpConnector::Connect, [this](){emit tcpConnect();});
     connect(&_connector, &TcpConnector::Disconnect, [this](){emit tcpDisconnect();});
     connect(_fileDialog, &QFileDialog::fileSelected, this, &DataStore::_sendHardwareFirmware);
@@ -204,24 +204,32 @@ void DataStore::_createShortcuts()
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_D), static_cast<QWidget*>(parent())), &QShortcut::activated, this, &DataStore::ChangeEnable);
 }
 
-void DataStore::_getPackage(const std::vector<uint8_t> &package)
+void DataStore::_parsePackage(const std::vector<uint8_t> &package)
 {
-    switch (package[0]) {
-        case rov_types::rov_telimetry::meta().packet_id:
-            _telimetry.deserialize(package);
-            emit telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll);
-            break;
-        case rov_types::rov_pd::meta().packet_id:
-            _pd.deserialize(package);
-            qDebug() << "Pd is update";
-            emit pdUpdate(_pd);
-            break;
-        case rov_types::rov_enable_pd::meta().packet_id:
-            _enable_pd.deserialize(package);
-            qDebug() << "Enable is update";
-            emit enablePdUpdate(_enable_pd);
-            break;
-    }
+    for (size_t i = 0; i < package.size();)
+        switch (package[i]) {
+            case rov_types::rov_telimetry::meta().packet_id:
+                _telimetry.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
+                                                            package.begin() + static_cast<int>(i) + rov_types::rov_telimetry::meta().packet_size));
+                i += rov_types::rov_telimetry::meta().packet_size;
+                emit telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll);
+                break;
+            case rov_types::rov_pd::meta().packet_id:
+                _telimetry.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
+                                                            package.begin() + static_cast<int>(i) + rov_types::rov_pd::meta().packet_size));
+                i += rov_types::rov_pd::meta().packet_size;
+                emit pdUpdate(_pd);
+                break;
+            case rov_types::rov_enable_pd::meta().packet_id:
+                _telimetry.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
+                                                            package.begin() + static_cast<int>(i) + rov_types::rov_enable_pd::meta().packet_size));
+                i += rov_types::rov_enable_pd::meta().packet_size;
+                emit enablePdUpdate(_enable_pd);
+                break;
+            default:
+                qDebug() << "Bad pkg";
+                i = package.size();
+        }
 }
 
 void DataStore::_sendHardwareFirmware(QString fileName)

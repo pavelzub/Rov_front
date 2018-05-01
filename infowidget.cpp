@@ -40,6 +40,7 @@ void InfoWidget::_createLayout()
     addLabel("Настройка камер", "Ctrl + 8");
     addLabel("Загрузка прошивки ардуино", "Ctrl + 9");
     addLabel("Закрыть приложение", "Ctrl + Q");
+    addLabel("Отлючиться от пульта", "Ctrl + D");
 
     mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(rightLayout);
