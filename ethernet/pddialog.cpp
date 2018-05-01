@@ -15,16 +15,16 @@ PdDialog::PdDialog(QWidget* parent):
 
 void PdDialog::UpdatePd(rov_types::rov_pd pd)
 {
-    _vals[0]->setText(QString::number(pd.yaw_p));
-    _vals[1]->setText(QString::number(pd.yaw_d));
-    _vals[2]->setText(QString::number(pd.depth_p));
-    _vals[3]->setText(QString::number(pd.depth_d));
-    _vals[4]->setText(QString::number(pd.roll_p));
-    _vals[5]->setText(QString::number(pd.roll_d));
-    _vals[6]->setText(QString::number(pd.roll_to_set));
-    _vals[7]->setText(QString::number(pd.pitch_p));
-    _vals[8]->setText(QString::number(pd.pitch_d));
-    _vals[9]->setText(QString::number(pd.pitch_to_set));
+    _vals[0]->setText(QString::number(pd.yaw_p).replace(".", ","));
+    _vals[1]->setText(QString::number(pd.yaw_d).replace(".", ","));
+    _vals[2]->setText(QString::number(pd.depth_p).replace(".", ","));
+    _vals[3]->setText(QString::number(pd.depth_d).replace(".", ","));
+    _vals[4]->setText(QString::number(pd.roll_p).replace(".", ","));
+    _vals[5]->setText(QString::number(pd.roll_d).replace(".", ","));
+    _vals[6]->setText(QString::number(pd.roll_to_set).replace(".", ","));
+    _vals[7]->setText(QString::number(pd.pitch_p).replace(".", ","));
+    _vals[8]->setText(QString::number(pd.pitch_d).replace(".", ","));
+    _vals[9]->setText(QString::number(pd.pitch_to_set).replace(".", ","));
 }
 
 void PdDialog::UpdateEnablePd(rov_types::rov_enable_pd enablePd)
@@ -98,16 +98,16 @@ void PdDialog::_sendData()
 {
     rov_types::rov_pd package;
 
-    if (_needUpdate[0]->isChecked()) package.yaw_p = _vals[0]->text().toFloat();
-    if (_needUpdate[1]->isChecked()) package.yaw_d = _vals[1]->text().toFloat();
-    if (_needUpdate[2]->isChecked()) package.depth_p = _vals[2]->text().toFloat();
-    if (_needUpdate[3]->isChecked()) package.depth_d = _vals[3]->text().toFloat();
-    if (_needUpdate[4]->isChecked()) package.roll_p = _vals[4]->text().toFloat();
-    if (_needUpdate[5]->isChecked()) package.roll_d = _vals[5]->text().toFloat();
-    if (_needUpdate[6]->isChecked()) package.roll_to_set = _vals[6]->text().toFloat();
-    if (_needUpdate[7]->isChecked()) package.pitch_p = _vals[7]->text().toFloat();
-    if (_needUpdate[8]->isChecked()) package.pitch_d = _vals[8]->text().toFloat();
-    if (_needUpdate[9]->isChecked()) package.pitch_to_set = _vals[9]->text().toFloat();
+    if (_needUpdate[0]->isChecked()) package.yaw_p = _vals[0]->text().replace(",", ".").toFloat();
+    if (_needUpdate[1]->isChecked()) package.yaw_d = _vals[1]->text().replace(",", ".").toFloat();
+    if (_needUpdate[2]->isChecked()) package.depth_p = _vals[2]->text().replace(",", ".").toFloat();
+    if (_needUpdate[3]->isChecked()) package.depth_d = _vals[3]->text().replace(",", ".").toFloat();
+    if (_needUpdate[4]->isChecked()) package.roll_p = _vals[4]->text().replace(",", ".").toFloat();
+    if (_needUpdate[5]->isChecked()) package.roll_d = _vals[5]->text().replace(",", ".").toFloat();
+    if (_needUpdate[6]->isChecked()) package.roll_to_set = _vals[6]->text().replace(",", ".").toFloat();
+    if (_needUpdate[7]->isChecked()) package.pitch_p = _vals[7]->text().replace(",", ".").toFloat();
+    if (_needUpdate[8]->isChecked()) package.pitch_d = _vals[8]->text().replace(",", ".").toFloat();
+    if (_needUpdate[9]->isChecked()) package.pitch_to_set = _vals[9]->text().replace(",", ".").toFloat();
 
     emit PdChange(package);
 }

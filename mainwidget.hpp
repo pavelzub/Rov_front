@@ -25,6 +25,9 @@ public:
     void ShowJoysticDebug();
     void ShowCamerasConfig();
 
+signals:
+    void EnableReg(int);
+
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);

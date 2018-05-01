@@ -16,28 +16,24 @@ DataStore::DataStore(QWidget *parent) :
 void DataStore::SetAxisX(int axis)
 {
     axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
-    axis *= (_power / 100.0);
     _control.axis_x = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex);
 }
 
 void DataStore::SetAxisY(int axis)
 {
     axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
-    axis *= (_power / 100.0);
     _control.axis_y = static_cast<std::int8_t>(axis - axis * 2 * _mainCameraIndex );
 }
 
 void DataStore::SetAxisZ(int axis)
 {
     axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
-    axis *= (_power / 100.0);
     _control.axis_z = static_cast<std::int8_t>(axis);
 }
 
 void DataStore::SetAxisW(int axis)
 {
     axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
-    axis *= (_power / 100.0);
     _control.axis_w = static_cast<std::int8_t>(axis);
 }
 
@@ -104,10 +100,6 @@ void DataStore::SetAcousticOff(int val)
 void DataStore::SetPower(int val)
 {
     _power = val;
-    _control.axis_x = static_cast<int8_t>(_control.axis_x * (_power / 100));
-    _control.axis_y = static_cast<int8_t>(_control.axis_y * (_power / 100));
-    _control.axis_z = static_cast<int8_t>(_control.axis_z * (_power / 100));
-    _control.axis_w = static_cast<int8_t>(_control.axis_w * (_power / 100));
 }
 
 void DataStore::SetSalto(int val)
@@ -157,13 +149,14 @@ void DataStore::SetEnablePd(int index)
             pkg.pitch_pd = _enable_pd.pitch_pd == 1 ? 0 : 1;
             break;
     }
+    qDebug() << index;
     _connector.Send(pkg.serialize());
 }
 
 void DataStore::ChangeEnable()
 {
     if (!_timer->isActive())
-        _timer->start(20);
+        _timer->start(50);
     else
         _timer->stop();
 }
@@ -191,8 +184,17 @@ void DataStore::_initConnections()
 void DataStore::_onTick()
 {
     _debugDialog->Update();
-    _connector.Send(_debugMode ? _debug.serialize() : _control.serialize());
-//    qDebug() << "AnusPes";
+    if (_debugMode){
+        _connector.Send(_debug.serialize());
+        return;
+    }
+
+    rov_types::rov_control pkg(_control);
+    pkg.axis_x *= (_power / 100.0);
+    pkg.axis_y *= (_power / 100.0);
+    pkg.axis_z *= (_power / 100.0);
+    pkg.axis_w *= (_power / 100.0);
+    _connector.Send(pkg.serialize());
 }
 
 void DataStore::_createShortcuts()
@@ -215,15 +217,17 @@ void DataStore::_parsePackage(const std::vector<uint8_t> &package)
                 emit telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll);
                 break;
             case rov_types::rov_pd::meta().packet_id:
-                _telimetry.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
+                _pd.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
                                                             package.begin() + static_cast<int>(i) + rov_types::rov_pd::meta().packet_size));
                 i += rov_types::rov_pd::meta().packet_size;
+//                qDebug() << "pf update";
                 emit pdUpdate(_pd);
                 break;
             case rov_types::rov_enable_pd::meta().packet_id:
-                _telimetry.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
+                _enable_pd.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
                                                             package.begin() + static_cast<int>(i) + rov_types::rov_enable_pd::meta().packet_size));
                 i += rov_types::rov_enable_pd::meta().packet_size;
+//                qDebug() << "enable update" <;
                 emit enablePdUpdate(_enable_pd);
                 break;
             default:

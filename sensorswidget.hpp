@@ -6,6 +6,7 @@
 #include <QList>
 #include <QLabel>
 #include <QPixmap>
+#include "rov_data_types/rov_data_types.hpp"
 
 class SensorsWidget : public QWidget
 {
@@ -15,6 +16,7 @@ public:
     void TelimetryChange(float yaw, float pitch, float roll);
     void RollCange(int val);
     void YawCange(int val);
+    void RegChange(rov_types::rov_enable_pd enable_pd);
 
 private:
     void _createLabels();
@@ -25,6 +27,7 @@ private:
     QPixmap _pixmaps[3];
     QLabel* _labels[3];
     QLabel* _vals[3];
+    QLabel* _texts[3];
 };
 
 #endif // SENSORSWIDGET_HPP

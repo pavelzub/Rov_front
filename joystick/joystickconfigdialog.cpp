@@ -4,6 +4,7 @@
 #include <QMetaMethod>
 #include <QMetaObject>
 #include <iostream>
+#include <QDebug>
 
 JoystickConfigDialog::JoystickConfigDialog(JoystickManager *joysticManager, QSettings *settings, QWidget *parent):
     QDialog(parent)

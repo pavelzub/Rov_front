@@ -1,5 +1,6 @@
 #include "sensorswidget.hpp"
 #include <QPainter>
+#include <QDebug>
 
 SensorsWidget::SensorsWidget(QWidget *parent) : QWidget(parent)
 {
@@ -20,17 +21,30 @@ void SensorsWidget::TelimetryChange(float yaw, float pitch, float roll)
     _labels[2]->setPixmap(pixmap);
 }
 
+void SensorsWidget::RegChange(rov_types::rov_enable_pd enable_pd)
+{
+    _texts[0]->setVisible(enable_pd.yaw_pd == 1);
+    _texts[1]->setVisible(enable_pd.pitch_pd == 1);
+    _texts[2]->setVisible(enable_pd.roll_pd == 1);
+}
+
 void SensorsWidget::_createLabels()
 {
+    QPoint iconPos[3] = {{18, 176}, {148, 176}, {278, 176}};
+    QPoint textPos[3] = {{23, 136}, {156, 132}, {284, 129}};
+    QString names[3] = {"yaw", "pitch", "roll"};
     for (int i = 0; i < 3; i++){
         _labels[i] = new QLabel(this);
         _labels[i]->setFixedSize(103, 103);
         _labels[i]->setAlignment(Qt::AlignCenter);
-    }
+        _labels[i]->move(iconPos[i]);
 
-    _labels[0]->move(18, 176);
-    _labels[1]->move(148, 176);
-    _labels[2]->move(278, 176);
+        _texts[i] = new QLabel(this);
+        _texts[i]->setFixedSize(85, 42);
+        _texts[i]->move(textPos[i]);
+        _texts[i]->setStyleSheet(QString("background-image: url(%1Text.png);").arg(names[i]));
+        _texts[i]->setVisible(false);
+    }
 }
 
 void SensorsWidget::_initPixmaps()

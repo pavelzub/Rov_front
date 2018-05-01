@@ -68,16 +68,16 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
             _dataStore->SetTwisting_motors(3, -1);
             break;
         case Qt::Key_A:
-            _dataStore->SetEnablePd(0);
+            emit EnableReg(0);
             break;
         case Qt::Key_S:
-            _dataStore->SetEnablePd(1);
+            emit EnableReg(1);
             break;
         case Qt::Key_D:
-            _dataStore->SetEnablePd(2);
+            emit EnableReg(2);
             break;
         case Qt::Key_F:
-            _dataStore->SetEnablePd(3);
+            emit EnableReg(3);
             break;
     }
 }
@@ -122,13 +122,13 @@ void MainWidget::_createIcons()
     _joysticIcon = new QLabel(this);
     _joysticIcon->setFixedSize(36, 36);
     _joysticIcon->move(50, 643);
-    _joysticIcon->setStyleSheet(QString("background-image: url(joystick.png);"));
+    _joysticIcon->setStyleSheet("background-image: url(joystick.png);");
     _joysticIcon->setVisible(false);
 
     _ethernetIcon = new QLabel(this);
     _ethernetIcon->setFixedSize(31, 31);
     _ethernetIcon->move(99, 647);
-    _ethernetIcon->setStyleSheet(QString("background-image: url(ethernet.png);"));
+    _ethernetIcon->setStyleSheet("background-image: url(ethernet.png);");
     _ethernetIcon->setVisible(false);
 }
 
@@ -162,5 +162,8 @@ void MainWidget::_initConnections()
     connect(_dataStore, &DataStore::tcpConnect, [this](){_ethernetIcon->setVisible(true);});
     connect(_dataStore, &DataStore::tcpDisconnect, [this](){_ethernetIcon->setVisible(false);});
     connect(_dataStore, &DataStore::telimetryUpdate, _sensorWidget, &SensorsWidget::TelimetryChange);
+    connect(_dataStore, &DataStore::enablePdUpdate, _sensorWidget, &SensorsWidget::RegChange);
+    connect(this, &MainWidget::EnableReg, _dataStore, &DataStore::SetEnablePd);
+
 }
 
