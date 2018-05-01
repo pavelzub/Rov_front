@@ -67,16 +67,16 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Comma:
             _dataStore->SetTwisting_motors(3, -1);
             break;
-        case Qt::Key_A:
+        case Qt::Key_Y:
             emit EnableReg(0);
             break;
-        case Qt::Key_S:
+        case Qt::Key_D:
             emit EnableReg(1);
             break;
-        case Qt::Key_D:
+        case Qt::Key_R:
             emit EnableReg(2);
             break;
-        case Qt::Key_F:
+        case Qt::Key_P:
             emit EnableReg(3);
             break;
     }

@@ -1,5 +1,6 @@
 #include "datastore.hpp"
 #include <QShortcut>
+#include <QSound>
 
 DataStore::DataStore(QWidget *parent) :
     QObject(parent),
@@ -28,6 +29,8 @@ void DataStore::SetAxisY(int axis)
 void DataStore::SetAxisZ(int axis)
 {
     axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
+    if (_control.axis_z && !axis)
+        QSound::play("sound.wav");
     _control.axis_z = static_cast<std::int8_t>(axis);
 }
 
