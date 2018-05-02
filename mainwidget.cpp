@@ -122,13 +122,13 @@ void MainWidget::_createIcons()
     _joysticIcon = new QLabel(this);
     _joysticIcon->setFixedSize(36, 36);
     _joysticIcon->move(50, 643);
-    _joysticIcon->setStyleSheet("background-image: url(joystick.png);");
+    _joysticIcon->setStyleSheet("background-image: url(images\\icons\\joystick.png);");
     _joysticIcon->setVisible(false);
 
     _ethernetIcon = new QLabel(this);
     _ethernetIcon->setFixedSize(31, 31);
     _ethernetIcon->move(99, 647);
-    _ethernetIcon->setStyleSheet("background-image: url(ethernet.png);");
+    _ethernetIcon->setStyleSheet("background-image: url(images\\icons\\ethernet.png);");
     _ethernetIcon->setVisible(false);
 }
 

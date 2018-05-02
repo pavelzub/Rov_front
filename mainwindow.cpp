@@ -8,7 +8,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       _mainWidget(new MainWidget(this)),
-      _background(new QPixmap("background.jpg"))
+      _background(new QPixmap("images\\background.jpg"))
 {
     setCentralWidget(_mainWidget);
     setFixedSize(WINDOWWIDTH, WINDOWHEIGTH);

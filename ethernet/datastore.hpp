@@ -57,7 +57,7 @@ private:
     void _sendPd(rov_types::rov_pd pd);
     void _updatePd();
 
-    int AXISTOLERANCE = 7;
+    int AXISTOLERANCE = 10;
     TcpConnector _connector;
     QTimer* _timer;
     DataDebugDialog* _debugDialog;

@@ -42,16 +42,16 @@ void SensorsWidget::_createLabels()
         _texts[i] = new QLabel(this);
         _texts[i]->setFixedSize(85, 42);
         _texts[i]->move(textPos[i]);
-        _texts[i]->setStyleSheet(QString("background-image: url(%1Text.png);").arg(names[i]));
+        _texts[i]->setStyleSheet(QString("background-image: url(images\\sensors\\%1Text.png);").arg(names[i]));
         _texts[i]->setVisible(false);
     }
 }
 
 void SensorsWidget::_initPixmaps()
 {
-    _pixmaps[0] = QPixmap("yaw.png");
-    _pixmaps[1] = QPixmap("pitch.png");
-    _pixmaps[2] = QPixmap("roll.png");
+    _pixmaps[0] = QPixmap("images\\sensors\\yaw.png");
+    _pixmaps[1] = QPixmap("images\\sensors\\pitch.png");
+    _pixmaps[2] = QPixmap("images\\sensors\\roll.png");
 }
 
 void SensorsWidget::_createVals()
