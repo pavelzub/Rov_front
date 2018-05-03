@@ -42,7 +42,7 @@ void SensorsWidget::_createLabels()
         _texts[i] = new QLabel(this);
         _texts[i]->setFixedSize(85, 42);
         _texts[i]->move(textPos[i]);
-        _texts[i]->setStyleSheet(QString("background-image: url(images\\sensors\\%1Text.png);").arg(names[i]));
+        _texts[i]->setStyleSheet(QString("background-image: url(images/sensors/%1Text.png);").arg(names[i]));
         _texts[i]->setVisible(false);
     }
 }

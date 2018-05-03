@@ -38,6 +38,8 @@ public:
     void SetTwisting_motors(int index, int val);
     void SetMainCameraIndex(int index);
     void SetEnablePd(int index);
+    void SetSecondManOpen(int val);
+    void SetSecondManClose(int val);
     void ChangeEnable();
 
 signals:

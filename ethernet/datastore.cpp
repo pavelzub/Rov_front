@@ -156,6 +156,16 @@ void DataStore::SetEnablePd(int index)
     _connector.Send(pkg.serialize());
 }
 
+void DataStore::SetSecondManOpen(int val)
+{
+    _control.secondary_maninpulator = static_cast<char>(val);
+}
+
+void DataStore::SetSecondManClose(int val)
+{
+    _control.secondary_maninpulator = static_cast<char>(-val);
+}
+
 void DataStore::ChangeEnable()
 {
     if (!_timer->isActive())

@@ -122,13 +122,13 @@ void MainWidget::_createIcons()
     _joysticIcon = new QLabel(this);
     _joysticIcon->setFixedSize(36, 36);
     _joysticIcon->move(50, 643);
-    _joysticIcon->setStyleSheet("background-image: url(images\\icons\\joystick.png);");
+    _joysticIcon->setStyleSheet("background-image: url(images/icons/joystick.png);");
     _joysticIcon->setVisible(false);
 
     _ethernetIcon = new QLabel(this);
     _ethernetIcon->setFixedSize(31, 31);
     _ethernetIcon->move(99, 647);
-    _ethernetIcon->setStyleSheet("background-image: url(images\\icons\\ethernet.png);");
+    _ethernetIcon->setStyleSheet("background-image: url(images/icons/ethernet.png);");
     _ethernetIcon->setVisible(false);
 }
 
@@ -153,6 +153,8 @@ void MainWidget::_initConnections()
     connect(_joystickMediator, &JoystickMediator::PowerChange, _dataStore, &DataStore::SetPower);
     connect(_joystickMediator, &JoystickMediator::SaltoChange, _dataStore, &DataStore::SetSalto);
     connect(_joystickMediator, &JoystickMediator::BochkaChange, _dataStore, &DataStore::SetBochka);
+    connect(_joystickMediator, &JoystickMediator::SecondManOpen, _dataStore, &DataStore::SetSecondManOpen);
+    connect(_joystickMediator, &JoystickMediator::SecondManClose, _dataStore, &DataStore::SetSecondManClose);;
 
     connect(_joystickMediator, &JoystickMediator::JoystickConnect, [this](){_joysticIcon->setVisible(true);});
     connect(_joystickMediator, &JoystickMediator::JoystickDisconnect, [this](){_joysticIcon->setVisible(false);});

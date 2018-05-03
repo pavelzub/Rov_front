@@ -36,6 +36,8 @@ signals:
     void PowerChange(int);
     void SaltoChange(int);
     void BochkaChange(int);
+    void SecondManOpen(int);
+    void SecondManClose(int);
     void JoystickConnect();
     void JoystickDisconnect();
 
@@ -60,6 +62,8 @@ private slots:
     void _powerChange(int val, int step);
     void _saltoChange(int val, int step);
     void _bochkaChange(int val, int step);
+    void _secondManOpen(int val, int step);
+    void _secondManClose(int val, int step);
 
 
 

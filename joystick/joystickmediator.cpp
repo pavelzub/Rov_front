@@ -168,6 +168,20 @@ void JoystickMediator::_bochkaChange(int val, int step)
     emit BochkaChange(val);
 }
 
+void JoystickMediator::_secondManOpen(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_secondManOpen"]) val *= -1;
+    emit SecondManOpen(val);
+}
+
+void JoystickMediator::_secondManClose(int val, int step)
+{
+    val = val ? val/abs(val) : 0;
+    if (_inverts["_secondManClose"]) val *= -1;
+    emit SecondManClose(val);
+}
+
 void JoystickMediator::_changeConnection(QString signalName, QString slotName, bool needConnect)
 {
     int index = _joysticManager->metaObject()->indexOfSignal(QMetaObject::normalizedSignature(qPrintable(signalName + "(int, int)")));

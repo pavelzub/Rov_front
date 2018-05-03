@@ -42,6 +42,7 @@ void DataDebugDialog::Update()
     _controlVals[11]->setText(QString::number(_control->twisting_motors[1]));
     _controlVals[12]->setText(QString::number(_control->twisting_motors[2]));
     _controlVals[13]->setText(QString::number(_control->twisting_motors[3]));
+    _controlVals[14]->setText(QString::number(_control->secondary_maninpulator));
 }
 
 void DataDebugDialog::_createLayout()
@@ -68,7 +69,7 @@ void DataDebugDialog::_createLayout()
     const QList<QString> telimetryNames = {"yaw", "pitch", "roll", "depth", "mega_communication", "mini_communication", "esp_communication", "esp_state",
                                       "manipulator_rotated", "manipulator_opened_closed", "camera_rotate0", "camera_rotate1", "magnet", "acoustic"};
     const QList<QString> controlNames = {"axis_x", "axis_y", "axis_z", "axis_w", "manipulator_rotate", "manipulator_open_close", "camera_rotate0", "camera_rotate1",
-                                        "magnet", "acoustic", "twisting_motors0", "twisting_motors1", "twisting_motors2", "twisting_motors3"};
+                                        "magnet", "acoustic", "twisting_motors0", "twisting_motors1", "twisting_motors2", "twisting_motors3", "subman"};
 
     addLayouts(&_telimetryVals, telimetryNames);
     addLayouts(&_controlVals, controlNames);
