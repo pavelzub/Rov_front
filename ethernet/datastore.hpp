@@ -40,10 +40,11 @@ public:
     void SetEnablePd(int index);
     void SetSecondManOpen(int val);
     void SetSecondManClose(int val);
+    void DisablePID();
     void ChangeEnable();
 
 signals:
-    void telimetryUpdate(float yaw, float pitch, float roll);
+    void telimetryUpdate(float yaw, float pitch, float roll, float depth);
     void pdUpdate(rov_types::rov_pd);
     void enablePdUpdate(rov_types::rov_enable_pd);
     void tcpConnect();

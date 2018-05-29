@@ -13,7 +13,7 @@ class SensorsWidget : public QWidget
     Q_OBJECT
 public:
     explicit SensorsWidget(QWidget *parent = nullptr);
-    void TelimetryChange(float yaw, float pitch, float roll);
+    void TelimetryChange(float yaw, float pitch, float roll, float depth);
     void RollCange(int val);
     void YawCange(int val);
     void RegChange(rov_types::rov_enable_pd enable_pd);
@@ -26,8 +26,8 @@ private:
 
     QPixmap _pixmaps[3];
     QLabel* _labels[3];
-    QLabel* _vals[3];
-    QLabel* _texts[3];
+    QLabel* _vals[4];
+    QLabel* _texts[4];
 };
 
 #endif // SENSORSWIDGET_HPP

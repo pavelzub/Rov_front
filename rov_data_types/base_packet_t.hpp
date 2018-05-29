@@ -10,10 +10,10 @@
 #include "binary_stream.hpp"
 #include "crc.hpp"
 namespace rov_types {
-    template <uint8_t packet_id_, uint8_t payload_size_, uint16_t packet_size_>
+    template <uint8_t packet_id_, uint8_t payload_size_>
     class base_packet_t : public serializable {
     public:
-        typedef meta_traits<packet_id_, payload_size_, packet_size_> meta;
+        typedef meta_traits<packet_id_, payload_size_> meta;
 
         virtual std::vector<std::uint8_t> serialize() override  {
             binary_stream bs;

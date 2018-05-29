@@ -28,7 +28,7 @@ void DataStore::SetAxisY(int axis)
 
 void DataStore::SetAxisZ(int axis)
 {
-    axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
+    if (_enable_pd.depth_pd == 1) axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
     if (_control.axis_z && !axis)
         QSound::play("sound.wav");
     _control.axis_z = static_cast<std::int8_t>(axis);
@@ -82,12 +82,12 @@ void DataStore::SetSubCameraRotateLeft(int val)
 
 void DataStore::SetMagnetOn(int val)
 {
-    _control.magnet = static_cast<char>(val);
+    _control.magnet = static_cast<char>(1);
 }
 
 void DataStore::SetMagnetOff(int val)
 {
-    _control.magnet = static_cast<char>(-val);
+    _control.magnet = static_cast<char>(0);
 }
 
 void DataStore::SetAcousticOn(int val)
@@ -166,6 +166,16 @@ void DataStore::SetSecondManClose(int val)
     _control.secondary_maninpulator = static_cast<char>(-val);
 }
 
+void DataStore::DisablePID()
+{
+    rov_types::rov_enable_pd pkg;
+    pkg.depth_pd = 0;
+    pkg.pitch_pd = 0;
+    pkg.roll_pd = 0;
+    pkg.yaw_pd = 0;
+    _connector.Send(pkg.serialize());
+}
+
 void DataStore::ChangeEnable()
 {
     if (!_timer->isActive())
@@ -184,7 +194,10 @@ void DataStore::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &DataStore::_onTick);
     connect(&_connector, &TcpConnector::dataUpdate, this, &DataStore::_parsePackage);
-    connect(&_connector, &TcpConnector::Connect, [this](){emit tcpConnect();});
+    connect(&_connector, &TcpConnector::Connect, [this](){
+        _updatePd();
+        emit tcpConnect();
+    });
     connect(&_connector, &TcpConnector::Disconnect, [this](){emit tcpDisconnect();});
     connect(_fileDialog, &QFileDialog::fileSelected, this, &DataStore::_sendHardwareFirmware);
     connect(_packageDebugDialog, &PackageDebugDialog::visibleChange, [this](bool f){ _debugMode = f; });
@@ -203,10 +216,10 @@ void DataStore::_onTick()
     }
 
     rov_types::rov_control pkg(_control);
-    pkg.axis_x *= (_power / 100.0);
-    pkg.axis_y *= (_power / 100.0);
+//    pkg.axis_x *= (_power / 100.0);
+//    pkg.axis_y *= (_power / 100.0);
     pkg.axis_z *= (_power / 100.0);
-    pkg.axis_w *= (_power / 100.0);
+//    pkg.axis_w *= (_power / 100.0);
     _connector.Send(pkg.serialize());
 }
 
@@ -227,7 +240,7 @@ void DataStore::_parsePackage(const std::vector<uint8_t> &package)
                 _telimetry.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),
                                                             package.begin() + static_cast<int>(i) + rov_types::rov_telimetry::meta().packet_size));
                 i += rov_types::rov_telimetry::meta().packet_size;
-                emit telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll);
+                emit telimetryUpdate(_telimetry.yaw, _telimetry.pitch, _telimetry.roll, _telimetry.depth);
                 break;
             case rov_types::rov_pd::meta().packet_id:
                 _pd.deserialize(std::vector<uint8_t>(package.begin() + static_cast<int>(i),

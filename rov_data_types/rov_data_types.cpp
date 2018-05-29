@@ -255,16 +255,20 @@ void rov_types::rov_debug::data_deserialize(rov_types::binary_stream &bs) {
 
 void rov_types::rov_pd::data_serialize(rov_types::binary_stream &bs) {
     bs << yaw_p;
+    bs << yaw_i;
     bs << yaw_d;
 
     bs << depth_p;
+    bs << depth_i;
     bs << depth_d;
 
     bs << roll_p;
+    bs << roll_i;
     bs << roll_d;
     bs << roll_to_set;
 
     bs << pitch_p;
+    bs << pitch_i;
     bs << pitch_d;
     bs << pitch_to_set;
 
@@ -272,16 +276,20 @@ void rov_types::rov_pd::data_serialize(rov_types::binary_stream &bs) {
 
 void rov_types::rov_pd::data_deserialize(rov_types::binary_stream &bs) {
     bs >> yaw_p;
+    bs >> yaw_i;
     bs >> yaw_d;
 
     bs >> depth_p;
+    bs >> depth_i;
     bs >> depth_d;
 
     bs >> roll_p;
+    bs >> roll_i;
     bs >> roll_d;
     bs >> roll_to_set;
 
     bs >> pitch_p;
+    bs >> pitch_i;
     bs >> pitch_d;
     bs >> pitch_to_set;
 }

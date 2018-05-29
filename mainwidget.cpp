@@ -79,6 +79,9 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         case Qt::Key_P:
             emit EnableReg(3);
             break;
+        case Qt::Key_Q:
+            _dataStore->DisablePID();
+            break;
     }
 }
 

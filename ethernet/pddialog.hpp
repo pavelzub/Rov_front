@@ -32,7 +32,7 @@ private:
     void _initConnections();
     void _sendData();
     void _updateData();
-    const QList<QString> NAMES = {"Yaw_P", "Yaw_D", "Depth_P", "Depth_D", "Roll_P", "Roll_D", "Roll_Default", "Pitch_P", "Pitch_D", "Pitch_Default"};
+    const QList<QString> NAMES = {"Yaw_P", "Yaw_I", "Yaw_D", "Depth_P", "Depth_I", "Depth_D", "Roll_P", "Roll_I", "Roll_D", "Roll_Default", "Pitch_P", "Pitch_I", "Pitch_D", "Pitch_Default"};
 
     QList<QLabel*> _names;
     QList<QLineEdit*> _vals;

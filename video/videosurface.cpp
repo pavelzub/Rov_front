@@ -37,7 +37,7 @@ QList<QVideoFrame::PixelFormat> VideoSurface::supportedPixelFormats(QAbstractVid
             << QVideoFrame::Format_AdobeDng;
 }
 
-bool VideoSurface:: present(const QVideoFrame &frame)
+bool VideoSurface::present(const QVideoFrame &frame)
 {
     if (frame.isValid()) {
         QVideoFrame cloneFrame(frame);
@@ -53,7 +53,7 @@ bool VideoSurface:: present(const QVideoFrame &frame)
         pixmap = pixmap.transformed(tr);
         pixmap = pixmap.scaled(960, 540, Qt::IgnoreAspectRatio,Qt::FastTransformation);
         *_pixmap = pixmap;
-
+        emit newFrame(pixmap);
         cloneFrame.unmap();
         return true;
     }
