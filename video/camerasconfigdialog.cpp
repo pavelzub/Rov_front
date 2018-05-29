@@ -7,7 +7,7 @@
 #include <iostream>
 #include <QShortcut>
 
-CamerasConfigDialog::CamerasConfigDialog(QSettings* settings, QWidget *parent):
+CamerasConfigDialog::CamerasConfigDialog(Settings *settings, QWidget *parent):
     QDialog(parent)
 {
     _settings = settings;
@@ -48,6 +48,6 @@ void CamerasConfigDialog::_btnPress()
         _settings->setValue("CAMERAS/cam_" + QString::number(i + 3) + "_url", _camerasAdress[i]->text());
     }
 
-    emit configUpdate();
+    _settings->cameraNeedsUpdate();
     hide();
 }

@@ -6,9 +6,9 @@
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
-    _settings(new QSettings(".ini", QSettings::IniFormat)),
+    _settings(new Settings(".ini", QSettings::IniFormat)),
     _joystickMediator(new JoystickMediator(_settings, this)),
-    _dataStore(new DataStore(this)),
+    _dataStore(new DataStore(_settings, this)),
     _timerWidget(new TimerWidget(this)),
     _camerasControlWidget(new CamerasControlWidget(_settings, this)),
     _joystickDebugDialog(new JoystickDebugDialog(_joystickMediator, this)),

@@ -3,16 +3,17 @@
 
 #include <iostream>
 
-EthernetCameraWidget::EthernetCameraWidget(int index, QSettings* settings, QWidget *parent):
+EthernetCameraWidget::EthernetCameraWidget(int index, Settings* settings, QWidget *parent):
     VideoWidget(index, parent)
 {
     _settings = settings;
-    UpdateConfig();
+    _updateConfig();
+    connect(_settings, &Settings::camerasUpdate, this, &EthernetCameraWidget::_updateConfig);
 }
 
-void EthernetCameraWidget::UpdateConfig()
+void EthernetCameraWidget::_updateConfig()
 {
-    QString url = "udp://" + _settings->value("CAMERAS/cam_" + QString::number(_index + 1) + "_url", "192.168.1.255:1234").toString();
+    QString url = "ws://" + _settings->value("CAMERAS/cam_" + QString::number(_index + 1) + "_url", "192.168.1.255:1234").toString();
     if (_url == url) return;
 
     _url = url;
@@ -21,14 +22,9 @@ void EthernetCameraWidget::UpdateConfig()
     }
 
     thread = new QThread;
-    VideoStreamParser* parser = new VideoStreamParser(url, &_isEnabled);
-    parser->moveToThread(thread);
-    connect(thread, &QThread::started, parser, &VideoStreamParser::process);
-    connect(parser, &VideoStreamParser::finished, thread, &QThread::quit);
-    connect(parser, &VideoStreamParser::repaint, this, &EthernetCameraWidget::_update);
-    connect(parser, &VideoStreamParser::finished, parser, &VideoStreamParser::deleteLater);
-    connect(parser, &VideoStreamParser::finished, this, &EthernetCameraWidget::_onStopEvent);
-    connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+    _webSocket = new WebSocket();
+    _webSocket->moveToThread(thread);
+    connect(_webSocket, &WebSocket::newFrame, this, &EthernetCameraWidget::_update);
     thread->start();
 }
 

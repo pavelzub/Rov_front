@@ -5,11 +5,13 @@
 #include <QAbstractSocket>
 #include <QTcpSocket>
 
+#include "settings.hpp"
+
 class TcpConnector : public QObject
 {
     Q_OBJECT
 public:
-    explicit TcpConnector(QObject *parent = nullptr);
+    explicit TcpConnector(Settings* settings, QObject *parent = nullptr);
     bool Send(const std::vector<std::uint8_t> data);
 
 signals:
@@ -19,7 +21,6 @@ signals:
 
 private:
     const quint16 HOST_PORT = 2090;
-    const QString HOST = "192.168.1.124";
 
     void _initConnections();
     void _connect();
@@ -27,8 +28,11 @@ private:
     void _onConnected();
     void _onDisconnected();
     void _onError(QAbstractSocket::SocketError error);
-    QTcpSocket* _socket;
+    void _updateIp();
 
+    QTcpSocket* _socket;
+    Settings* _settings;
+    QString HOST = "192.168.88.251";
 };
 
 #endif // TCPCONNETOR_HPP

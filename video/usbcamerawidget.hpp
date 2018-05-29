@@ -16,7 +16,7 @@ public:
     void setCamera(QCameraInfo camInfo);
 
 private:
-    void _initConnections();
+    void _updatePixmap(QPixmap pixmap);
 
     QString _deviceName;
     QCamera* _camera = nullptr;

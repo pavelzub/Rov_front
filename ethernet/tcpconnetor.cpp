@@ -1,11 +1,12 @@
 #include "tcpconnetor.hpp"
 #include <iostream>
 
-TcpConnector::TcpConnector(QObject *parent) :
+TcpConnector::TcpConnector(Settings *settings, QObject *parent) :
     QObject(parent),
     _socket(new QTcpSocket(this))
 {
-    _connect();
+    _settings = settings;
+    _updateIp();
     _initConnections();
 }
 
@@ -23,6 +24,7 @@ void TcpConnector::_initConnections()
     connect(_socket, &QTcpSocket::connected, this, &TcpConnector::_onConnected);
     connect(_socket, &QTcpSocket::disconnected, this, &TcpConnector::_onDisconnected);
     connect(_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TcpConnector::_onError);
+    connect(_settings, &Settings::serverIpUpdate, this, &TcpConnector::_updateIp);
 }
 
 void TcpConnector::_connect()
@@ -51,4 +53,11 @@ void TcpConnector::_onDisconnected()
 void TcpConnector::_onError(QAbstractSocket::SocketError error)
 {
     _connect();
+}
+
+void TcpConnector::_updateIp()
+{
+    HOST = _settings->value("SERVER/server_url", "192.168.88.251").toString();
+    if (_socket->isOpen())_socket->disconnectFromHost();
+    else _connect();
 }

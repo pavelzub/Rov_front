@@ -5,8 +5,10 @@
 
 #include <QObject>
 #include <QWidget>
-#include <QSettings>
 #include <QThread>
+
+#include "settings.hpp"
+#include "websocket.hpp"
 
 extern "C" {
     #define __STDC_CONSTANT_MACROS
@@ -17,16 +19,17 @@ extern "C" {
 class EthernetCameraWidget : public VideoWidget
 {
 public:
-    EthernetCameraWidget(int _index, QSettings *settings, QWidget *parent = nullptr);
-    void UpdateConfig();
+    EthernetCameraWidget(int _index, Settings *settings, QWidget *parent = nullptr);
 
 private:
     void _update(QPixmap pixmap);
+    void _updateConfig();
     void _onStopEvent();
 
     QString _url;
     QThread* thread = nullptr;
-    QSettings* _settings;
+    Settings* _settings;
+    WebSocket* _webSocket;
 };
 
 #endif // ITHERNETCAMERAWIDGET_HPP

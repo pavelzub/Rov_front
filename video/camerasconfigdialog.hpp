@@ -8,20 +8,19 @@
 #include <QLineEdit>
 #include <QList>
 
+#include "settings.hpp"
+
 class CamerasConfigDialog : public QDialog
 {
     Q_OBJECT
 public:
-    CamerasConfigDialog(QSettings* settings, QWidget* parent = nullptr);
-
-signals:
-    void configUpdate();
+    CamerasConfigDialog(Settings* settings, QWidget* parent = nullptr);
 
 private:
     void _createLayout();
     void _btnPress();
 
-    QSettings* _settings;
+    Settings* _settings;
     QList<QLineEdit*> _camerasAdress;
 };
 

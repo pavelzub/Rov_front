@@ -4,13 +4,14 @@
 #include <QDialog>
 #include <QObject>
 #include <QWidget>
-#include <QSettings>
 #include <QLabel>
 #include <QList>
 #include <QCheckBox>
 
+#include "settings.hpp"
 #include "joystickmanager.hpp"
 #include "clickablelabel.hpp"
+
 void _camera1RotateRight(int val, int step);
 void _camera1RotateLeft(int val, int step);
 void _camera2RotateRight(int val, int step);
@@ -34,10 +35,7 @@ class JoystickConfigDialog : public QDialog
 {
     Q_OBJECT
 public:
-    JoystickConfigDialog(JoystickManager* joysticManager, QSettings* settings, QWidget* parent = nullptr);
-
-signals:
-    void configUpdate();
+    JoystickConfigDialog(JoystickManager* joysticManager, Settings* settings, QWidget* parent = nullptr);
 
 private slots:
     void _changeConfig(int val, int step);
@@ -53,7 +51,7 @@ private:
 
     int _selectIndex = -1;
     JoystickManager* _joysticManager;
-    QSettings* _settings;
+    Settings* _settings;
     QList<ClickableLabel*> _buttons;
     QList<QCheckBox*> _checkBoxs;
 };

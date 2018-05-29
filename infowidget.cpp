@@ -35,6 +35,7 @@ void InfoWidget::_createLayout()
     addLabel("Отправляемый и получаемый пакеты", "Ctrl + 1");
     addLabel("Отладка движетелей", "Ctrl + 2");
     addLabel("Информация о джойстике", "Ctrl + 3");
+    addLabel("Адрес сервера", "Ctrl + 5");
     addLabel("Настройка регуляторов", "Ctrl + 6");
     addLabel("Настройка джойстика", "Ctrl + 7");
     addLabel("Настройка камер", "Ctrl + 8");

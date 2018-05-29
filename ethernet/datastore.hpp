@@ -10,12 +10,14 @@
 #include "datadebugdialog.hpp"
 #include "packagedebugdialog.hpp"
 #include "pddialog.hpp"
+#include "serveripdialog.hpp"
+#include "settings.hpp"
 
 class DataStore : public QObject
 {
     Q_OBJECT
 public:
-    explicit DataStore(QWidget *parent = nullptr);
+    explicit DataStore(Settings *settings, QWidget *parent = nullptr);
     void SetAxisX(int axis);
     void SetAxisY(int axis);
     void SetAxisZ(int axis);
@@ -61,8 +63,9 @@ private:
     void _updatePd();
 
     int AXISTOLERANCE = 10;
-    TcpConnector _connector;
+    TcpConnector* _connector;
     QTimer* _timer;
+    ServerIpDialog* _serverIpDialog;
     DataDebugDialog* _debugDialog;
     QFileDialog* _fileDialog;
     PackageDebugDialog* _packageDebugDialog;

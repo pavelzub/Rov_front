@@ -6,7 +6,7 @@
 #include <iostream>
 #include <QDebug>
 
-JoystickConfigDialog::JoystickConfigDialog(JoystickManager *joysticManager, QSettings *settings, QWidget *parent):
+JoystickConfigDialog::JoystickConfigDialog(JoystickManager *joysticManager, Settings *settings, QWidget *parent):
     QDialog(parent)
 {
     _joysticManager = joysticManager;
@@ -29,7 +29,7 @@ void JoystickConfigDialog::_changeConfig(int val, int step)
     _buttons[_selectIndex]->setText(name);
     _selectLabel(-1);
 
-    emit configUpdate();
+    _settings->joystickNeedUpdate();
 }
 
 void JoystickConfigDialog::closeEvent(QCloseEvent *event)
@@ -116,5 +116,5 @@ void JoystickConfigDialog::_checkCheckBox(int i, bool isCheck)
     _settings->setValue(availableSlots[i] + "Invert" , isCheck);
     _settings->endGroup();
 
-    emit configUpdate();
+    _settings->joystickNeedUpdate();
 }

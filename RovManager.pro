@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia multimediawidgets
+QT       += core gui multimedia multimediawidgets websockets network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -67,7 +67,10 @@ SOURCES += \
     sensorswidget.cpp \
     ethernet/packagedebugdialog.cpp \
     infowidget.cpp \
-    ethernet/pddialog.cpp
+    ethernet/pddialog.cpp \
+    settings.cpp \
+    ethernet/serveripdialog.cpp \
+    video/websocket.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -95,4 +98,7 @@ HEADERS += \
     sensorswidget.hpp \
     ethernet/packagedebugdialog.hpp \
     infowidget.hpp \
-    ethernet/pddialog.hpp
+    ethernet/pddialog.hpp \
+    settings.hpp \
+    ethernet/serveripdialog.hpp \
+    video/websocket.hpp

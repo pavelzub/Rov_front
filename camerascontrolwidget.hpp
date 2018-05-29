@@ -7,6 +7,7 @@
 #include "video/videowidget.hpp"
 #include "video/videostreamparser.hpp"
 #include "video/camerasconfigdialog.hpp"
+#include "settings.hpp"
 
 #include <QWidget>
 #include <QTextEdit>
@@ -14,15 +15,13 @@
 #include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QTimer>
-#include <QSettings>
 
 class CamerasControlWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CamerasControlWidget(QSettings* settings, QWidget *parent = nullptr);
+    explicit CamerasControlWidget(Settings* settings, QWidget *parent = nullptr);
     void swapCameras(int index);
-    void updateConfig();
     void showConfigDialog();
 
 signals:
@@ -40,7 +39,7 @@ private:
     void _initConnections();
     void _initFfmpeg();
 
-    QSettings* _settings;
+    Settings* _settings;
     CamerasConfigDialog* _camerasConfigDialog;
     QTimer* _timer;
     VideoWidget* _cameras[4];

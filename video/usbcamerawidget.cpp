@@ -5,7 +5,6 @@ USBCameraWidget::USBCameraWidget(int index, QWidget *parent):
     _timer(new QTimer(this))
 {
     _timer->start(20);
-    _initConnections();
 }
 
 QString USBCameraWidget::getDeviceName()
@@ -18,7 +17,8 @@ void USBCameraWidget::setCamera(QCameraInfo camInfo)
     if (!_videoSurface) free(_videoSurface);
     if (!_camera) free(_camera);
     _camera = new QCamera(camInfo);
-    _videoSurface = new VideoSurface(_pixmap, this);
+    _videoSurface = new VideoSurface(this);
+    connect(_videoSurface, &VideoSurface::newFrame, this, &USBCameraWidget::_updatePixmap);
     _deviceName = camInfo.deviceName();
     _camera->setViewfinder(_videoSurface);
     _camera->setCaptureMode(QCamera::CaptureStillImage);
@@ -35,9 +35,8 @@ void USBCameraWidget::setCamera(QCameraInfo camInfo)
     _isEnabled = true;
 }
 
-void USBCameraWidget::_initConnections()
+void USBCameraWidget::_updatePixmap(QPixmap pixmap)
 {
-    connect(_timer, &QTimer::timeout, [this](){
-        repaint();
-    });
+    *_pixmap = pixmap;
+    repaint();
 }

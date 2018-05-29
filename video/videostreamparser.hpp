@@ -11,8 +11,6 @@ extern "C" {
     #include <libswscale/swscale.h>
 }
 
-typedef void (*repaintFunc)();
-
 class VideoStreamParser : public QObject
 {
     Q_OBJECT

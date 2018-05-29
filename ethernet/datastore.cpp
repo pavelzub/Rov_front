@@ -2,8 +2,10 @@
 #include <QShortcut>
 #include <QSound>
 
-DataStore::DataStore(QWidget *parent) :
+DataStore::DataStore(Settings* settings, QWidget *parent) :
     QObject(parent),
+    _connector(new TcpConnector(settings, this)),
+    _serverIpDialog(new ServerIpDialog(settings, parent)),
     _debugDialog(new DataDebugDialog(&_telimetry, &_control, parent)),
     _fileDialog(new QFileDialog(parent)),
     _packageDebugDialog(new PackageDebugDialog(&_debug, parent)),
@@ -153,7 +155,7 @@ void DataStore::SetEnablePd(int index)
             break;
     }
     qDebug() << index;
-    _connector.Send(pkg.serialize());
+    _connector->Send(pkg.serialize());
 }
 
 void DataStore::SetSecondManOpen(int val)
@@ -173,7 +175,7 @@ void DataStore::DisablePID()
     pkg.pitch_pd = 0;
     pkg.roll_pd = 0;
     pkg.yaw_pd = 0;
-    _connector.Send(pkg.serialize());
+    _connector->Send(pkg.serialize());
 }
 
 void DataStore::ChangeEnable()
@@ -193,12 +195,12 @@ void DataStore::_initTimer()
 void DataStore::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &DataStore::_onTick);
-    connect(&_connector, &TcpConnector::dataUpdate, this, &DataStore::_parsePackage);
-    connect(&_connector, &TcpConnector::Connect, [this](){
+    connect(_connector, &TcpConnector::dataUpdate, this, &DataStore::_parsePackage);
+    connect(_connector, &TcpConnector::Connect, [this](){
         _updatePd();
         emit tcpConnect();
     });
-    connect(&_connector, &TcpConnector::Disconnect, [this](){emit tcpDisconnect();});
+    connect(_connector, &TcpConnector::Disconnect, [this](){emit tcpDisconnect();});
     connect(_fileDialog, &QFileDialog::fileSelected, this, &DataStore::_sendHardwareFirmware);
     connect(_packageDebugDialog, &PackageDebugDialog::visibleChange, [this](bool f){ _debugMode = f; });
     connect(this, &DataStore::pdUpdate, _pdDialog, &PdDialog::UpdatePd);
@@ -211,7 +213,7 @@ void DataStore::_onTick()
 {
     _debugDialog->Update();
     if (_debugMode){
-        _connector.Send(_debug.serialize());
+        _connector->Send(_debug.serialize());
         return;
     }
 
@@ -220,7 +222,7 @@ void DataStore::_onTick()
 //    pkg.axis_y *= (_power / 100.0);
     pkg.axis_z *= (_power / 100.0);
 //    pkg.axis_w *= (_power / 100.0);
-    _connector.Send(pkg.serialize());
+    _connector->Send(pkg.serialize());
 }
 
 void DataStore::_createShortcuts()
@@ -229,6 +231,7 @@ void DataStore::_createShortcuts()
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_2), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_packageDebugDialog->show();});
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_9), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_fileDialog->show();});
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_6), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_pdDialog->show();});
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_5), static_cast<QWidget*>(parent())), &QShortcut::activated, [this](){_serverIpDialog->show();});
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_D), static_cast<QWidget*>(parent())), &QShortcut::activated, this, &DataStore::ChangeEnable);
 }
 
@@ -273,21 +276,21 @@ void DataStore::_sendHardwareFirmware(QString fileName)
     QTextStream in(&file);
     _hardware_firmware.firmware = in.readAll().toStdString();
     _hardware_firmware.size = _hardware_firmware.firmware.size();
-    _connector.Send(_hardware_firmware.serialize());
+    _connector->Send(_hardware_firmware.serialize());
     std::cout << "Poslan!" << std::endl;
 }
 
 void DataStore::_sendPd(rov_types::rov_pd pd)
 {
-    _connector.Send(pd.serialize());
+    _connector->Send(pd.serialize());
 }
 
 void DataStore::_updatePd()
 {
     qDebug() << "update";
     rov_types::rov_pd pkg;
-    _connector.Send(pkg.serialize());
+    _connector->Send(pkg.serialize());
 
     rov_types::rov_enable_pd pkge;
-    _connector.Send(pkge.serialize());
+    _connector->Send(pkge.serialize());
 }

@@ -4,7 +4,7 @@
 #include <QVideoWidget>
 #include <QLabel>
 
-CamerasControlWidget::CamerasControlWidget(QSettings* settings, QWidget *parent) :
+CamerasControlWidget::CamerasControlWidget(Settings *settings, QWidget *parent) :
       QWidget(parent),
       _camerasConfigDialog(new CamerasConfigDialog(settings, this)),
       _timer(new QTimer(this))
@@ -32,12 +32,6 @@ void CamerasControlWidget::swapCameras(int index)
     _mainCameraIndex = index;
 
     emit changeMainCameraIndex(_mainCameraIndex == 1 ? 1 : 0);
-}
-
-void CamerasControlWidget::updateConfig()
-{
-    static_cast<EthernetCameraWidget*>(_cameras[2])->UpdateConfig();
-    static_cast<EthernetCameraWidget*>(_cameras[3])->UpdateConfig();
 }
 
 void CamerasControlWidget::showConfigDialog()
@@ -104,7 +98,6 @@ void CamerasControlWidget::_createLayout()
 void CamerasControlWidget::_initConnections()
 {
     connect(_timer, &QTimer::timeout, this, &CamerasControlWidget::refreshCamerasInfo);
-    connect(_camerasConfigDialog, &CamerasConfigDialog::configUpdate, this, &CamerasControlWidget::updateConfig);
 
     for (int i = 0; i < 4; i++)
         connect(_cameras[i], &VideoWidget::needSwap, this, &CamerasControlWidget::swapCameras);

@@ -4,7 +4,7 @@
 #include <QLabel>
 #include <iostream>
 
-JoystickMediator::JoystickMediator(QSettings *settings, QWidget *parent) :
+JoystickMediator::JoystickMediator(Settings *settings, QWidget *parent) :
     QObject(parent),
     _joysticManager(new JoystickManager(this)),
     _configDialog(new JoystickConfigDialog(_joysticManager, settings, parent))
@@ -40,7 +40,7 @@ void JoystickMediator::_initConnections()
 {
     connect(_joysticManager, &JoystickManager::JoystickConnect, [this](){emit JoystickConnect();});
     connect(_joysticManager, &JoystickManager::JoystickDisconnect, [this](){emit JoystickDisconnect();});
-    connect(_configDialog, &JoystickConfigDialog::configUpdate, this, &JoystickMediator::_updateSettings);
+    connect(_settings, &Settings::joystickUpdate, this, &JoystickMediator::_updateSettings);
 }
 
 void JoystickMediator::_manRotateRight(int val, int step) {

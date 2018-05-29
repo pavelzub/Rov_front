@@ -8,13 +8,13 @@
 #include "joystick/joystickdebugdialog.hpp"
 #include "sensorswidget.hpp"
 #include "infowidget.hpp"
+#include "settings.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QTimer>
-#include <QSettings>
 
 class MainWidget : public QWidget
 {
@@ -37,7 +37,7 @@ private:
     void _createIcons();
     void _initConnections();
 
-    QSettings* _settings;
+    Settings* _settings;
     JoystickMediator* _joystickMediator;
     DataStore* _dataStore;
     TimerWidget* _timerWidget;

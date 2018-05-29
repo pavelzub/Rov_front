@@ -52,7 +52,6 @@ bool VideoSurface::present(const QVideoFrame &frame)
         tr = tr.rotate(180);
         pixmap = pixmap.transformed(tr);
         pixmap = pixmap.scaled(960, 540, Qt::IgnoreAspectRatio,Qt::FastTransformation);
-        *_pixmap = pixmap;
         emit newFrame(pixmap);
         cloneFrame.unmap();
         return true;
@@ -60,8 +59,7 @@ bool VideoSurface::present(const QVideoFrame &frame)
     return false;
 }
 
-VideoSurface::VideoSurface(QPixmap *pixmap, QObject *parent):
+VideoSurface::VideoSurface(QObject *parent):
     QAbstractVideoSurface(parent)
 {
-    _pixmap = pixmap;
 }

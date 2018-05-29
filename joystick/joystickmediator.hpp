@@ -2,9 +2,9 @@
 #define JOYSTICKMEDIATOR_HPP
 
 #include <QObject>
-#include <QSettings>
 #include <QMap>
 
+#include "settings.hpp"
 #include "joystickmanager.hpp"
 #include "joystickconfigdialog.hpp"
 
@@ -13,7 +13,7 @@ class JoystickMediator : public QObject
     Q_OBJECT
 
 public:
-    explicit JoystickMediator(QSettings* settings, QWidget *parent = nullptr);
+    explicit JoystickMediator(Settings *settings, QWidget *parent = nullptr);
     void showConfigDialog();
 
 signals:
@@ -74,7 +74,7 @@ private:
 
     QMap<QString, QString> _connects;
     QMap<QString, bool> _inverts;
-    QSettings* _settings;
+    Settings* _settings;
     JoystickManager* _joysticManager;
     JoystickConfigDialog* _configDialog;
 };
