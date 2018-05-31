@@ -5,6 +5,7 @@
 
 EthernetCameraWidget::EthernetCameraWidget(int index, Settings* settings, QWidget *parent):
     VideoWidget(index, parent)
+//    _webSocket(new WebSocket("asda", this))
 {
     _settings = settings;
     _updateConfig();
@@ -19,12 +20,19 @@ void EthernetCameraWidget::_updateConfig()
     _url = url;
     if (thread != nullptr){
         thread->terminate();
+//        delete thread;
     }
 
     thread = new QThread;
-    _webSocket = new WebSocket();
+//    VideoStreamParser* parser = new VideoStreamParser(url, &_isEnabled);
+    _webSocket = new WebSocket("asd");
     _webSocket->moveToThread(thread);
+    connect(thread, &QThread::started, _webSocket, &WebSocket::process);
+//    connect(_webSocket, &VideoStreamParser::finished, thread, &QThread::quit);
     connect(_webSocket, &WebSocket::newFrame, this, &EthernetCameraWidget::_update);
+//    connect(_webSocket, &VideoStreamParser::finished, parser, &VideoStreamParser::deleteLater);
+//    connect(_webSocket, &VideoStreamParser::finished, this, &EthernetCameraWidget::_onStopEvent);
+    connect(thread, &QThread::finished, thread, &QThread::deleteLater);
     thread->start();
 }
 

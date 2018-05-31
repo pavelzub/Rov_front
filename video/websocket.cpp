@@ -1,10 +1,11 @@
 #include "websocket.hpp"
 
-WebSocket::WebSocket(QObject *parent):
+WebSocket::WebSocket(QString url, QObject *parent):
     QObject(parent),
     _socket(new QWebSocket())
 {
     _socket->setParent(this);
+    _url = url;
     _initConnections();
 }
 

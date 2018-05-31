@@ -9,7 +9,7 @@ class WebSocket : public QObject
 {
     Q_OBJECT
 public:
-    WebSocket(QObject* parent = nullptr);
+    WebSocket(QString url, QObject* parent = nullptr);
     void process();
 
 signals:
