@@ -94,12 +94,12 @@ void DataStore::SetMagnetOff(int val)
 
 void DataStore::SetAcousticOn(int val)
 {
-    _control.acoustic = static_cast<char>(val);
+    _control.realese = static_cast<char>(val);
 }
 
 void DataStore::SetAcousticOff(int val)
 {
-    _control.acoustic = static_cast<char>(-val);
+    _control.realese = static_cast<char>(-val);
 }
 
 void DataStore::SetPower(int val)
@@ -160,12 +160,27 @@ void DataStore::SetEnablePd(int index)
 
 void DataStore::SetSecondManOpen(int val)
 {
-    _control.secondary_maninpulator = static_cast<char>(val);
+    _control.secondary_manipulator = static_cast<char>(val);
 }
 
 void DataStore::SetSecondManClose(int val)
 {
-    _control.secondary_maninpulator = static_cast<char>(-val);
+    _control.secondary_manipulator = static_cast<char>(-val);
+}
+
+void DataStore::SetFlashLightPowerUp()
+{
+    _control.flashlight = 1;
+}
+
+void DataStore::SetFlashLightPowerDown()
+{
+    _control.flashlight = -1;
+}
+
+void DataStore::SetFlashLightPowerSave()
+{
+    _control.flashlight = 0;
 }
 
 void DataStore::DisablePID()

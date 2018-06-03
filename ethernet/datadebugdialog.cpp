@@ -26,7 +26,10 @@ void DataDebugDialog::Update()
     _telimetryVals[10]->setText(QString::number(_telimetry->camera_rotate[0]));
     _telimetryVals[11]->setText(QString::number(_telimetry->camera_rotate[1]));
     _telimetryVals[12]->setText(QString::number(_telimetry->magnet));
-    _telimetryVals[13]->setText(QString::number(_telimetry->acoustic));
+    _telimetryVals[13]->setText(QString::number(_telimetry->esp));
+    _telimetryVals[14]->setText(QString::number(_telimetry->esp_comm));
+    _telimetryVals[15]->setText(QString::number(_telimetry->flashlight));
+    _telimetryVals[16]->setText(QString::number(_telimetry->leo_comm));
 
     _controlVals[0]->setText(QString::number(_control->axis_x));
     _controlVals[1]->setText(QString::number(_control->axis_y));
@@ -37,12 +40,13 @@ void DataDebugDialog::Update()
     _controlVals[6]->setText(QString::number(_control->camera_rotate[0]));
     _controlVals[7]->setText(QString::number(_control->camera_rotate[1]));
     _controlVals[8]->setText(QString::number(_control->magnet));
-    _controlVals[9]->setText(QString::number(_control->acoustic));
+    _controlVals[9]->setText(QString::number(_control->realese));
     _controlVals[10]->setText(QString::number(_control->twisting_motors[0]));
     _controlVals[11]->setText(QString::number(_control->twisting_motors[1]));
     _controlVals[12]->setText(QString::number(_control->twisting_motors[2]));
     _controlVals[13]->setText(QString::number(_control->twisting_motors[3]));
-    _controlVals[14]->setText(QString::number(_control->secondary_maninpulator));
+    _controlVals[14]->setText(QString::number(_control->secondary_manipulator));
+    _controlVals[15]->setText(QString::number(_control->flashlight));
 }
 
 void DataDebugDialog::_createLayout()
@@ -67,9 +71,10 @@ void DataDebugDialog::_createLayout()
     };
 
     const QList<QString> telimetryNames = {"yaw", "pitch", "roll", "depth", "mega_communication", "mini_communication", "esp_communication", "esp_state",
-                                      "manipulator_rotated", "manipulator_opened_closed", "camera_rotate0", "camera_rotate1", "magnet", "acoustic"};
+                                           "manipulator_rotated", "manipulator_opened_closed", "camera_rotate0", "camera_rotate1", "magnet", "release", "esp_comm",
+                                           "flashlight", "leo_comm"};
     const QList<QString> controlNames = {"axis_x", "axis_y", "axis_z", "axis_w", "manipulator_rotate", "manipulator_open_close", "camera_rotate0", "camera_rotate1",
-                                        "magnet", "acoustic", "twisting_motors0", "twisting_motors1", "twisting_motors2", "twisting_motors3", "subman"};
+                                        "magnet", "release", "twisting_motors0", "twisting_motors1", "twisting_motors2", "twisting_motors3", "subman", "flashlight"};
 
     addLayouts(&_telimetryVals, telimetryNames);
     addLayouts(&_controlVals, controlNames);

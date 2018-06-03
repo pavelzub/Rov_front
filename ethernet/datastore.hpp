@@ -42,6 +42,9 @@ public:
     void SetEnablePd(int index);
     void SetSecondManOpen(int val);
     void SetSecondManClose(int val);
+    void SetFlashLightPowerUp();
+    void SetFlashLightPowerDown();
+    void SetFlashLightPowerSave();
     void DisablePID();
     void ChangeEnable();
 

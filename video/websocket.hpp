@@ -11,6 +11,7 @@ class WebSocket : public QObject
 public:
     WebSocket(QString url, QObject* parent = nullptr);
     void process();
+    void setUrl(QString url);
 
 signals:
     void newFrame(QPixmap pixmap);
@@ -23,7 +24,7 @@ private:
     void _error(QAbstractSocket::SocketError error);
 
     QString _url;
-    QWebSocket* _socket;
+    QWebSocket _socket;
 };
 
 #endif // WEBSOCKET_HPP

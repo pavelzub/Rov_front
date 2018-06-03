@@ -25,9 +25,9 @@ private:
     void _update(QPixmap pixmap);
     void _updateConfig();
     void _onStopEvent();
+    void _initSocket();
 
     QString _url;
-    QThread* thread = nullptr;
     Settings* _settings;
     WebSocket* _webSocket;
 };

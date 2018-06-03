@@ -26,7 +26,7 @@ void PdDialog::UpdatePd(rov_types::rov_pd pd)
     _vals[8]->setText(QString::number(pd.roll_d).replace(".", ","));
     _vals[9]->setText(QString::number(pd.roll_to_set).replace(".", ","));
     _vals[10]->setText(QString::number(pd.pitch_p).replace(".", ","));
-    _vals[11]->setText(QString::number(pd.pitch_p).replace(".", ","));
+    _vals[11]->setText(QString::number(pd.pitch_i).replace(".", ","));
     _vals[12]->setText(QString::number(pd.pitch_d).replace(".", ","));
     _vals[13]->setText(QString::number(pd.pitch_to_set).replace(".", ","));
 }

@@ -82,6 +82,12 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Q:
             _dataStore->DisablePID();
             break;
+        case Qt::Key_Plus:
+            _dataStore->SetFlashLightPowerUp();
+            break;
+        case Qt::Key_Minus:
+            _dataStore->SetFlashLightPowerDown();
+            break;
     }
 }
 
@@ -111,6 +117,12 @@ void MainWidget::keyReleaseEvent(QKeyEvent *event)
             break;
         case Qt::Key_Comma:
             _dataStore->SetTwisting_motors(3, 0);
+            break;
+        case Qt::Key_Plus:
+            _dataStore->SetFlashLightPowerSave();
+            break;
+        case Qt::Key_Minus:
+            _dataStore->SetFlashLightPowerSave();
             break;
     }
 }
@@ -157,7 +169,7 @@ void MainWidget::_initConnections()
     connect(_joystickMediator, &JoystickMediator::SaltoChange, _dataStore, &DataStore::SetSalto);
     connect(_joystickMediator, &JoystickMediator::BochkaChange, _dataStore, &DataStore::SetBochka);
     connect(_joystickMediator, &JoystickMediator::SecondManOpen, _dataStore, &DataStore::SetSecondManOpen);
-    connect(_joystickMediator, &JoystickMediator::SecondManClose, _dataStore, &DataStore::SetSecondManClose);;
+    connect(_joystickMediator, &JoystickMediator::SecondManClose, _dataStore, &DataStore::SetSecondManClose);
 
     connect(_joystickMediator, &JoystickMediator::JoystickConnect, [this](){_joysticIcon->setVisible(true);});
     connect(_joystickMediator, &JoystickMediator::JoystickDisconnect, [this](){_joysticIcon->setVisible(false);});

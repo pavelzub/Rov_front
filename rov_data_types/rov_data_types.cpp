@@ -21,7 +21,13 @@ void rov_types::rov_telimetry::data_serialize(rov_types::binary_stream &bs) {
         bs << c;
     }
     bs << magnet;
-    bs << acoustic;
+    bs << ammeter;
+    bs << voltmeter;
+    bs << secondary_manipulator;
+    bs << flashlight;
+    bs << esp;
+    bs << esp_comm;
+    bs << leo_comm;
 
 }
 
@@ -41,7 +47,13 @@ void rov_types::rov_telimetry::data_deserialize(rov_types::binary_stream &bs) {
         bs >> c;
     }
     bs >> magnet;
-    bs >> acoustic;
+    bs >> ammeter;
+    bs >> voltmeter;
+    bs >> secondary_manipulator;
+    bs >> flashlight;
+    bs >> esp;
+    bs >> esp_comm;
+    bs >> leo_comm;
 }
 
 
@@ -56,11 +68,12 @@ void rov_types::rov_control::data_serialize(rov_types::binary_stream &bs) {
         bs << b;
     }
     bs << magnet;
-    bs << acoustic;
     for(const auto & b : twisting_motors) {
         bs << b;
     }
-    bs << secondary_maninpulator;
+    bs << secondary_manipulator;
+    bs << flashlight;
+    bs << realese;
 }
 
 void rov_types::rov_control::data_deserialize(rov_types::binary_stream &bs) {
@@ -74,11 +87,12 @@ void rov_types::rov_control::data_deserialize(rov_types::binary_stream &bs) {
         bs >> b;
     }
     bs >> magnet;
-    bs >> acoustic;
     for(auto & b : twisting_motors) {
         bs >> b;
     }
-    bs >> secondary_maninpulator;
+    bs >> secondary_manipulator;
+    bs >> flashlight;
+    bs >> realese;
 }
 
 void rov_types::rov_hardware_control::data_serialize(rov_types::binary_stream &bs) {
@@ -306,4 +320,38 @@ void rov_types::rov_enable_pd::data_deserialize(rov_types::binary_stream &bs) {
     bs >> depth_pd;
     bs >> pitch_pd;
     bs >> roll_pd;
+}
+
+
+void rov_types::rov_leo_telimetry::data_serialize(binary_stream & bs)
+{
+    bs << secondary_manipulator;
+    bs << flashlight;
+    bs << esp;
+    bs << esp_comm;
+    bs << leo_comm;
+}
+
+void rov_types::rov_leo_telimetry::data_deserialize(binary_stream & bs)
+{
+    bs >> secondary_manipulator;
+    bs >> flashlight;
+    bs >> esp;
+    bs >> esp_comm;
+    bs >> leo_comm;
+}
+
+void rov_types::rov_leo_control::data_serialize(binary_stream & bs)
+{
+    bs << secondary_manipulator;
+    bs << flashlight;
+    bs << realease;
+
+}
+
+void rov_types::rov_leo_control::data_deserialize(binary_stream & bs)
+{
+    bs >> secondary_manipulator;
+    bs >> flashlight;
+    bs >> realease;
 }
