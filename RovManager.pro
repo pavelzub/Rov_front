@@ -12,21 +12,12 @@ TARGET = RovManager
 TEMPLATE = app
 
 INCLUDEPATH += \
-    $$PWD/SDL-1.2/include/SDL \
+    $$PWD/SDL-1.2/include/SDL
 #    $$PWD/SDL/include \
-    $$PWD/ffmpeg/include
+
 LIBS += \
-    -L$$PWD/SDL-1.2/bin -lSDL \
+    -L$$PWD/SDL-1.2/bin -lSDL
 #    -L$$PWD/SDL -lSDL2 \
-    -L$$PWD/ffmpeg/lib \
-    -lavcodec \
-    -lavdevice \
-    -lavutil \
-    -lpostproc \
-    -lavfilter \
-    -lswresample \
-    -lavformat \
-    -lswscale
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -48,7 +39,6 @@ SOURCES += \
     video/usbcamerawidget.cpp \
     timerwidget.cpp \
     video/ethernetcamerawidget.cpp \
-    video/videostreamparser.cpp \
     camerascontrolwidget.cpp \
     rov_data_types/binary_stream.cpp \
     rov_data_types/crc.cpp \
@@ -80,7 +70,6 @@ HEADERS += \
     video/usbcamerawidget.hpp \
     timerwidget.hpp \
     video/ethernetcamerawidget.hpp \
-    video/videostreamparser.hpp \
     camerascontrolwidget.hpp \
     rov_data_types/binary_stream.hpp \
     rov_data_types/crc.hpp \
