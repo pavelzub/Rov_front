@@ -72,8 +72,6 @@ void CamerasControlWidget::refreshCamerasInfo()
 
 void CamerasControlWidget::_initCameras()
 {
-    _initFfmpeg();
-
     _cameras[0] = new USBCameraWidget(0, this);
     _cameras[1] = new USBCameraWidget(1, this);
     _cameras[2] = new EthernetCameraWidget(2, _settings, this);
@@ -101,11 +99,4 @@ void CamerasControlWidget::_initConnections()
 
     for (int i = 0; i < 4; i++)
         connect(_cameras[i], &VideoWidget::needSwap, this, &CamerasControlWidget::swapCameras);
-}
-
-void CamerasControlWidget::_initFfmpeg()
-{
-    av_register_all();
-    avformat_network_init();
-    avcodec_register_all();
 }

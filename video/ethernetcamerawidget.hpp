@@ -10,12 +10,6 @@
 #include "settings.hpp"
 #include "websocket.hpp"
 
-extern "C" {
-    #define __STDC_CONSTANT_MACROS
-    #include <libavformat/avformat.h>
-    #include <libavutil/dict.h>
-}
-
 class EthernetCameraWidget : public VideoWidget
 {
 public:

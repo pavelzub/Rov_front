@@ -71,7 +71,7 @@ void TimerWidget::paintEvent(QPaintEvent *event)
         znak = "-";
     }
     QLabel::paintEvent(event);
-    QPainter* painter = new QPainter(this);
+    QPainter painter(this);
 
     QPen pen(Qt::white);
     QFont font = QFont("After Disaster");
@@ -79,8 +79,8 @@ void TimerWidget::paintEvent(QPaintEvent *event)
     if (_timeLeft <= CRITICALTIME || znak == "-"){
         pen = QPen(Qt::red);
     }
-    painter->setPen(pen);
-    painter->setFont(font);
-    painter->drawText(this->rect(), Qt::AlignCenter, znak + time.toString("mm:ss:zzz"));
-    painter->end();
+    painter.setPen(pen);
+    painter.setFont(font);
+    painter.drawText(this->rect(), Qt::AlignCenter, znak + time.toString("mm:ss:zzz"));
+    painter.end();
 }

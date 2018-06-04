@@ -19,33 +19,33 @@ VideoWidget::VideoWidget(int index, QWidget *parent):
 void VideoWidget::paintEvent(QPaintEvent *event)
 {
     QVideoWidget::paintEvent(event);
-    QPainter* painter = new QPainter(this);
+    QPainter painter(this);
 
     QPen pen = QPen(Qt::black);
-    QFont font = painter->font();
+    QFont font = painter.font();
     font.setPointSize(15);
 
     if (!_isEnabled)
         pen = QPen(Qt::white);
 
     if (_pixmap->size() != QSize(0, 0)){
-        painter->setRenderHint(QPainter::Antialiasing);
-        painter->setRenderHint(QPainter::Antialiasing, true);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::Antialiasing, true);
 
         QPainterPath path;
         QPixmap pixmap = *_pixmap;
         pixmap = pixmap.scaled(width(), height(), Qt::IgnoreAspectRatio,Qt::FastTransformation);
         path.addRoundedRect(QRectF(0, 0, width(), height()), 10, 10);
 
-        painter->setClipPath(path);
-        painter->drawPixmap(0, 0, pixmap);
+        painter.setClipPath(path);
+        painter.drawPixmap(0, 0, pixmap);
     }
 
-    painter->setFont(font);
-    painter->setPen(pen);
-    painter->drawText(5, 20, "Сam " + QString::number(_index + 1));
+    painter.setFont(font);
+    painter.setPen(pen);
+    painter.drawText(5, 20, "Сam " + QString::number(_index + 1));
 
-    painter->end();
+    painter.end();
 }
 
 void VideoWidget::setPriority(CameraPriority priority)

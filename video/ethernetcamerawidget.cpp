@@ -1,5 +1,4 @@
 #include "ethernetcamerawidget.hpp"
-#include "videostreamparser.hpp"
 
 #include <iostream>
 
