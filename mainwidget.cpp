@@ -43,12 +43,12 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Control:
             _infoWidget->show();
             break;
-        case Qt::Key_Z:
-            _dataStore->SetTwisting_motors(0, 1);
-            break;
-        case Qt::Key_X:
-            _dataStore->SetTwisting_motors(0, -1);
-            break;
+//        case Qt::Key_Z:
+//            _dataStore->SetTwisting_motors(0, 1);
+//            break;
+//        case Qt::Key_X:
+//            _dataStore->SetTwisting_motors(0, -1);
+//            break;
         case Qt::Key_C:
             _dataStore->SetTwisting_motors(1, 1);
             break;
@@ -94,12 +94,12 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
 void MainWidget::keyReleaseEvent(QKeyEvent *event)
 {
     switch (event->key()) {
-        case Qt::Key_Z:
-            _dataStore->SetTwisting_motors(0, 0);
-            break;
-        case Qt::Key_X:
-            _dataStore->SetTwisting_motors(0, 0);
-            break;
+//        case Qt::Key_Z:
+//            _dataStore->SetTwisting_motors(0, 0);
+//            break;
+//        case Qt::Key_X:
+//            _dataStore->SetTwisting_motors(0, 0);
+//            break;
         case Qt::Key_C:
             _dataStore->SetTwisting_motors(1, 0);
             break;

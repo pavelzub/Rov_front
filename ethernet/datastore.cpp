@@ -32,7 +32,7 @@ void DataStore::SetAxisZ(int axis)
 {
     if (_enable_pd.depth_pd == 1) axis = abs(axis) < AXISTOLERANCE ? 0 : axis;
     if (_control.axis_z && !axis)
-        QSound::play("sound.wav");
+        QSound::play("sounds\\axisZ.wav");
     _control.axis_z = static_cast<std::int8_t>(axis);
 }
 

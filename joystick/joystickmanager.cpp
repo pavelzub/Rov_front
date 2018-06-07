@@ -1,6 +1,7 @@
 #include "joystickmanager.hpp"
 #include <QMetaObject>
 #include <iostream>
+#include <QDebug>
 
 JoystickManager::JoystickManager(QObject *parent)
     : QObject(parent),
