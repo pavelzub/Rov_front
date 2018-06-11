@@ -1,4 +1,5 @@
 #include "websocket.hpp"
+#include <unistd.h>
 
 WebSocket::WebSocket(QString url, QObject *parent):
     QObject(parent)
@@ -35,7 +36,7 @@ void WebSocket::_connect()
 
 void WebSocket::_disconnect()
 {
-    sleep(500);
+    sleep(200);
     _socket.open(QUrl(_url));
 }
 
@@ -50,5 +51,6 @@ void WebSocket::_getData(const QByteArray &message)
 
 void WebSocket::_error(QAbstractSocket::SocketError error)
 {
+    sleep(200);
     _socket.open(QUrl(_url));
 }

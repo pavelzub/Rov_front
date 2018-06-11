@@ -15,12 +15,12 @@ void SensorsWidget::TelimetryChange(float yaw, float pitch, float roll, float de
 {
     QPixmap pixmap = _createPixmap(yaw, 0);
     _labels[0]->setPixmap(pixmap);
-    pixmap = _createPixmap(pitch, 1);
+    pixmap = _createPixmap(pitch - 60, 1);
     _labels[1]->setPixmap(pixmap);
-    pixmap = _createPixmap(roll, 2);
+    pixmap = _createPixmap(roll - 91, 2);
     _labels[2]->setPixmap(pixmap);
     QString fonttemplate = tr("<font color='White'>%1</font>");
-    _vals[3]->setText(fonttemplate.arg(QString().setNum(depth, 'g', 20)));
+    _vals[3]->setText(fonttemplate.arg(QString().setNum(depth, 'g', 4)));
 }
 
 void SensorsWidget::RegChange(rov_types::rov_enable_pd enable_pd)
