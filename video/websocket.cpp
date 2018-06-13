@@ -36,7 +36,7 @@ void WebSocket::_connect()
 
 void WebSocket::_disconnect()
 {
-    sleep(200);
+    qDebug() << "Disonnect";
     _socket.open(QUrl(_url));
 }
 
@@ -51,6 +51,5 @@ void WebSocket::_getData(const QByteArray &message)
 
 void WebSocket::_error(QAbstractSocket::SocketError error)
 {
-    sleep(200);
-    _socket.open(QUrl(_url));
+    qDebug() << "Eror:" << error;
 }
