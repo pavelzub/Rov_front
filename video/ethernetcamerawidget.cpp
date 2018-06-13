@@ -5,6 +5,7 @@
 EthernetCameraWidget::EthernetCameraWidget(int index, Settings* settings, QWidget *parent):
     VideoWidget(index, parent)
 {
+    if (index == 3) return;
     _settings = settings;
     _initSocket();
     connect(_settings, &Settings::camerasUpdate, this, &EthernetCameraWidget::_updateConfig);
