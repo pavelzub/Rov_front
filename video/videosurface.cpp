@@ -1,4 +1,5 @@
 #include "videosurface.hpp"
+#include "unistd.h"
 
 QList<QVideoFrame::PixelFormat> VideoSurface::supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const
 {
@@ -55,6 +56,9 @@ bool VideoSurface::present(const QVideoFrame &frame)
         emit newFrame(pixmap);
         cloneFrame.unmap();
         return true;
+    }
+    else{
+        sleep(10);
     }
     return false;
 }
