@@ -60,7 +60,8 @@ SOURCES += \
     ethernet/pddialog.cpp \
     settings.cpp \
     ethernet/serveripdialog.cpp \
-    video/websocket.cpp
+    video/websocket.cpp \
+    depthdialog.cpp
 
 HEADERS += \
     mainwindow.hpp \
@@ -90,4 +91,5 @@ HEADERS += \
     ethernet/pddialog.hpp \
     settings.hpp \
     ethernet/serveripdialog.hpp \
-    video/websocket.hpp
+    video/websocket.hpp \
+    depthdialog.hpp

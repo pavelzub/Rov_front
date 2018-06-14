@@ -13,7 +13,8 @@ MainWidget::MainWidget(QWidget *parent)
     _camerasControlWidget(new CamerasControlWidget(_settings, this)),
     _joystickDebugDialog(new JoystickDebugDialog(_joystickMediator, this)),
     _sensorWidget(new SensorsWidget(this)),
-    _infoWidget(new InfoWidget(this))
+    _infoWidget(new InfoWidget(this)),
+    _depthDialog(new DepthDialog)
 {
     _createLayout();
     _initConnections();
@@ -43,12 +44,12 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Control:
             _infoWidget->show();
             break;
-//        case Qt::Key_Z:
-//            _dataStore->SetTwisting_motors(0, 1);
-//            break;
-//        case Qt::Key_X:
-//            _dataStore->SetTwisting_motors(0, -1);
-//            break;
+        case Qt::Key_Z:
+            _dataStore->SetTwisting_motors(0, 1);
+            break;
+        case Qt::Key_X:
+            _dataStore->SetTwisting_motors(0, -1);
+            break;
         case Qt::Key_C:
             _dataStore->SetTwisting_motors(1, 1);
             break;
@@ -94,12 +95,12 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
 void MainWidget::keyReleaseEvent(QKeyEvent *event)
 {
     switch (event->key()) {
-//        case Qt::Key_Z:
-//            _dataStore->SetTwisting_motors(0, 0);
-//            break;
-//        case Qt::Key_X:
-//            _dataStore->SetTwisting_motors(0, 0);
-//            break;
+        case Qt::Key_Z:
+            _dataStore->SetTwisting_motors(0, 0);
+            break;
+        case Qt::Key_X:
+            _dataStore->SetTwisting_motors(0, 0);
+            break;
         case Qt::Key_C:
             _dataStore->SetTwisting_motors(1, 0);
             break;
@@ -182,5 +183,7 @@ void MainWidget::_initConnections()
     connect(_dataStore, &DataStore::enablePdUpdate, _sensorWidget, &SensorsWidget::RegChange);
     connect(this, &MainWidget::EnableReg, _dataStore, &DataStore::SetEnablePd);
 
+    connect(_dataStore, &DataStore::telimetryUpdate, _depthDialog, &DepthDialog::setDepth);
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_4), this), &QShortcut::activated, [this](){_depthDialog->show();});
 }
 

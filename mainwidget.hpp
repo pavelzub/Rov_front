@@ -9,6 +9,7 @@
 #include "sensorswidget.hpp"
 #include "infowidget.hpp"
 #include "settings.hpp"
+#include "depthdialog.hpp"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -47,6 +48,7 @@ private:
     InfoWidget* _infoWidget;
     QLabel* _joysticIcon;
     QLabel* _ethernetIcon;
+    DepthDialog* _depthDialog;
 };
 
 #endif // MYMAINWIDGET_HPP
