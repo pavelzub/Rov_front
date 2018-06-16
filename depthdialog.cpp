@@ -38,7 +38,7 @@ void DepthDialog::_createLayout()
     depth2->setText("Bottom depth: ");
     connect(depth2, &QPushButton::pressed, [this, val2, val3, val4](){
         val2->setText(_depth->text());
-        val4->setText(QString::number(val2->text().toDouble() - val3->text().toDouble() + 2.5));
+        val4->setText(QString::number(val2->text().toDouble() - val3->text().toDouble() + 0.05));
     });
 //    depth2->setFixedSize(100,20);
 
@@ -46,7 +46,7 @@ void DepthDialog::_createLayout()
     depth3->setText("ADV depth: ");
     connect(depth3, &QPushButton::pressed, [this, val2, val3, val4](){
         val3->setText(_depth->text());
-        val4->setText(QString::number(val2->text().toDouble() - val3->text().toDouble() + 2.5));
+        val4->setText(QString::number(val2->text().toDouble() - val3->text().toDouble() + 0.05));
     });
 //    depth3->setFixedSize(100,20);
 

@@ -52,7 +52,8 @@ void TcpConnector::_onDisconnected()
 
 void TcpConnector::_onError(QAbstractSocket::SocketError error)
 {
-    _connect();
+    qDebug() << "Tcp connector error: " << error;
+//    _connect();
 }
 
 void TcpConnector::_updateIp()

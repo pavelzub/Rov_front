@@ -51,10 +51,10 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
             _dataStore->SetTwisting_motors(0, -1);
             break;
         case Qt::Key_C:
-            _dataStore->SetTwisting_motors(1, 1);
+            _dataStore->SetTwisting_motors(1, -1);
             break;
         case Qt::Key_V:
-            _dataStore->SetTwisting_motors(1, -1);
+            _dataStore->SetTwisting_motors(1, 1);
             break;
         case Qt::Key_B:
             _dataStore->SetTwisting_motors(2, 1);
@@ -63,10 +63,10 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
             _dataStore->SetTwisting_motors(2, -1);
             break;
         case Qt::Key_M:
-            _dataStore->SetTwisting_motors(3, 1);
+            _dataStore->SetTwisting_motors(3, -1);
             break;
         case Qt::Key_Comma:
-            _dataStore->SetTwisting_motors(3, -1);
+            _dataStore->SetTwisting_motors(3, 1);
             break;
         case Qt::Key_Y:
             emit EnableReg(0);
